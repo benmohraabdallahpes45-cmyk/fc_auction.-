@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>FC Auction Online</title>
 
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
@@ -259,7 +259,7 @@ h2{text-align:center}
 
 <br><br>
 
-<button class="green start" onclick="createRoom()">
+<button id="createRoomBtn" class="green start" type="button">
 🏠 إنشاء غرفة
 </button>
 
@@ -306,7 +306,7 @@ maxlength="20">
 
 <br><br>
 
-<button class="blue start" onclick="joinRoom()">
+<button id="joinRoomBtn" class="blue start" type="button">
 📱 دخول الغرفة
 </button>
 
@@ -733,7 +733,12 @@ function createRoom(){
 
  setStatus("🔌 جاري إنشاء الغرفة...");
 
- peer=new Peer(roomCode);
+ peer=new Peer(roomCode,{
+  host:"0.peerjs.com",
+  port:443,
+  secure:true,
+  path:"/"
+ });
 
  peer.on("open",()=>{
 
@@ -776,7 +781,9 @@ function createRoom(){
  });
 
  peer.on("error",err=>{
-  setStatus("❌ خطأ: "+err.type);
+  console.error("PeerJS error:",err);
+  setStatus("❌ خطأ في الاتصال: "+(err.type||"unknown"));
+  alert("تعذر إنشاء الغرفة. تأكد من الإنترنت ثم أعد المحاولة.");
  });
 
 }
@@ -804,7 +811,12 @@ function joinRoom(){
 
  setStatus("🔌 جاري الاتصال...");
 
- peer=new Peer();
+ peer=new Peer({
+  host:"0.peerjs.com",
+  port:443,
+  secure:true,
+  path:"/"
+ });
 
  peer.on("open",()=>{
 
@@ -829,8 +841,10 @@ function joinRoom(){
 
  });
 
- peer.on("error",()=>{
-  alert("لم يتم العثور على الغرفة");
+ peer.on("error",err=>{
+  console.error("PeerJS join error:",err);
+  setStatus("❌ تعذر الاتصال بالغرفة");
+  alert("لم يتم العثور على الغرفة أو تعذر الاتصال بها.");
  });
 
 }
@@ -1822,6 +1836,22 @@ document.getElementById("bidInput")
  .addEventListener("keydown",e=>{
   if(e.key==="Enter")bid();
  });
+
+// تشغيل أزرار الغرفة بشكل مباشر حتى لا يعتمد التطبيق على onclick.
+window.addEventListener("DOMContentLoaded",()=>{
+ const createBtn=document.getElementById("createRoomBtn");
+ const joinBtn=document.getElementById("joinRoomBtn");
+
+ if(createBtn) createBtn.addEventListener("click",createRoom);
+ if(joinBtn) joinBtn.addEventListener("click",joinRoom);
+
+ if(typeof Peer!=="function"){
+  setStatus("❌ مكتبة الاتصال لم تُحمّل");
+  if(createBtn) createBtn.disabled=true;
+  if(joinBtn) joinBtn.disabled=true;
+  console.error("PeerJS failed to load.");
+ }
+});
 
 </script>
 
