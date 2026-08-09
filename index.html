@@ -15,14 +15,14 @@ html,body{
   margin:0;
   min-height:100%;
   font-family:Arial,Tahoma,sans-serif;
-  background:#06101b;
+  background:#050b12;
   color:#fff
 }
 
 body{padding:10px}
 
 .app{
-  width:min(1150px,100%);
+  width:min(1200px,100%);
   margin:auto
 }
 
@@ -43,12 +43,12 @@ h1{
 }
 
 .card{
-  background:#0d1b2b;
+  background:#0c1724;
   border:1px solid #29445e;
   border-radius:22px;
   padding:16px;
   margin:10px 0;
-  box-shadow:0 10px 30px #0005
+  box-shadow:0 10px 30px #0008
 }
 
 .status{
@@ -102,16 +102,29 @@ input{
   cursor:pointer
 }
 
-.blue{background:#1688ff;color:#fff}
-.red{background:#ff566b;color:#fff}
-.dark{background:#1b3047;color:#fff}
+.blue{
+  background:#1688ff;
+  color:#fff
+}
+
+.red{
+  background:#ff566b;
+  color:#fff
+}
+
+.dark{
+  background:#1b3047;
+  color:#fff
+}
 
 .btn:disabled{
-  opacity:.35;
+  opacity:.4;
   cursor:not-allowed
 }
 
-.hidden{display:none!important}
+.hidden{
+  display:none!important
+}
 
 .roomCode{
   text-align:center;
@@ -142,7 +155,7 @@ input{
 }
 
 /* =========================
-   ARENA
+   GAME ARENA
 ========================= */
 
 .arena{
@@ -153,23 +166,30 @@ input{
 }
 
 .side{
-  min-height:650px;
+  min-height:700px;
   border-radius:22px;
-  padding:14px;
+  padding:12px;
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
-  border:2px solid
+  border:2px solid;
+  overflow:hidden
 }
 
 .blueSide{
-  background:linear-gradient(160deg,#062c56,#071a2e);
+  background:
+    linear-gradient(160deg,#062c56,#071a2e);
   border-color:#1688ff
 }
 
 .redSide{
-  background:linear-gradient(160deg,#56152b,#21101c);
+  background:
+    linear-gradient(160deg,#56152b,#21101c);
   border-color:#ff566b
+}
+
+.sideHeader{
+  padding:8px 4px 12px;
+  text-align:center
 }
 
 .sideTitle{
@@ -180,168 +200,132 @@ input{
 .money{
   font-size:25px;
   font-weight:900;
-  color:#54efae
+  color:#54efae;
+  margin-top:4px
 }
 
-/* =========================
-   REAL FORMATION PITCH
-========================= */
+/* Tactical pitch */
 
 .pitch{
   position:relative;
-  width:100%;
-  height:510px;
-  margin-top:12px;
+  flex:1;
+  min-height:600px;
   border-radius:18px;
   overflow:hidden;
-  border:2px solid #ffffff55;
+  border:2px solid #ffffff38;
   background:
     repeating-linear-gradient(
       90deg,
       #116b39 0 35px,
-      #0f6335 35px 70px
+      #0e6234 35px 70px
     );
-  box-shadow:inset 0 0 35px #0005
+  padding:12px
 }
 
-.pitch:before{
-  content:"";
+.pitchLines{
   position:absolute;
-  inset:16px;
-  border:2px solid #ffffff75;
+  inset:12px;
+  border:2px solid #ffffff65;
   border-radius:10px;
   pointer-events:none
 }
 
-.pitch:after{
+.pitchLines:before{
   content:"";
   position:absolute;
-  width:90px;
-  height:90px;
-  border:2px solid #ffffff70;
-  border-radius:50%;
   left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  pointer-events:none
+  top:0;
+  bottom:0;
+  width:2px;
+  background:#ffffff55;
+  transform:translateX(-50%)
 }
 
-.halfLine{
+.pitchLines:after{
+  content:"";
   position:absolute;
-  left:5%;
-  right:5%;
-  top:50%;
-  height:2px;
-  background:#ffffff70
-}
-
-.centerDot{
-  position:absolute;
-  width:9px;
-  height:9px;
-  background:#fff;
+  width:75px;
+  height:75px;
+  border:2px solid #ffffff55;
   border-radius:50%;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%)
 }
 
-.goal{
+.position{
   position:absolute;
-  left:50%;
-  width:55px;
-  height:10px;
-  border:2px solid #fff8;
-  transform:translateX(-50%)
-}
-
-.goal.top{top:15px}
-.goal.bottom{bottom:15px}
-
-.box{
-  position:absolute;
-  left:50%;
-  width:145px;
-  height:65px;
-  border:2px solid #ffffff65;
-  transform:translateX(-50%)
-}
-
-.box.top{top:17px}
-.box.bottom{bottom:17px}
-
-/* اللاعب داخل الملعب */
-
-.fieldPlayer{
-  position:absolute;
-  width:54px;
-  height:54px;
   transform:translate(-50%,-50%);
-  z-index:4;
-  text-align:center
+  width:74px;
+  text-align:center;
+  z-index:3
 }
 
-.fieldPlayer .circle{
-  width:39px;
-  height:39px;
-  margin:auto;
-  border-radius:50%;
-  overflow:hidden;
-  border:2px solid #fff;
-  background:#081522;
-  box-shadow:0 4px 10px #0008
-}
-
-.fieldPlayer img{
-  width:100%;
-  height:100%;
-  object-fit:cover
-}
-
-.fieldPlayer .pos{
+.positionName{
   display:block;
-  margin-top:2px;
-  font-size:9px;
+  font-size:10px;
   font-weight:900;
-  color:#fff
+  margin-bottom:3px;
+  color:#dfffee
 }
 
-.fieldPlayer .name{
+.playerSlot{
+  width:64px;
+  min-height:70px;
+  padding:4px;
+  border-radius:9px;
+  background:#071522dd;
+  border:1px solid #ffffff55;
+  backdrop-filter:blur(3px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center
+}
+
+.playerSlot img{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #fff6
+}
+
+.playerSlot b{
   display:block;
-  max-width:78px;
-  margin:auto;
-  white-space:nowrap;
+  width:100%;
   overflow:hidden;
+  white-space:nowrap;
   text-overflow:ellipsis;
   font-size:8px;
-  background:#06101bcc;
-  border-radius:5px;
-  padding:1px 3px
+  margin-top:3px
 }
 
-.emptyPos{
-  position:absolute;
-  width:48px;
-  height:48px;
-  transform:translate(-50%,-50%);
-  border:2px dashed #ffffff80;
-  border-radius:50%;
-  z-index:3;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#ffffffbb;
-  font-size:8px;
-  font-weight:900;
-  background:#0002
+.emptySlot{
+  color:#8fa5b7;
+  font-size:8px
 }
 
-/* =========================
-   AUCTION CENTER
-========================= */
+/* Real tactical positions */
+
+.pos-GK{left:50%;bottom:7%}
+.pos-RB{left:82%;bottom:22%}
+.pos-CB1{left:61%;bottom:25%}
+.pos-CB2{left:39%;bottom:25%}
+.pos-LB{left:18%;bottom:22%}
+
+.pos-DMF{left:50%;bottom:39%}
+.pos-CMF{left:50%;bottom:53%}
+.pos-AMF{left:50%;bottom:66%}
+
+.pos-RWF{left:76%;bottom:78%}
+.pos-LWF{left:24%;bottom:78%}
+.pos-CF{left:50%;bottom:87%}
+
+/* Auction center */
 
 .center{
-  background:#0a1725;
+  background:#08121e;
   border:2px solid #315673;
   border-radius:22px;
   padding:15px;
@@ -349,76 +333,112 @@ input{
   display:flex;
   flex-direction:column;
   justify-content:center;
-  min-height:650px;
-  transition:.35s
+  min-height:700px
 }
 
-.center.blueTurn{
-  border-color:#1688ff;
-  box-shadow:0 0 28px #1688ff55
+.auctionLabel{
+  color:#9fb4c8;
+  font-size:13px;
+  margin-bottom:8px
 }
 
-.center.redTurn{
-  border-color:#ff566b;
-  box-shadow:0 0 28px #ff566b55
+/* FC style card */
+
+.fcCard{
+  width:min(280px,85vw);
+  min-height:390px;
+  margin:5px auto 12px;
+  border-radius:18px;
+  padding:10px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(145deg,#d6b15b,#6f4917 45%,#d9bd6a);
+  border:3px solid #f5db87;
+  box-shadow:
+    0 12px 30px #0009,
+    inset 0 0 0 2px #fff4;
+  color:#201505
 }
 
-.auctionCard{
-  padding:14px;
-  border-radius:20px;
-  border:2px solid #315673;
-  background:linear-gradient(160deg,#101f30,#08131f);
-  transition:.35s;
-  animation:auctionPulse 2s infinite
+.fcCard:before{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border:1px solid #fff8;
+  border-radius:13px;
+  pointer-events:none
 }
 
-.auctionCard.blueAuction{
-  border-color:#1688ff;
-  background:linear-gradient(160deg,#082d53,#091827)
+.fcTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  position:relative;
+  z-index:2
 }
 
-.auctionCard.redAuction{
-  border-color:#ff566b;
-  background:linear-gradient(160deg,#501629,#1b1018)
-}
-
-@keyframes auctionPulse{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.012)}
-}
-
-.auctionImg{
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  object-fit:cover;
-  margin:auto;
-  background:#172c42;
-  border:4px solid #315673
-}
-
-.auctionName{
-  font-size:29px;
+.fcRating{
+  font-size:30px;
   font-weight:900;
+  line-height:1
+}
+
+.fcPos{
+  font-size:12px;
+  font-weight:900;
+  margin-top:3px
+}
+
+.fcCountry{
+  font-size:10px;
+  font-weight:900;
+  text-align:left
+}
+
+.fcPhoto{
+  width:190px;
+  height:190px;
+  object-fit:cover;
+  display:block;
+  margin:8px auto 3px;
+  border-radius:50%;
+  border:4px solid #f9e7a7;
+  background:#10263b
+}
+
+.fcName{
+  font-size:22px;
+  font-weight:900;
+  text-align:center;
+  margin-top:5px
+}
+
+.fcStats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:4px;
   margin-top:10px
 }
 
-.auctionMeta{
-  color:#9fb4c8;
-  font-size:14px;
-  margin:4px
+.fcStat{
+  background:#3c280d55;
+  border-radius:7px;
+  padding:5px;
+  font-size:9px;
+  font-weight:900
+}
+
+.fcStat b{
+  display:block;
+  font-size:14px
 }
 
 .price{
   font-size:38px;
   color:#54efae;
   font-weight:900;
-  margin:5px
-}
-
-.turn{
-  margin:5px auto;
-  display:inline-block
+  margin:4px
 }
 
 .bidGrid{
@@ -432,9 +452,97 @@ input{
   margin:0
 }
 
-/* =========================
-   COACH
-========================= */
+/* Position progress */
+
+.positionProgress{
+  display:grid;
+  grid-template-columns:repeat(11,1fr);
+  gap:3px;
+  margin:10px 0
+}
+
+.progressDot{
+  height:6px;
+  border-radius:20px;
+  background:#23384d
+}
+
+.progressDot.done{
+  background:#54efae
+}
+
+.progressDot.current{
+  background:#ffd54a
+}
+
+/* Confirmation modal */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px
+}
+
+.modalBox{
+  width:min(440px,95vw);
+  background:#0d1b2b;
+  border:2px solid #315673;
+  border-radius:22px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 20px 60px #000
+}
+
+.modalTitle{
+  font-size:23px;
+  font-weight:900;
+  margin-bottom:12px
+}
+
+.modalText{
+  line-height:1.9;
+  color:#d9e6ef
+}
+
+.modalCard{
+  margin:12px auto;
+  width:150px;
+  background:#172b3d;
+  border:2px solid #3c5e78;
+  border-radius:15px;
+  padding:8px
+}
+
+.modalCard img{
+  width:105px;
+  height:105px;
+  border-radius:50%;
+  object-fit:cover
+}
+
+.modalCard b{
+  display:block;
+  margin-top:5px
+}
+
+.okBtn{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:14px;
+  font-weight:900;
+  background:#20df91;
+  color:#06101b;
+  cursor:pointer;
+  margin-top:8px
+}
+
+/* Coaches */
 
 .coach{
   display:grid;
@@ -456,27 +564,12 @@ input{
   object-fit:cover
 }
 
-/* =========================
-   RESULT
-========================= */
-
-.log{
-  max-height:190px;
-  overflow:auto;
-  font-size:13px;
-  line-height:1.7
-}
-
 .result{
   background:#071522;
   border-radius:15px;
   padding:12px;
   line-height:1.8
 }
-
-/* =========================
-   TOAST
-========================= */
 
 .toast{
   position:fixed;
@@ -487,108 +580,52 @@ input{
   border:1px solid #36546e;
   padding:12px 17px;
   border-radius:14px;
-  z-index:99;
+  z-index:2000;
   display:none
 }
 
-/* =========================
-   MODALS
-========================= */
+@media(max-width:900px){
+  .arena{
+    grid-template-columns:1fr
+  }
 
-.modal{
-  position:fixed;
-  inset:0;
-  background:#000b;
-  z-index:200;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:15px
+  .side{
+    min-height:620px
+  }
+
+  .center{
+    order:-1;
+    min-height:650px
+  }
 }
 
-.modalBox{
-  width:min(440px,100%);
-  background:#0d1b2b;
-  border:2px solid #315673;
-  border-radius:22px;
-  padding:20px;
-  text-align:center;
-  box-shadow:0 20px 60px #000b;
-  animation:modalIn .2s ease
-}
+@media(max-width:500px){
+  .pitch{
+    min-height:570px
+  }
 
-@keyframes modalIn{
-  from{transform:scale(.92);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
+  .position{
+    width:62px
+  }
 
-.modalTitle{
-  font-size:22px;
-  font-weight:900;
-  margin-bottom:10px
-}
+  .playerSlot{
+    width:56px;
+    min-height:64px
+  }
 
-.modalText{
-  color:#cbd8e4;
-  line-height:1.8;
-  margin:8px 0
-}
+  .playerSlot img{
+    width:32px;
+    height:32px
+  }
 
-.modalPlayer{
-  background:#071522;
-  border:1px solid #315673;
-  border-radius:16px;
-  padding:12px;
-  margin:12px 0
-}
+  .fcCard{
+    min-height:350px
+  }
 
-.modalPlayer img{
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  object-fit:cover;
-  border:3px solid #54efae
-}
-
-.modalPlayer b{
-  display:block;
-  font-size:20px;
-  margin-top:5px
-}
-
-.okBtn{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:14px;
-  font-weight:900;
-  background:#20df91;
-  color:#06101b;
-  margin-top:8px;
-  cursor:pointer
-}
-
-.timerText{
-  color:#54efae;
-  font-weight:900;
-  font-size:14px
-}
-
-@media(max-width:800px){
-  .arena{grid-template-columns:1fr}
-  .side{min-height:580px}
-  .center{order:-1;min-height:570px}
-  .pitch{height:500px}
-}
-
-@media(max-width:480px){
-  .pitch{height:460px}
-  .fieldPlayer{width:45px}
-  .fieldPlayer .circle{width:34px;height:34px}
-  .fieldPlayer .name{font-size:7px;max-width:58px}
-  .emptyPos{width:40px;height:40px;font-size:7px}
-  .auctionImg{width:125px;height:125px}
-  .auctionName{font-size:24px}
+  .fcPhoto{
+    width:155px;
+    height:155px
+  }
 }
 </style>
 </head>
@@ -598,34 +635,34 @@ input{
 <div class="app">
 
 <header>
-  <h1>FC AUCTION ONLINE ⚽</h1>
-  <div class="sub">مزاد مباشر — تشكيلات حقيقية — 🔵 ضد 🔴</div>
+<h1>FC AUCTION ONLINE ⚽</h1>
+<div class="sub">مزاد مباشر — 11 مركز — 🔵 ضد 🔴</div>
 </header>
 
 <div id="status" class="status">
-  جاري الاتصال بقاعدة البيانات...
+جاري الاتصال بقاعدة البيانات...
 </div>
 
 <!-- HOME -->
 
 <section id="home" class="card">
 
-  <h2>🏠 غرفة اللعب</h2>
+<h2>🏠 غرفة اللعب</h2>
 
-  <div class="grid">
+<div class="grid">
 
-    <div>
-      <input id="name1" maxlength="18" placeholder="اسم اللاعب الأول">
-      <button class="btn blue" onclick="createRoom()">إنشاء غرفة</button>
-    </div>
+<div>
+<input id="name1" maxlength="18" placeholder="اسم اللاعب الأول">
+<button class="btn blue" onclick="createRoom()">إنشاء غرفة</button>
+</div>
 
-    <div>
-      <input id="name2" maxlength="18" placeholder="اسم اللاعب الثاني">
-      <input id="roomInput" maxlength="6" placeholder="كود الغرفة">
-      <button class="btn red" onclick="joinRoom()">دخول لاعب ثاني</button>
-    </div>
+<div>
+<input id="name2" maxlength="18" placeholder="اسم اللاعب الثاني">
+<input id="roomInput" maxlength="6" placeholder="كود الغرفة">
+<button class="btn red" onclick="joinRoom()">دخول لاعب ثاني</button>
+</div>
 
-  </div>
+</div>
 
 </section>
 
@@ -634,283 +671,319 @@ input{
 
 <section id="room" class="hidden">
 
-  <div class="card">
+<div class="card">
 
-    <div class="spread">
+<div class="spread">
 
-      <div>
-        <div class="small">كود الغرفة</div>
-        <div id="roomCode" class="roomCode">------</div>
-      </div>
+<div>
+<div class="small">كود الغرفة</div>
+<div id="roomCode" class="roomCode">------</div>
+</div>
 
-      <span id="role" class="badge">—</span>
+<span id="role" class="badge">—</span>
 
-    </div>
+</div>
 
-    <div id="roomPlayers" class="grid" style="margin-top:12px"></div>
+<div id="roomPlayers" class="grid" style="margin-top:12px"></div>
 
-    <div id="waiting" class="status" style="margin-top:10px">
-      في انتظار اللاعب الثاني...
-    </div>
+<div id="waiting" class="status" style="margin-top:10px">
+في انتظار اللاعب الثاني...
+</div>
 
-    <button id="startBtn" class="btn hidden" onclick="startGame()">
-      ▶️ بدء المزاد
-    </button>
+<button id="startBtn"
+class="btn hidden"
+onclick="startGame()">
+▶️ بدء المزاد
+</button>
 
-  </div>
+</div>
 
 
-  <div id="game" class="hidden">
+<!-- GAME -->
 
-    <div class="arena">
+<div id="game" class="hidden">
 
-      <!-- BLUE -->
+<div class="arena">
 
-      <div class="side blueSide">
 
-        <div>
-          <div class="sideTitle">
-            🔵 <span id="blueName">لاعب 1</span>
-          </div>
+<!-- BLUE -->
 
-          <div id="blueMoney" class="money">200M</div>
-        </div>
+<div class="side blueSide">
 
-        <div id="bluePitch" class="pitch"></div>
+<div class="sideHeader">
 
-      </div>
+<div class="sideTitle">
+🔵 <span id="blueName">لاعب 1</span>
+</div>
 
+<div id="blueMoney" class="money">
+200M
+</div>
 
-      <!-- CENTER -->
+</div>
 
-      <div id="centerArena" class="center">
+<div id="bluePitch" class="pitch">
 
-        <div class="small">
-          ⚡ اللاعب الحالي في المزاد
-        </div>
+<div class="pitchLines"></div>
 
-        <div id="auctionCard" class="auctionCard">
+</div>
 
-          <img id="auctionImg" class="auctionImg" src="">
+</div>
 
-          <div id="auctionName" class="auctionName">—</div>
 
-          <div id="auctionMeta" class="auctionMeta">—</div>
+<!-- CENTER -->
 
-          <div id="auctionPrice" class="price">0M</div>
+<div class="center">
 
-          <div id="turn" class="badge turn">—</div>
+<div class="auctionLabel">
+⚡ اللاعب الحالي في المزاد
+</div>
 
-          <div class="bidGrid">
+<div id="positionProgress" class="positionProgress"></div>
 
-            <input
-              id="bidInput"
-              type="number"
-              min="1"
-              placeholder="أدخل مبلغ المزايدة"
-            >
+<div id="auctionCard" class="fcCard">
 
-            <button
-              id="bidBtn"
-              class="btn"
-              style="margin:0"
-              onclick="makeBid()"
-            >
-              💰 زايد
-            </button>
+<div class="fcTop">
 
-          </div>
+<div>
+<div id="fcRating" class="fcRating">90</div>
+<div id="fcPosition" class="fcPos">GK</div>
+</div>
 
-          <div class="grid">
+<div id="fcCountry" class="fcCountry">
+FC
+</div>
 
-            <button
-              id="passBtn"
-              class="btn dark"
-              onclick="passPlayer()"
-            >
-              ❌ لا أريد
-            </button>
+</div>
 
-            <button
-              id="randomBtn"
-              class="btn dark"
-              onclick="freeRandom()"
-            >
-              🎁 لاعب عشوائي
-            </button>
+<img id="auctionImg" class="fcPhoto" src="">
 
-          </div>
+<div id="auctionName" class="fcName">
+—
+</div>
 
-        </div>
+<div class="fcStats">
 
-      </div>
+<div class="fcStat">
+PAC
+<b id="statPac">90</b>
+</div>
 
+<div class="fcStat">
+SHO
+<b id="statSho">90</b>
+</div>
 
-      <!-- RED -->
+<div class="fcStat">
+PAS
+<b id="statPas">90</b>
+</div>
 
-      <div class="side redSide">
+<div class="fcStat">
+DRI
+<b id="statDri">90</b>
+</div>
 
-        <div>
-          <div class="sideTitle">
-            🔴 <span id="redName">لاعب 2</span>
-          </div>
+<div class="fcStat">
+DEF
+<b id="statDef">90</b>
+</div>
 
-          <div id="redMoney" class="money">200M</div>
-        </div>
+<div class="fcStat">
+PHY
+<b id="statPhy">90</b>
+</div>
 
-        <div id="redPitch" class="pitch"></div>
+</div>
 
-      </div>
+</div>
 
-    </div>
+<div id="auctionMeta" class="badge">
+GK — حارس مرمى
+</div>
 
+<div id="auctionPrice" class="price">
+0M
+</div>
 
-    <!-- COACHES -->
+<div id="turn" class="badge">
+—
+</div>
 
-    <div class="card">
+<div class="bidGrid">
 
-      <div class="spread">
+<input
+id="bidInput"
+type="number"
+min="1"
+placeholder="أدخل مبلغ المزايدة">
 
-        <h3 style="margin:0">
-          🧠 المدربون
-        </h3>
+<button
+id="bidBtn"
+class="btn"
+style="margin:0"
+onclick="makeBid()">
+💰 زايد
+</button>
 
-        <span class="badge">
-          يظهرون بعد اكتمال الفريقين
-        </span>
+</div>
 
-      </div>
+<button
+id="passBtn"
+class="btn dark"
+onclick="passPlayer()">
+❌ لا أريد
+</button>
 
-      <div class="coach" style="margin-top:9px">
+</div>
 
-        <div class="coachBox">
 
-          <img id="myCoachImg">
+<!-- RED -->
 
-          <b id="myCoachName">لم يتم الاختيار</b>
+<div class="side redSide">
 
-          <div id="myCoachRating" class="small">
-            —
-          </div>
+<div class="sideHeader">
 
-        </div>
+<div class="sideTitle">
+🔴 <span id="redName">لاعب 2</span>
+</div>
 
-        <div class="coachBox">
+<div id="redMoney" class="money">
+200M
+</div>
 
-          <img id="oppCoachImg">
+</div>
 
-          <b id="oppCoachName">لم يتم الاختيار</b>
+<div id="redPitch" class="pitch">
 
-          <div id="oppCoachRating" class="small">
-            —
-          </div>
+<div class="pitchLines"></div>
 
-        </div>
+</div>
 
-      </div>
+</div>
 
-    </div>
+</div>
 
 
-    <!-- MATCH -->
+<!-- COACHES -->
 
-    <div class="card">
+<div id="coachCard" class="card hidden">
 
-      <div class="spread">
+<div class="spread">
 
-        <h3 style="margin:0">
-          🏟️ محاكاة المباراة AI
-        </h3>
+<h3 style="margin:0">
+🧠 المدربون
+</h3>
 
-        <button
-          id="simBtn"
-          class="btn"
-          style="width:auto;margin:0"
-          onclick="simulateMatch()"
-        >
-          ⚽ محاكاة
-        </button>
+<span class="badge">
+اختيار عشوائي
+</span>
 
-      </div>
+</div>
 
-      <div id="matchResult" class="result" style="margin-top:10px">
-        عند اكتمال التشكيلتين ستظهر المدربين ويمكن تشغيل المحاكاة.
-      </div>
+<div class="coach" style="margin-top:9px">
 
-    </div>
+<div class="coachBox">
 
+<img id="myCoachImg">
 
-    <!-- LOG -->
+<b id="myCoachName">—</b>
 
-    <div class="card">
+<div id="myCoachRating" class="small">
+—
+</div>
 
-      <h3>📜 سجل المزاد</h3>
+</div>
 
-      <div id="log" class="log"></div>
+<div class="coachBox">
 
-    </div>
+<img id="oppCoachImg">
 
-  </div>
+<b id="oppCoachName">—</b>
+
+<div id="oppCoachRating" class="small">
+—
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MATCH -->
+
+<div id="matchCard" class="card hidden">
+
+<div class="spread">
+
+<h3 style="margin:0">
+🏟️ محاكاة المباراة AI
+</h3>
+
+<button
+id="simBtn"
+class="btn"
+style="width:auto;margin:0"
+onclick="simulateMatch()">
+⚽ محاكاة
+</button>
+
+</div>
+
+<div id="matchResult"
+class="result"
+style="margin-top:10px">
+بعد اكتمال التشكيلتين يمكنك المحاكاة.
+</div>
+
+</div>
+
+
+</div>
 
 </section>
 
 </div>
 
 
-<!-- BID CONFIRM -->
+<!-- CONFIRM MODAL -->
 
-<div id="bidModal" class="modal hidden">
+<div id="modal" class="modal hidden">
 
-  <div class="modalBox">
+<div class="modalBox">
 
-    <div class="modalTitle">
-      💰 تأكيد المزايدة
-    </div>
+<div id="modalTitle" class="modalTitle">
+تأكيد
+</div>
 
-    <div id="bidModalText" class="modalText"></div>
+<div id="modalText" class="modalText">
+—
+</div>
 
-    <button class="okBtn" onclick="confirmBid()">
-      OK
-    </button>
+<div id="modalPlayerCard" class="modalCard hidden">
 
-    <button
-      class="btn dark"
-      style="margin-top:8px"
-      onclick="closeBidModal()"
-    >
-      إلغاء
-    </button>
+<img id="modalPlayerImg">
 
-  </div>
+<b id="modalPlayerName">
+—
+</b>
+
+<div id="modalPlayerPos" class="small">
+—
+</div>
 
 </div>
 
+<button
+id="modalOk"
+class="okBtn"
+onclick="confirmModal()">
+OK
+</button>
 
-<!-- AUCTION RESULT -->
-
-<div id="resultModal" class="modal hidden">
-
-  <div class="modalBox">
-
-    <div id="resultModalTitle" class="modalTitle">
-      ✅ نتيجة المزاد
-    </div>
-
-    <div id="resultModalText" class="modalText"></div>
-
-    <div id="resultPlayerCard"></div>
-
-    <div id="resultTimer" class="timerText"></div>
-
-    <button
-      id="resultOk"
-      class="okBtn"
-      onclick="confirmResult()"
-    >
-      OK
-    </button>
-
-  </div>
+</div>
 
 </div>
 
@@ -925,13 +998,13 @@ input{
 ========================================================= */
 
 const firebaseConfig={
-  apiKey:"AIzaSyAGKh-bNXYBVbv0BcIIxi8IHRZf4A0leSA",
-  authDomain:"fc-auction-online.firebaseapp.com",
-  databaseURL:"https://fc-auction-online-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId:"fc-auction-online",
-  storageBucket:"fc-auction-online.firebasestorage.app",
-  messagingSenderId:"131249827121",
-  appId:"1:131249827121:web:eae71599ef1f8fda28d410"
+apiKey:"AIzaSyAGKh-bNXYBVbv0BcIIxi8IHRZf4A0leSA",
+authDomain:"fc-auction-online.firebaseapp.com",
+databaseURL:"https://fc-auction-online-default-rtdb.europe-west1.firebasedatabase.app",
+projectId:"fc-auction-online",
+storageBucket:"fc-auction-online.firebasestorage.app",
+messagingSenderId:"131249827121",
+appId:"1:131249827121:web:eae71599ef1f8fda28d410"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -945,24 +1018,24 @@ const db=firebase.database();
 
 const fallback=[
 
-["Kylian Mbappe","ST",180],
-["Erling Haaland","ST",180],
-["Vinicius Jr","LW",170],
-["Jude Bellingham","CM",165],
-["Mohamed Salah","RW",155],
-["Harry Kane","ST",150],
-["Kevin De Bruyne","CM",145],
-["Rodri","DM",145],
-["Lamine Yamal","RW",145],
-["Bukayo Saka","RW",140],
-["Jamal Musiala","AM",140],
-["Pedri","CM",135],
-["Valverde","CM",135],
-["Phil Foden","RW",130],
-["Odegaard","AM",130],
-["Cole Palmer","AM",128],
-["Osimhen","ST",125],
-["Lautaro Martinez","ST",125],
+["Kylian Mbappe","CF",180],
+["Erling Haaland","CF",180],
+["Vinicius Jr","LWF",170],
+["Jude Bellingham","CMF",165],
+["Mohamed Salah","RWF",155],
+["Harry Kane","CF",150],
+["Kevin De Bruyne","CMF",145],
+["Rodri","DMF",145],
+["Lamine Yamal","RWF",145],
+["Bukayo Saka","RWF",140],
+["Jamal Musiala","AMF",140],
+["Pedri","CMF",135],
+["Valverde","CMF",135],
+["Phil Foden","RWF",130],
+["Odegaard","AMF",130],
+["Cole Palmer","AMF",128],
+["Osimhen","CF",125],
+["Lautaro Martinez","CF",125],
 ["Saliba","CB",120],
 ["Ruben Dias","CB",118],
 ["Van Dijk","CB",115],
@@ -973,53 +1046,81 @@ const fallback=[
 ["Ederson","GK",105],
 ["Maignan","GK",104],
 
-["Ronaldo Nazario","ST",195],
-["Pele","ST",198],
-["Maradona","AM",197],
-["Zidane","AM",194],
-["Ronaldinho","LW",190],
-["Cruyff","ST",196],
+["Ronaldo Nazario","CF",195],
+["Pele","CF",198],
+["Maradona","AMF",197],
+["Zidane","AMF",194],
+["Ronaldinho","LWF",190],
+["Cruyff","CF",196],
 ["Beckenbauer","CB",195],
-["Platini","AM",192],
-["Garrincha","RW",193],
-["Eusebio","ST",191],
-["Puskas","ST",193],
-["George Best","RW",190],
+["Platini","AMF",192],
+["Garrincha","RWF",193],
+["Eusebio","CF",191],
+["Puskas","CF",193],
+["George Best","RWF",190],
 ["Maldini","CB",188],
-["Kaka","AM",185],
-["Beckham","RM",180],
-["Drogba","ST",180],
-["Eto'o","ST",178],
-["Rivaldo","LW",180],
-["Figo","RW",181],
+["Kaka","AMF",185],
+["Beckham","CMF",180],
+["Drogba","CF",180],
+["Eto'o","CF",178],
+["Rivaldo","LWF",180],
+["Figo","RWF",181],
 ["Casillas","GK",180],
 ["Buffon","GK",182],
 
-["Riyad Mahrez","RW",105],
-["Youcef Belaili","LW",82],
-["Bennacer","CM",100],
-["Feghouli","RW",78],
-["Bounedjah","ST",75],
+["Riyad Mahrez","RWF",105],
+["Youcef Belaili","LWF",82],
+["Bennacer","CMF",100],
+["Feghouli","RWF",78],
+["Bounedjah","CF",75],
 ["Aissa Mandi","CB",72],
-["Amine Gouiri","ST",88],
-["Ismael Bennacer","CM",100]
+["Amine Gouiri","CF",88],
+["Ismael Bennacer","CMF",100]
 
 ].map((x,i)=>({
 
-  id:"p"+i,
+id:"p"+i,
 
-  name:x[0],
+name:x[0],
 
-  position:x[1],
+position:x[1],
 
-  value:x[2],
+value:x[2],
 
-  image:
-    "https://ui-avatars.com/api/?name="+
-    encodeURIComponent(x[0])+
-    "&background=10263b&color=fff&size=256"
+image:""
 
 }));
+
+
+/* =========================================================
+   FIXED FORMATION ORDER
+========================================================= */
+
+const FORMATION=[
+
+{key:"GK",name:"GK",label:"حارس مرمى"},
+
+{key:"RB",name:"RB",label:"ظهير أيمن"},
+
+{key:"CB1",name:"CB",label:"قلب دفاع"},
+
+{key:"CB2",name:"CB",label:"قلب دفاع"},
+
+{key:"LB",name:"LB",label:"ظهير أيسر"},
+
+{key:"DMF",name:"DMF",label:"محور دفاعي"},
+
+{key:"CMF",name:"CMF",label:"وسط"},
+
+{key:"AMF",name:"AMF",label:"وسط هجومي"},
+
+{key:"RWF",name:"RWF",label:"جناح أيمن"},
+
+{key:"LWF",name:"LWF",label:"جناح أيسر"},
+
+{key:"CF",name:"CF",label:"مهاجم"},
+
+];
 
 
 /* =========================================================
@@ -1065,98 +1166,26 @@ const coachNames=[
 
 
 /* =========================================================
-   FORMATION
-========================================================= */
-
-const FORMATION=[
-
-  {id:"GK",  label:"GK",  x:50,y:91},
-
-  {id:"RB",  label:"RB",  x:82,y:75},
-  {id:"CB1", label:"CB",  x:61,y:78},
-  {id:"CB2", label:"CB",  x:39,y:78},
-  {id:"LB",  label:"LB",  x:18,y:75},
-
-  {id:"DMF", label:"DMF", x:50,y:64},
-
-  {id:"CMF", label:"CMF", x:50,y:49},
-
-  {id:"AMF", label:"AMF", x:50,y:35},
-
-  {id:"RWF", label:"RWF", x:79,y:20},
-  {id:"LWF", label:"LWF", x:21,y:20},
-
-  {id:"CF",  label:"CF",  x:50,y:13}
-
-];
-
-
-/* =========================================================
-   POSITION MAPPING
-========================================================= */
-
-function normalizePosition(pos){
-
-  pos=String(pos||"").toUpperCase();
-
-  if(pos==="ST" || pos==="CF")return"CF";
-  if(pos==="RW" || pos==="RM")return"RWF";
-  if(pos==="LW" || pos==="LM")return"LWF";
-  if(pos==="AM")return"AMF";
-  if(pos==="CM")return"CMF";
-  if(pos==="DM")return"DMF";
-
-  if(pos==="RB")return"RB";
-  if(pos==="LB")return"LB";
-  if(pos==="CB")return"CB";
-  if(pos==="GK")return"GK";
-
-  return"CMF";
-}
-
-
-function compatibleSlots(player){
-
-  const p=normalizePosition(player.position);
-
-  if(p==="GK")return["GK"];
-
-  if(p==="RB")return["RB","CB1","CB2"];
-  if(p==="LB")return["LB","CB1","CB2"];
-
-  if(p==="CB")return["CB1","CB2","DMF"];
-
-  if(p==="DMF")return["DMF","CMF"];
-
-  if(p==="CMF")return["CMF","DMF","AMF"];
-
-  if(p==="AMF")return["AMF","CMF","CF"];
-
-  if(p==="RWF")return["RWF","CF","AMF"];
-
-  if(p==="LWF")return["LWF","CF","AMF"];
-
-  if(p==="CF")return["CF","AMF","RWF","LWF"];
-
-  return["CMF"];
-}
-
-
-/* =========================================================
-   HELPERS
+   PLAYER ID
 ========================================================= */
 
 let playerId=localStorage.getItem("fc_auction_id");
 
 if(!playerId){
 
-  playerId=
-    "p_"+
-    Math.random().toString(36).slice(2)+
-    Date.now();
+playerId=
+"p_"+
+Math.random().toString(36).slice(2)+
+Date.now();
 
-  localStorage.setItem("fc_auction_id",playerId);
+localStorage.setItem("fc_auction_id",playerId);
+
 }
+
+
+/* =========================================================
+   STATE
+========================================================= */
 
 let roomRef=null;
 let roomCode="";
@@ -1164,85 +1193,127 @@ let side="";
 let host=false;
 let room=null;
 
-let pendingBidAmount=0;
-let resultConfirmed=false;
-let localResultId=null;
-let auctionTimer=null;
-let resultTimer=null;
+let modalAction=null;
+let modalBusy=false;
 
+
+/* =========================================================
+   HELPERS
+========================================================= */
 
 const $=id=>document.getElementById(id);
 
-
 function toast(x){
 
-  $("toast").textContent=x;
+$("toast").textContent=x;
 
-  $("toast").style.display="block";
+$("toast").style.display="block";
 
-  clearTimeout(window.tt);
+clearTimeout(window.tt);
 
-  window.tt=setTimeout(
-    ()=>$("toast").style.display="none",
-    2500
-  );
+window.tt=setTimeout(()=>{
+
+$("toast").style.display="none";
+
+},2500);
+
 }
-
 
 function clean(x){
 
-  return String(x||"")
-    .trim()
-    .replace(/[.#$[\]/]/g,"")
-    .slice(0,18);
-}
+return String(x||"")
+.trim()
+.replace(/[.#$[\]/]/g,"")
+.slice(0,18);
 
+}
 
 function esc(x){
 
-  return String(x??"").replace(
-    /[&<>"']/g,
-    m=>({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-    }[m])
-  );
+return String(x??"")
+.replace(/[&<>"']/g,m=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[m]));
+
 }
-
-
-function avatar(n){
-
-  return "https://ui-avatars.com/api/?name="+
-    encodeURIComponent(n)+
-    "&background=10263b&color=fff&size=256";
-}
-
 
 function shuffle(a){
 
-  return [...a].sort(()=>Math.random()-.5);
-}
+return [...a].sort(()=>Math.random()-.5);
 
+}
 
 function pick(a){
 
-  return a[Math.floor(Math.random()*a.length)];
+return a[Math.floor(Math.random()*a.length)];
+
+}
+
+function avatar(n){
+
+return "https://ui-avatars.com/api/?name="+
+encodeURIComponent(n)+
+"&background=10263b&color=fff&size=256";
+
 }
 
 
+/* =========================================================
+   GET REAL PLAYER PHOTO FROM WIKIPEDIA
+========================================================= */
+
+async function getPlayerImage(name){
+
+try{
+
+const url=
+"https://en.wikipedia.org/api/rest_v1/page/summary/"+
+encodeURIComponent(name.replace(/ /g,"_"));
+
+const res=await fetch(url);
+
+if(!res.ok)return avatar(name);
+
+const data=await res.json();
+
+return data.thumbnail?.source ||
+data.originalimage?.source ||
+avatar(name);
+
+}catch(e){
+
+return avatar(name);
+
+}
+
+}
+
+
+/* =========================================================
+   CREATE COACH
+========================================================= */
+
 function coach(n){
 
-  return{
-    name:n,
-    rating:65+Math.floor(Math.random()*36),
-    image:
-      "https://ui-avatars.com/api/?name="+
-      encodeURIComponent(n)+
-      "&background=17334b&color=fff&size=256"
-  };
+return{
+
+name:n,
+
+rating:
+65+
+Math.floor(Math.random()*36),
+
+image:
+avatar(n)
+
+};
+
 }
 
 
@@ -1252,15 +1323,16 @@ function coach(n){
 
 db.ref(".info/connected").on("value",s=>{
 
-  const on=s.val()===true;
+let on=s.val()===true;
 
-  $("status").textContent=
-    on
-      ?"متصل بقاعدة البيانات ✅"
-      :"غير متصل بقاعدة البيانات ⚠️";
+$("status").textContent=
+on
+?"متصل بقاعدة البيانات ✅"
+:"غير متصل بقاعدة البيانات ⚠️";
 
-  $("status").className=
-    "status "+(on?"online":"error");
+$("status").className=
+"status "+
+(on?"online":"error");
 
 });
 
@@ -1271,141 +1343,129 @@ db.ref(".info/connected").on("value",s=>{
 
 async function createRoom(){
 
-  const n=clean($("name1").value);
+let n=clean($("name1").value);
 
-  if(!n)
-    return toast("اكتب اسم اللاعب الأول");
+if(!n)
+return toast("اكتب اسم اللاعب الأول");
 
-  let c=
-    Math.random()
-      .toString(36)
-      .slice(2,8)
-      .toUpperCase();
+let c=
+Math.random()
+.toString(36)
+.slice(2,8)
+.toUpperCase();
 
-  while(
-    (await db.ref("rooms/"+c).once("value")).exists()
-  ){
+while(
+(await db.ref("rooms/"+c).once("value")).exists()
+){
 
-    c=
-      Math.random()
-        .toString(36)
-        .slice(2,8)
-        .toUpperCase();
-  }
+c=
+Math.random()
+.toString(36)
+.slice(2,8)
+.toUpperCase();
 
-  roomCode=c;
-  side="blue";
-  host=true;
+}
 
-  roomRef=db.ref("rooms/"+c);
+roomCode=c;
+side="blue";
+host=true;
 
-  await roomRef.set({
+roomRef=db.ref("rooms/"+c);
 
-    status:"waiting",
+await roomRef.set({
 
-    hostId:playerId,
+status:"waiting",
 
-    players:{
+hostId:playerId,
 
-      blue:{
-        id:playerId,
-        name:n,
-        budget:200,
-        team:[]
-      },
+players:{
 
-      red:null
+blue:{
+id:playerId,
+name:n,
+budget:200,
+team:{}
+},
 
-    },
+red:null
 
-    pool:[],
+},
 
-    used:[],
+pool:[],
 
-    recent:[],
+used:[],
 
-    auction:null,
+auction:null,
 
-    turn:"blue",
+turn:"blue",
 
-    coaches:{
-      blue:null,
-      red:null
-    },
+positionIndex:0,
 
-    match:null,
+coaches:{
+blue:null,
+red:null
+},
 
-    resultPopup:null,
+match:null
 
-    logs:[
-      {
-        text:"تم إنشاء الغرفة."
-      }
-    ]
+});
 
-  });
+listen();
 
-  listen();
+showRoom();
 
-  showRoom();
 }
 
 
 /* =========================================================
-   JOIN ROOM
+   JOIN
 ========================================================= */
 
 async function joinRoom(){
 
-  const n=clean($("name2").value);
+let n=clean($("name2").value);
 
-  const c=
-    clean($("roomInput").value)
-      .toUpperCase();
+let c=
+clean($("roomInput").value)
+.toUpperCase();
 
-  if(!n||!c)
-    return toast("أكمل البيانات");
+if(!n||!c)
+return toast("أكمل البيانات");
 
-  const ref=db.ref("rooms/"+c);
+let ref=db.ref("rooms/"+c);
 
-  const s=await ref.once("value");
+let s=await ref.once("value");
 
-  if(!s.exists())
-    return toast("الغرفة غير موجودة");
+if(!s.exists())
+return toast("الغرفة غير موجودة");
 
-  if(s.val().players?.red)
-    return toast("الغرفة ممتلئة");
+if(s.val().players?.red)
+return toast("الغرفة ممتلئة");
 
-  roomCode=c;
-  side="red";
-  host=false;
-  roomRef=ref;
+roomCode=c;
+side="red";
+host=false;
+roomRef=ref;
 
-  await ref.child("players/red").set({
+await ref.child("players/red").set({
 
-    id:playerId,
-    name:n,
-    budget:200,
-    team:[]
+id:playerId,
+name:n,
+budget:200,
+team:{}
 
-  });
+});
 
-  await ref.update({
+await ref.update({
 
-    status:"ready",
+status:"ready"
 
-    logs:[
-      ...(s.val().logs||[]),
-      {
-        text:n+" دخل الغرفة."
-      }
-    ]
+});
 
-  });
+listen();
 
-  listen();
+showRoom();
 
-  showRoom();
 }
 
 
@@ -1415,21 +1475,17 @@ async function joinRoom(){
 
 function listen(){
 
-  roomRef.off("value");
+roomRef.off("value");
 
-  roomRef.on("value",s=>{
+roomRef.on("value",s=>{
 
-    room=s.val();
+room=s.val();
 
-    if(room){
+if(room)
+render();
 
-      render();
+});
 
-      scheduleTimers();
-
-    }
-
-  });
 }
 
 
@@ -1439,173 +1495,192 @@ function listen(){
 
 function showRoom(){
 
-  $("home").classList.add("hidden");
+$("home").classList.add("hidden");
 
-  $("room").classList.remove("hidden");
+$("room").classList.remove("hidden");
 
-  $("roomCode").textContent=roomCode;
+$("roomCode").textContent=roomCode;
 
-  $("role").textContent=
-    host
-      ?"👑 المضيف"
-      :"👤 اللاعب الثاني";
-}
-
-
-/* =========================================================
-   RENDER ROOM
-========================================================= */
-
-function render(){
-
-  const b=room.players?.blue;
-  const r=room.players?.red;
-
-  const ready=!!(b&&r);
-
-  $("roomPlayers").innerHTML=`
-
-    <div class="card" style="margin:0">
-      🔵 <b>${esc(b?.name||"في الانتظار")}</b>
-    </div>
-
-    <div class="card" style="margin:0">
-      🔴 <b>${esc(r?.name||"في الانتظار")}</b>
-    </div>
-
-  `;
-
-  $("waiting").textContent=
-    ready
-      ?"اللاعبان جاهزان ✅"
-      :"في انتظار اللاعب الثاني...";
-
-  $("startBtn").classList.toggle(
-    "hidden",
-    !(host&&ready&&room.status!=="playing")
-  );
-
-  if(
-    room.status==="playing" ||
-    room.status==="finished"
-  ){
-
-    $("game").classList.remove("hidden");
-
-    renderGame();
-
-  }
+$("role").textContent=
+host
+?"👑 المضيف"
+:"👤 اللاعب الثاني";
 
 }
 
 
 /* =========================================================
-   NEW AUCTION
-========================================================= */
-
-function newAuction(p){
-
-  return{
-
-    player:p,
-
-    price:0,
-
-    highestSide:null,
-
-    highestName:null,
-
-    active:true,
-
-    locked:false,
-
-    lockedBy:null,
-
-    nextTurnAt:0,
-
-    passes:{
-      blue:false,
-      red:false
-    }
-
-  };
-
-}
-
-
-/* =========================================================
-   CHOOSE PLAYER
-========================================================= */
-
-function choose(pool,used,recent){
-
-  let a=pool.filter(
-    p=>
-      !used.includes(p.id) &&
-      !recent.includes(p.id)
-  );
-
-  if(!a.length){
-
-    a=pool.filter(
-      p=>!used.includes(p.id)
-    );
-
-  }
-
-  if(!a.length)
-    a=pool;
-
-  return pick(a);
-}
-
-
-/* =========================================================
-   START GAME
+   START
 ========================================================= */
 
 async function startGame(){
 
-  if(!host||!room.players?.red)
-    return;
+if(!host||!room.players?.red)
+return;
 
-  let pool=shuffle(fallback);
+let pool=shuffle(fallback);
 
-  let first=choose(pool,[],[]);
+let coachesPool=shuffle(coachNames);
 
-  await roomRef.update({
+await roomRef.update({
 
-    status:"playing",
+status:"playing",
 
-    pool,
+pool,
 
-    used:[],
+used:[],
 
-    recent:[],
+positionIndex:0,
 
-    coaches:{
-      blue:null,
-      red:null
-    },
+turn:"blue",
 
-    auction:newAuction(first),
+auction:null,
 
-    turn:"blue",
+coaches:{
 
-    resultPopup:null,
+blue:coach(coachesPool[0]),
+red:coach(coachesPool[1])
 
-    match:null,
+},
 
-    logs:[
-      ...(room.logs||[]),
-      {
-        text:
-          "🎲 بدأ المزاد — أول لاعب: "+
-          first.name
-      }
-    ]
+match:null
 
-  });
+});
+
+setTimeout(()=>{
+
+startNextAuction();
+
+},300);
+
+}
+
+
+/* =========================================================
+   GET POSITION
+========================================================= */
+
+function currentPosition(){
+
+let index=Number(room?.positionIndex||0);
+
+return FORMATION[index];
+
+}
+
+
+/* =========================================================
+   PLAYERS FOR POSITION
+========================================================= */
+
+function playersForPosition(position){
+
+return (room.pool||[])
+.filter(p=>p.position===position);
+
+}
+
+
+/* =========================================================
+   RANDOM SAME POSITION
+========================================================= */
+
+function randomSamePosition(position){
+
+let list=
+playersForPosition(position)
+.filter(p=>
+!(room.used||[]).includes(p.id)
+);
+
+if(!list.length){
+
+list=
+playersForPosition(position);
+
+}
+
+return pick(list);
+
+}
+
+
+/* =========================================================
+   START NEXT AUCTION
+========================================================= */
+
+async function startNextAuction(){
+
+if(!room||room.status!=="playing")
+return;
+
+let index=Number(room.positionIndex||0);
+
+if(index>=FORMATION.length){
+
+await finishTeams();
+
+return;
+
+}
+
+let pos=FORMATION[index];
+
+let candidates=
+playersForPosition(pos.name);
+
+if(!candidates.length){
+
+toast("لا يوجد لاعب لهذا المركز");
+
+return;
+
+}
+
+let used=
+room.used||[];
+
+let available=
+candidates.filter(p=>!used.includes(p.id));
+
+if(!available.length){
+
+available=candidates;
+
+}
+
+let player=pick(available);
+
+let image=await getPlayerImage(player.name);
+
+player={
+...player,
+image
+};
+
+let auction={
+
+player,
+
+position:pos.name,
+
+price:0,
+
+highestSide:null,
+
+highestName:null,
+
+active:true
+
+};
+
+await roomRef.update({
+
+auction,
+
+turn:"blue"
+
+});
 
 }
 
@@ -1616,744 +1691,641 @@ async function startGame(){
 
 async function makeBid(){
 
-  if(
-    !room?.auction?.active ||
-    room.auction.locked
-  )
-    return toast("انتظر انتهاء العملية الحالية");
+if(!room?.auction?.active)
+return;
 
-  if(room.turn!==side)
-    return toast("ليس دورك");
+if(room.turn!==side)
+return toast("ليس دورك");
 
-  const me=room.players[side];
+let me=room.players[side];
 
-  const amount=
-    Number($("bidInput").value);
+let amount=
+Number($("bidInput").value);
 
-  if(
-    !Number.isFinite(amount) ||
-    amount<=Number(room.auction.price||0)
-  ){
+if(
+!Number.isFinite(amount)||
+amount<=Number(room.auction.price||0)
+)
+return toast("المبلغ لازم يكون أكبر من السعر الحالي");
 
-    return toast(
-      "المبلغ لازم يكون أكبر من السعر الحالي"
-    );
+if(amount>me.budget)
+return toast("رصيدك لا يكفي");
 
-  }
+if(Object.keys(me.team||{}).length>=11)
+return toast("اكتمل فريقك");
 
-  if(amount>me.budget)
-    return toast("رصيدك لا يكفي");
+let nextSide=
+side==="blue"
+?"red"
+:"blue";
 
-  if((me.team||[]).length>=11)
-    return toast("اكتمل فريقك");
+/*
+   المزايدة لا تنتقل مباشرة.
+   اللاعب يضغط OK ثم ننتظر 4 ثواني.
+*/
 
-  pendingBidAmount=amount;
+await roomRef.update({
 
-  $("bidModalText").innerHTML=
-    `
-    ${esc(me.name)}
-    <br>
-    ستزايد على
-    <b>${esc(room.auction.player.name)}</b>
-    <br>
-    بمبلغ
-    <strong style="color:#54efae;font-size:22px">
-      ${amount}M
-    </strong>
-    `;
+auction:{
 
-  $("bidModal").classList.remove("hidden");
+...room.auction,
+
+price:amount,
+
+highestSide:side,
+
+highestName:me.name
+
+},
+
+turn:side
+
+});
+
+$("bidInput").value="";
+
+showBidConfirm(
+me.name,
+room.auction.player,
+amount,
+nextSide
+);
 
 }
 
 
 /* =========================================================
-   CONFIRM BID
+   BID CONFIRM
 ========================================================= */
 
-async function confirmBid(){
+function showBidConfirm(name,player,amount,nextSide){
 
-  $("bidModal").classList.add("hidden");
+modalAction={
 
-  if(
-    !room?.auction?.active ||
-    room.auction.locked ||
-    room.turn!==side
-  )
-    return;
+type:"bid",
 
-  const me=room.players[side];
+nextSide,
 
-  const amount=pendingBidAmount;
+player,
 
-  if(amount>me.budget)
-    return toast("رصيدك لم يعد يكفي");
+amount
 
-  const nextTurnAt=
-    Date.now()+4000;
+};
 
-  const auction={
+$("modalTitle").textContent="💰 تأكيد المزايدة";
 
-    ...room.auction,
+$("modalText").innerHTML=
+"<b>"+esc(name)+"</b> زايد بـ <b>"+
+amount+
+"M</b><br><br>"+
+"اضغط OK لتأكيد المزايدة.<br>"+
+"بعد التأكيد ينتظر 4 ثواني قبل دور اللاعب الآخر.";
 
-    price:amount,
+$("modalPlayerCard").classList.remove("hidden");
 
-    highestSide:side,
+$("modalPlayerImg").src=
+player.image||avatar(player.name);
 
-    highestName:me.name,
+$("modalPlayerName").textContent=
+player.name;
 
-    locked:true,
+$("modalPlayerPos").textContent=
+player.position;
 
-    lockedBy:side,
-
-    nextTurnAt,
-
-    passes:{
-      blue:false,
-      red:false
-    }
-
-  };
-
-  await roomRef.update({
-
-    auction,
-
-    logs:[
-      ...(room.logs||[]),
-      {
-        text:
-          me.name+
-          " زايد "+
-          amount+
-          "M على "+
-          room.auction.player.name
-    }
-    ]
-
-  });
-
-  $("bidInput").value="";
+$("modal").classList.remove("hidden");
 
 }
 
 
 /* =========================================================
-   CLOSE BID
-========================================================= */
-
-function closeBidModal(){
-
-  $("bidModal").classList.add("hidden");
-
-}
-
-
-/* =========================================================
-   4 SECOND TURN TIMER
-========================================================= */
-
-function scheduleTimers(){
-
-  clearTimeout(auctionTimer);
-
-  if(
-    host &&
-    room?.auction?.locked &&
-    room.auction.nextTurnAt
-  ){
-
-    const wait=
-      Math.max(
-        0,
-        Number(room.auction.nextTurnAt)-Date.now()
-      );
-
-    auctionTimer=setTimeout(
-      releaseTurn,
-      wait+50
-    );
-
-  }
-
-}
-
-
-async function releaseTurn(){
-
-  if(
-    !host ||
-    !room?.auction?.locked
-  )
-    return;
-
-  const auction=room.auction;
-
-  const other=
-    auction.lockedBy==="blue"
-      ?"red"
-      :"blue";
-
-  const updated={
-    ...auction,
-    locked:false,
-    lockedBy:null,
-    nextTurnAt:0
-  };
-
-  await roomRef.update({
-
-    auction:updated,
-
-    turn:other,
-
-    logs:[
-      ...(room.logs||[]),
-      {
-        text:
-          "🎯 الآن دور "+
-          room.players[other].name+
-          " للمزايدة."
-      }
-    ]
-
-  });
-
-}
-
-
-/* =========================================================
-   PASS / NO I WANT
+   PASS
 ========================================================= */
 
 async function passPlayer(){
 
-  if(
-    !room?.auction?.active ||
-    room.auction.locked
-  )
-    return toast("انتظر انتهاء العملية الحالية");
+if(!room?.auction?.active)
+return;
 
-  if(room.turn!==side)
-    return toast("ليس دورك");
+if(room.turn!==side)
+return toast("ليس دورك");
 
-  const auction=room.auction;
+let opponent=
+side==="blue"
+?"red"
+:"blue";
 
-  const current=auction.player;
+let a=room.auction;
 
-  const other=
-    side==="blue"
-      ?"red"
-      :"blue";
+/*
+   إذا كان الخصم زايد بالفعل:
+   الرافض يأخذ لاعب عشوائي من نفس المركز.
+   واللاعب صاحب المزايدة يأخذ اللاعب الموجود.
+*/
 
-  /*
-    إذا كان هناك مزايد:
-    الشخص الذي قال لا أريد يأخذ لاعب عشوائي
-    والمزايد يأخذ اللاعب الحالي بالسعر الأخير.
-  */
+if(a.highestSide && a.highestSide!==side){
 
-  if(auction.highestSide){
+await giveRandomToPasser(side);
 
-    const winner=auction.highestSide;
+return;
 
-    await awardWinnerAndRandomLoser(
-      winner,
-      side,
-      auction.price
-    );
+}
 
-    return;
-  }
+/*
+   إذا لا توجد مزايدة:
+   اللاعب الذي قال لا أريد يأخذ لاعب عشوائي
+   ثم ينتقل الدور.
+*/
 
-
-  /*
-    لا توجد أي مزايدة:
-    أول شخص يقول لا أريد يأخذ لاعباً عشوائياً
-    واللاعب الحالي لا يتم شراؤه.
-  */
-
-  const randomPlayer=
-    choose(
-      room.pool,
-      room.used||[],
-      room.recent||[]
-    );
-
-  if(!randomPlayer)
-    return;
-
-  const me=room.players[side];
-
-  const team=
-    addPlayerToTeam(
-      me.team||[],
-      randomPlayer
-    );
-
-  const used=[
-    ...(room.used||[]),
-    randomPlayer.id
-  ];
-
-  await roomRef.update({
-
-    ["players/"+side]:{
-      ...me,
-      team
-    },
-
-    used,
-
-    recent:[
-      current.id,
-      randomPlayer.id
-    ],
-
-    auction:null,
-
-    logs:[
-      ...(room.logs||[]),
-      {
-        text:
-          me.name+
-          " قال لا أريد "+current.name+
-          " — 🎁 أخذ "+randomPlayer.name+
-          " عشوائياً."
-      }
-    ],
-
-    resultPopup:{
-
-      id:"res_"+Date.now(),
-
-      type:"randomOnly",
-
-      loser:side,
-
-      loserName:me.name,
-
-      currentPlayer:current,
-
-      randomPlayer,
-
-      createdAt:Date.now()
-
-    }
-
-  });
+await giveRandomToPasser(side);
 
 }
 
 
 /* =========================================================
-   WINNER + RANDOM LOSER
+   RANDOM PLAYER TO PASSER
 ========================================================= */
 
-async function awardWinnerAndRandomLoser(
-  winner,
-  loser,
-  price
+async function giveRandomToPasser(receiver){
+
+let a=room.auction;
+
+let position=a.position;
+
+let randomPlayer=
+randomSamePosition(position);
+
+if(!randomPlayer)
+return toast("لا يوجد لاعب عشوائي لهذا المركز");
+
+let me=room.players[receiver];
+
+let team={
+...(me.team||{})
+};
+
+let slotKey=
+getSlotKeyForPosition(position,team);
+
+team[slotKey]=randomPlayer;
+
+let used=[
+...(room.used||[]),
+a.player.id,
+randomPlayer.id
+];
+
+let opponent=
+receiver==="blue"
+?"red"
+:"blue";
+
+/*
+   إذا كان الخصم قد زايد:
+   الخصم يأخذ اللاعب الأصلي.
+*/
+
+if(
+a.highestSide &&
+a.highestSide!==receiver
 ){
 
-  const current=room.auction.player;
+let winner=
+room.players[a.highestSide];
 
-  const winnerObj=room.players[winner];
+let winnerTeam={
+...(winner.team||{})
+};
 
-  const loserObj=room.players[loser];
+let winnerSlot=
+getSlotKeyForPosition(position,winnerTeam);
 
-  const randomPlayer=
-    choose(
-      room.pool,
-      room.used||[],
-      room.recent||[]
-    );
+winnerTeam[winnerSlot]=a.player;
 
-  if(!randomPlayer)
-    return;
+await roomRef.update({
 
-  const winnerTeam=
-    addPlayerToTeam(
-      winnerObj.team||[],
-      current
-    );
+["players/"+receiver+"/team"]:team,
 
-  const loserTeam=
-    addPlayerToTeam(
-      loserObj.team||[],
-      randomPlayer
-    );
+["players/"+a.highestSide+"/team"]:winnerTeam,
 
-  const used=[
-    ...(room.used||[]),
-    current.id,
-    randomPlayer.id
-  ];
+used,
 
-  await roomRef.update({
+auction:null,
 
-    ["players/"+winner]:{
+turn:opponent,
 
-      ...winnerObj,
+positionIndex:
+Number(room.positionIndex||0)+1
 
-      budget:
-        winnerObj.budget-
-        Number(price),
+});
 
-      team:winnerTeam
+showRandomReceived(
+me.name,
+randomPlayer,
+position
+);
 
-    },
+return;
 
-    ["players/"+loser]:{
+}
 
-      ...loserObj,
 
-      team:loserTeam
+/*
+   لا توجد مزايدة:
+   اللاعب يأخذ random.
+*/
 
-    },
+await roomRef.update({
 
-    used,
+["players/"+receiver+"/team"]:team,
 
-    recent:[
-      current.id,
-      randomPlayer.id
-    ],
+used,
 
-    auction:null,
+auction:null,
 
-    logs:[
+turn:opponent,
 
-      ...(room.logs||[]),
+positionIndex:
+Number(room.positionIndex||0)+1
 
-      {
-        text:
-          winnerObj.name+
-          " أخذ "+
-          current.name+
-          " بـ "+
-          price+
-          "M."
-      },
+});
 
-      {
-        text:
-          loserObj.name+
-          " قال لا أريد — 🎁 أخذ "+
-          randomPlayer.name+
-          " عشوائياً."
-      }
-
-    ],
-
-    resultPopup:{
-
-      id:"res_"+Date.now(),
-
-      type:"winnerRandom",
-
-      winner,
-
-      loser,
-
-      winnerName:winnerObj.name,
-
-      loserName:loserObj.name,
-
-      currentPlayer:current,
-
-      randomPlayer,
-
-      price,
-
-      createdAt:Date.now()
-
-    }
-
-  });
+showRandomReceived(
+me.name,
+randomPlayer,
+position
+);
 
 }
 
 
 /* =========================================================
-   RANDOM BUTTON
+   SLOT KEY
 ========================================================= */
 
-async function freeRandom(){
+function getSlotKeyForPosition(position,team){
 
-  if(
-    !room?.auction?.active ||
-    room.auction.locked
-  )
-    return toast("انتظر انتهاء العملية الحالية");
+if(position==="CB"){
 
-  if(room.turn!==side)
-    return toast("ليس دورك");
+if(!team.CB1)
+return "CB1";
 
-  await passPlayer();
+if(!team.CB2)
+return "CB2";
+
+return "CB1";
+
+}
+
+return position;
 
 }
 
 
 /* =========================================================
-   ADD PLAYER TO CORRECT FORMATION POSITION
+   RANDOM RECEIVED MODAL
 ========================================================= */
 
-function addPlayerToTeam(team,player){
+function showRandomReceived(name,player,position){
 
-  const list=[...(team||[])];
+modalAction={
 
-  if(list.length>=11)
-    return list;
+type:"random",
 
-  const usedSlots=
-    list
-      .map(p=>p.slot)
-      .filter(Boolean);
+player,
 
-  const possible=
-    compatibleSlots(player);
+position
 
-  let slot=null;
+};
 
-  for(const wanted of possible){
+$("modalTitle").textContent=
+"🎁 لاعب عشوائي";
 
-    if(!usedSlots.includes(wanted)){
+$("modalText").innerHTML=
+"<b>"+esc(name)+
+"</b> أخذ لاعبًا عشوائيًا من مركز <b>"+
+position+
+"</b>.";
 
-      slot=wanted;
+$("modalPlayerCard").classList.remove("hidden");
 
-      break;
-    }
+$("modalPlayerImg").src=
+player.image||avatar(player.name);
 
-  }
+$("modalPlayerName").textContent=
+player.name;
 
-  /*
-    إذا المركز الأصلي ممتلئ:
-    ضع اللاعب في أول مركز فارغ.
-  */
+$("modalPlayerPos").textContent=
+position;
 
-  if(!slot){
-
-    const free=
-      FORMATION.find(
-        x=>!usedSlots.includes(x.id)
-      );
-
-    if(free)
-      slot=free.id;
-
-  }
-
-  if(!slot)
-    return list;
-
-  return[
-    ...list,
-    {
-      ...player,
-      slot
-    }
-  ];
+$("modal").classList.remove("hidden");
 
 }
 
 
 /* =========================================================
-   NEXT AUCTION AFTER RESULT
+   MODAL OK
 ========================================================= */
 
-function scheduleResult(){
+function confirmModal(){
 
-  clearTimeout(resultTimer);
+if(modalBusy||!modalAction)
+return;
 
-  if(!host)
-    return;
+modalBusy=true;
 
-  resultTimer=setTimeout(
-    async()=>{
+let action=modalAction;
 
-      if(
-        !room ||
-        room.auction ||
-        !room.resultPopup
-      )
-        return;
+$("modal").classList.add("hidden");
 
-      const b=room.players.blue;
-      const r=room.players.red;
+modalAction=null;
 
-      if(
-        b.team.length>=11 &&
-        r.team.length>=11
-      ){
+if(action.type==="bid"){
 
-        await finishTeams();
+/*
+   OK للمزايدة:
+   ننتظر 4 ثواني ثم نعطي الدور للخصم.
+*/
 
-        return;
-      }
+setTimeout(async()=>{
 
-      const p=
-        choose(
-          room.pool,
-          room.used||[],
-          room.recent||[]
-        );
+if(!room?.auction?.active){
 
-      if(!p)
-        return;
+modalBusy=false;
 
-      await roomRef.update({
+return;
 
-        auction:newAuction(p),
+}
 
-        turn:
-          room.turn ||
-          "blue",
+let next=
+action.nextSide;
 
-        resultPopup:null,
+await roomRef.update({
 
-        logs:[
-          ...(room.logs||[]),
-          {
-            text:
-              "⚡ لاعب جديد ظهر في المزاد: "+
-              p.name
-          }
-        ]
+turn:next
 
-      });
+});
 
-    },
-    2500
-  );
+modalBusy=false;
+
+},4000);
+
+return;
+
+}
+
+if(action.type==="random"){
+
+/*
+   OK لاستلام اللاعب العشوائي.
+   ننتظر 2.5 ثانية ثم يبدأ اللاعب التالي.
+*/
+
+setTimeout(async()=>{
+
+modalBusy=false;
+
+if(!room)
+return;
+
+let index=
+Number(room.positionIndex||0);
+
+if(index>=FORMATION.length){
+
+await finishTeams();
+
+return;
+
+}
+
+await startNextAuction();
+
+},2500);
+
+}
 
 }
 
 
 /* =========================================================
-   RESULT CONFIRM OK
+   RENDER ROOM
 ========================================================= */
 
-async function confirmResult(){
+function render(){
 
-  if(!room?.resultPopup)
-    return;
+let b=room.players?.blue;
 
-  resultConfirmed=true;
+let r=room.players?.red;
 
-  $("resultModal").classList.add("hidden");
+let ready=!!(b&&r);
 
-  if(host){
+$("roomPlayers").innerHTML=`
 
-    await roomRef.update({
+<div class="card" style="margin:0">
+🔵 <b>${esc(b?.name||"في الانتظار")}</b>
+</div>
 
-      resultPopup:{
-        ...room.resultPopup,
-        confirmed:true
-      }
+<div class="card" style="margin:0">
+🔴 <b>${esc(r?.name||"في الانتظار")}</b>
+</div>
 
-    });
+`;
 
-    scheduleResult();
+$("waiting").textContent=
+ready
+?"اللاعبان جاهزان ✅"
+:"في انتظار اللاعب الثاني...";
 
-  }
+$("startBtn").classList.toggle(
+"hidden",
+!(host&&ready&&room.status!=="playing")
+);
+
+if(room.status==="playing"){
+
+$("game").classList.remove("hidden");
+
+renderGame();
+
+}
+
+if(room.status==="finished"){
+
+$("game").classList.remove("hidden");
+
+renderGame();
+
+}
 
 }
 
 
 /* =========================================================
-   RENDER RESULT POPUP
+   TEAM HTML
 ========================================================= */
 
-function renderResultPopup(){
+function teamPlayer(team,key){
 
-  const r=room?.resultPopup;
+return team?.[key]||null;
 
-  if(!r)
-    return;
+}
 
-  if(localResultId===r.id)
-    return;
+function slotHTML(position,player){
 
-  localResultId=r.id;
+return `
 
-  resultConfirmed=false;
+<div class="position pos-${position.key}">
 
-  clearInterval(resultTimer);
+<span class="positionName">
+${position.name}
+</span>
 
-  $("resultTimer").textContent="";
+<div class="playerSlot">
 
-  if(r.type==="winnerRandom"){
+${
+player
+?
+`
+<img src="${player.image||avatar(player.name)}">
+<b>${esc(player.name)}</b>
+`
+:
+`
+<div class="emptySlot">
+فارغ
+</div>
+`
+}
 
-    $("resultModalTitle").textContent=
-      "🏆 نتيجة المزايدة";
+</div>
 
-    $("resultModalText").innerHTML=
-      `
-      <b>${esc(r.winnerName)}</b>
-      أخذ اللاعب
-      <b>${esc(r.currentPlayer.name)}</b>
-      بالمزايدة
-      <strong style="color:#54efae">
-        ${r.price}M
-      </strong>
-      <br><br>
-      <b>${esc(r.loserName)}</b>
-      قال «لا أريد»
-      وأخذ لاعباً عشوائياً:
-      `;
+</div>
 
-    $("resultPlayerCard").innerHTML=`
+`;
 
-      <div class="modalPlayer">
+}
 
-        <img
-          src="${r.randomPlayer.image||avatar(r.randomPlayer.name)}"
-        >
 
-        <b>${esc(r.randomPlayer.name)}</b>
+function renderPitch(team){
 
-        <div class="small">
-          ${esc(r.randomPlayer.position)}
-        </div>
+let html="";
 
-      </div>
+FORMATION.forEach(pos=>{
 
-    `;
+let key=pos.key;
 
-  }else{
+let player=null;
 
-    $("resultModalTitle").textContent=
-      "🎁 لاعب عشوائي";
+if(key==="CB1")
+player=team?.CB1;
 
-    $("resultModalText").innerHTML=
-      `
-      <b>${esc(r.loserName)}</b>
-      قال «لا أريد» للاعب
-      <b>${esc(r.currentPlayer.name)}</b>
-      <br>
-      وحصل على لاعب عشوائي:
-      `;
+else if(key==="CB2")
+player=team?.CB2;
 
-    $("resultPlayerCard").innerHTML=`
+else
+player=team?.[key];
 
-      <div class="modalPlayer">
+html+=slotHTML(pos,player);
 
-        <img
-          src="${r.randomPlayer.image||avatar(r.randomPlayer.name)}"
-        >
+});
 
-        <b>${esc(r.randomPlayer.name)}</b>
+return html;
 
-        <div class="small">
-          ${esc(r.randomPlayer.position)}
-        </div>
+}
 
-      </div>
 
-    `;
+/* =========================================================
+   RENDER FC CARD
+========================================================= */
 
-  }
+function renderAuctionCard(){
 
-  $("resultModal").classList.remove("hidden");
+let a=room.auction;
+
+if(!a){
+
+$("auctionName").textContent="انتهى المزاد";
+
+return;
+
+}
+
+let p=a.player;
+
+$("auctionImg").src=
+p.image||avatar(p.name);
+
+$("auctionName").textContent=
+p.name;
+
+$("fcPosition").textContent=
+p.position;
+
+$("auctionMeta").textContent=
+p.position+" — "+
+(FORMATION.find(x=>
+x.name===p.position)?.label||"");
+
+let rating=
+Math.min(
+99,
+Math.max(
+60,
+Math.round(Number(p.value||80)*.55)
+)
+);
+
+$("fcRating").textContent=rating;
+
+$("statPac").textContent=
+Math.max(60,rating+Math.floor(Math.random()*8)-4);
+
+$("statSho").textContent=
+Math.max(60,rating+Math.floor(Math.random()*8)-4);
+
+$("statPas").textContent=
+Math.max(60,rating+Math.floor(Math.random()*8)-4);
+
+$("statDri").textContent=
+Math.max(60,rating+Math.floor(Math.random()*8)-4);
+
+$("statDef").textContent=
+Math.max(45,rating+Math.floor(Math.random()*8)-12);
+
+$("statPhy").textContent=
+Math.max(50,rating+Math.floor(Math.random()*8)-8);
+
+$("auctionPrice").textContent=
+Number(a.price||0)+"M";
+
+$("fcCountry").textContent="FC";
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function renderProgress(){
+
+let index=
+Number(room.positionIndex||0);
+
+$("positionProgress").innerHTML=
+FORMATION.map((x,i)=>{
+
+let cls="progressDot";
+
+if(i<index)
+cls+=" done";
+
+if(i===index)
+cls+=" current";
+
+return `<div class="${cls}" title="${x.name}"></div>`;
+
+}).join("");
 
 }
 
@@ -2364,603 +2336,314 @@ function renderResultPopup(){
 
 function renderGame(){
 
-  const b=room.players.blue;
-  const r=room.players.red;
-  const a=room.auction;
+let b=room.players.blue;
 
-  $("blueName").textContent=b.name;
-  $("redName").textContent=r.name;
+let r=room.players.red;
 
-  $("blueMoney").textContent=b.budget+"M";
-  $("redMoney").textContent=r.budget+"M";
+$("blueName").textContent=b.name;
 
-  renderPitch(
-    "bluePitch",
-    b.team||[],
-    "blue"
-  );
+$("redName").textContent=r.name;
 
-  renderPitch(
-    "redPitch",
-    r.team||[],
-    "red"
-  );
+$("blueMoney").textContent=
+b.budget+"M";
 
+$("redMoney").textContent=
+r.budget+"M";
 
-  if(a){
+$("bluePitch").innerHTML=
+`<div class="pitchLines"></div>`+
+renderPitch(b.team);
 
-    $("auctionImg").src=
-      a.player.image||
-      avatar(a.player.name);
+$("redPitch").innerHTML=
+`<div class="pitchLines"></div>`+
+renderPitch(r.team);
 
-    $("auctionName").textContent=
-      a.player.name;
+renderProgress();
 
-    $("auctionMeta").textContent=
-      normalizePosition(a.player.position)+
-      " — القيمة "+a.player.value+"M";
+renderAuctionCard();
 
-    $("auctionPrice").textContent=
-      a.price+"M";
+if(room.auction){
 
-    $("turn").textContent=
-      a.locked
-        ?(
-          "⏳ انتظار 4 ثواني..."
-        )
-        :(
-          room.turn===side
-            ?"🎯 دورك"
-            :"⏳ دور الخصم"
-        );
+$("turn").textContent=
+room.turn===side
+?"🎯 دورك"
+:"⏳ دور الخصم";
 
-    $("bidBtn").disabled=
-      room.turn!==side ||
-      a.locked;
+$("bidBtn").disabled=
+room.turn!==side;
 
-    $("passBtn").disabled=
-      room.turn!==side ||
-      a.locked;
+$("passBtn").disabled=
+room.turn!==side;
 
-    $("randomBtn").disabled=
-      room.turn!==side ||
-      a.locked;
+$("bidInput").disabled=
+room.turn!==side;
 
-    $("bidInput").disabled=
-      room.turn!==side ||
-      a.locked;
+}else{
 
+$("turn").textContent="انتظر اللاعب التالي";
 
-    const colorClass=
-      room.turn==="blue"
-        ?"blueAuction"
-        :"redAuction";
+$("bidBtn").disabled=true;
 
-    $("auctionCard").className=
-      "auctionCard "+colorClass;
+$("passBtn").disabled=true;
 
-    $("centerArena").className=
-      "center "+
-      (
-        room.turn==="blue"
-          ?"blueTurn"
-          :"redTurn"
-      );
+$("bidInput").disabled=true;
 
-  }
+}
 
+renderCoaches();
 
-  /* COACHES */
+renderMatch();
 
-  const my=
-    room.coaches?.[side];
+if(
+Object.keys(b.team||{}).length>=11 &&
+Object.keys(r.team||{}).length>=11
+){
 
-  const opp=
-    room.coaches?.[
-      side==="blue"
-        ?"red"
-        :"blue"
-    ];
+$("coachCard").classList.remove("hidden");
 
-  if(my){
+$("matchCard").classList.remove("hidden");
 
-    $("myCoachImg").src=my.image;
-    $("myCoachName").textContent=my.name;
-    $("myCoachRating").textContent=
-      "التقييم "+my.rating;
-
-  }
-
-  if(opp){
-
-    $("oppCoachImg").src=opp.image;
-    $("oppCoachName").textContent=opp.name;
-    $("oppCoachRating").textContent=
-      "التقييم "+opp.rating;
-
-  }
-
-
-  if(
-    room.status==="finished" &&
-    b.team.length>=11 &&
-    r.team.length>=11
-  ){
-
-    $("simBtn").disabled=false;
-
-  }else{
-
-    $("simBtn").disabled=true;
-
-  }
-
-
-  renderMatch();
-
-  renderLog();
-
-  renderResultPopup();
+}
 
 }
 
 
 /* =========================================================
-   PITCH RENDER
-========================================================= */
-
-function renderPitch(id,team,color){
-
-  const pitch=$(id);
-
-  let html=`
-
-    <div class="halfLine"></div>
-    <div class="centerDot"></div>
-
-    <div class="goal top"></div>
-    <div class="goal bottom"></div>
-
-    <div class="box top"></div>
-    <div class="box bottom"></div>
-
-  `;
-
-  FORMATION.forEach(pos=>{
-
-    const player=
-      (team||[]).find(
-        p=>p.slot===pos.id
-      );
-
-    if(player){
-
-      html+=`
-
-        <div
-          class="fieldPlayer"
-          style="left:${pos.x}%;top:${pos.y}%"
-        >
-
-          <div class="circle">
-
-            <img
-              src="${player.image||avatar(player.name)}"
-            >
-
-          </div>
-
-          <span class="pos">
-            ${pos.label}
-          </span>
-
-          <span class="name">
-            ${esc(player.name)}
-          </span>
-
-        </div>
-
-      `;
-
-    }else{
-
-      html+=`
-
-        <div
-          class="emptyPos"
-          style="left:${pos.x}%;top:${pos.y}%"
-        >
-          ${pos.label}
-        </div>
-
-      `;
-
-    }
-
-  });
-
-  pitch.innerHTML=html;
-
-}
-
-
-/* =========================================================
-   LOG
-========================================================= */
-
-function renderLog(){
-
-  $("log").innerHTML=
-    (room.logs||[])
-      .slice()
-      .reverse()
-      .map(
-        x=>"<div>• "+esc(x.text)+"</div>"
-      )
-      .join("");
-
-}
-
-
-/* =========================================================
-   FINISH BOTH TEAMS
+   FINISH TEAMS
 ========================================================= */
 
 async function finishTeams(){
 
-  if(!host)
-    return;
+let b=room.players.blue;
 
-  const b=room.players.blue;
-  const r=room.players.red;
+let r=room.players.red;
 
-  if(
-    b.team.length<11 ||
-    r.team.length<11
-  )
-    return;
+if(
+Object.keys(b.team||{}).length<11 ||
+Object.keys(r.team||{}).length<11
+)
+return;
 
+let coaches=room.coaches||{};
 
-  /*
-    المدربان يتم اختيارهما فقط هنا.
-  */
+if(!coaches.blue||!coaches.red){
 
-  const cs=shuffle(coachNames);
+let c=shuffle(coachNames);
 
-  const coaches={
+coaches={
 
-    blue:coach(cs[0]),
-    red:coach(cs[1])
+blue:coach(c[0]),
+red:coach(c[1])
 
-  };
+};
 
+}
 
-  await roomRef.update({
+await roomRef.update({
 
-    status:"finished",
+status:"finished",
 
-    coaches,
+coaches
 
-    resultPopup:null,
+});
 
-    logs:[
-
-      ...(room.logs||[]),
-
-      {
-        text:
-          "🏆 اكتملت التشكيلتان بالكامل."
-      },
-
-      {
-        text:
-          "🧠 تم اختيار المدرب "+
-          coaches.blue.name+
-          " للاعب الأزرق."
-      },
-
-      {
-        text:
-          "🧠 تم اختيار المدرب "+
-          coaches.red.name+
-          " للاعب الأحمر."
-      }
-
-    ]
-
-  });
+toast("🏆 اكتملت التشكيلتان! اختاروا المحاكاة AI");
 
 }
 
 
 /* =========================================================
-   MATCH STRENGTH
+   COACHES
 ========================================================= */
 
-function playerPositionBonus(p){
+function renderCoaches(){
 
-  const value=Number(p.value||70);
+let my=
+room.coaches?.[side];
 
-  const pos=
-    normalizePosition(p.position);
+let opp=
+room.coaches?.[
+side==="blue"?"red":"blue"
+];
 
-  const slot=p.slot;
+if(my){
 
-  if(!slot)
-    return value;
+$("myCoachImg").src=
+my.image;
 
-  if(pos==="GK" && slot==="GK")
-    return value+18;
+$("myCoachName").textContent=
+my.name;
 
-  if(pos==="RB" && slot==="RB")
-    return value+14;
+$("myCoachRating").textContent=
+"التقييم "+my.rating;
 
-  if(pos==="LB" && slot==="LB")
-    return value+14;
-
-  if(pos==="CB" && (slot==="CB1"||slot==="CB2"))
-    return value+14;
-
-  if(pos==="DMF" && slot==="DMF")
-    return value+14;
-
-  if(pos==="CMF" && slot==="CMF")
-    return value+14;
-
-  if(pos==="AMF" && slot==="AMF")
-    return value+15;
-
-  if(pos==="RWF" && slot==="RWF")
-    return value+14;
-
-  if(pos==="LWF" && slot==="LWF")
-    return value+14;
-
-  if(pos==="CF" && slot==="CF")
-    return value+16;
-
-  return value-8;
 }
 
+if(opp){
 
-function teamStrength(team,coachData){
+$("oppCoachImg").src=
+opp.image;
 
-  if(!team?.length)
-    return 0;
+$("oppCoachName").textContent=
+opp.name;
 
-  let total=0;
+$("oppCoachRating").textContent=
+"التقييم "+opp.rating;
 
-  team.forEach(p=>{
-    total+=playerPositionBonus(p);
-  });
+}
 
-  const avg=
-    total/team.length;
-
-  const coachBonus=
-    coachData
-      ?(coachData.rating-65)*1.4
-      :0;
-
-  return avg+coachBonus;
 }
 
 
 /* =========================================================
-   POISSON
+   MATCH AI
 ========================================================= */
+
+function strength(team){
+
+let players=
+Object.values(team||{});
+
+if(!players.length)
+return 45;
+
+return players.reduce(
+(s,p)=>s+Number(p.value||70),
+0
+)/players.length;
+
+}
 
 function poisson(lambda){
 
-  const L=Math.exp(-lambda);
+let L=Math.exp(-lambda);
 
-  let k=0;
-  let p=1;
+let k=0;
 
-  do{
+let p=1;
 
-    k++;
+do{
 
-    p*=Math.random();
+k++;
 
-  }while(
-    p>L &&
-    k<8
-  );
+p*=Math.random();
 
-  return Math.max(0,k-1);
+}while(p>L&&k<8);
+
+return k-1;
+
 }
 
 
-/* =========================================================
-   MATCH SIMULATION
-========================================================= */
-
 async function simulateMatch(){
 
-  if(room.status!=="finished")
-    return toast("أكمل التشكيلتين أولاً");
+let b=room.players.blue;
 
-  const b=room.players.blue;
-  const r=room.players.red;
+let r=room.players.red;
 
-  if(
-    b.team.length<11 ||
-    r.team.length<11
-  ){
+if(
+Object.keys(b.team||{}).length<11||
+Object.keys(r.team||{}).length<11
+){
 
-    return toast(
-      "لازم كل فريق يكمل 11 لاعب"
-    );
+return toast(
+"يجب اكتمال التشكيلتين أولاً"
+);
 
-  }
+}
 
-  if(
-    !room.coaches.blue ||
-    !room.coaches.red
-  ){
+let sb=
+strength(b.team)+
+(room.coaches.blue.rating-75)*1.8;
 
-    return toast(
-      "المدربون لم يتم اختيارهم بعد"
-    );
+let sr=
+strength(r.team)+
+(room.coaches.red.rating-75)*1.8;
 
-  }
+let total=
+Math.max(1,sb+sr);
 
+let poss=
+Math.max(
+35,
+Math.min(
+65,
+Math.round(
+50+
+(sb-sr)/total*25
+)
+)
+);
 
-  const sb=
-    teamStrength(
-      b.team,
-      room.coaches.blue
-    );
+let gb=
+Math.min(
+6,
+poisson(
+Math.max(
+.3,
+1.4+
+(sb-sr)/100*1.8
+)
+)
+);
 
-  const sr=
-    teamStrength(
-      r.team,
-      room.coaches.red
-    );
+let gr=
+Math.min(
+6,
+poisson(
+Math.max(
+.3,
+1.4+
+(sr-sb)/100*1.8
+)
+)
+);
 
+await roomRef.child("match").set({
 
-  const difference=
-    sb-sr;
+blue:{
 
-  const total=
-    Math.max(
-      1,
-      sb+sr
-    );
+name:b.name,
 
+goals:gb,
 
-  /* الاستحواذ */
+shots:
+gb+
+Math.floor(Math.random()*13)+3,
 
-  const possBlue=
-    Math.max(
-      35,
-      Math.min(
-        65,
-        Math.round(
-          50+
-          difference/total*28
-        )
-      )
-    );
+on:
+gb+
+Math.floor(Math.random()*6),
 
-  const possRed=
-    100-possBlue;
+pos:poss,
 
+corners:
+Math.floor(Math.random()*8)+1
 
-  /*
-    أهداف منطقية نسبياً:
-    الفريق الأقوى يأخذ معدل أهداف أعلى.
-  */
+},
 
-  const blueLambda=
-    Math.max(
-      .35,
-      Math.min(
-        3.4,
-        1.25+
-        difference/35
-      )
-    );
+red:{
 
-  const redLambda=
-    Math.max(
-      .35,
-      Math.min(
-        3.4,
-        1.25-
-        difference/35
-      )
-    );
+name:r.name,
 
+goals:gr,
 
-  const gb=
-    Math.min(
-      6,
-      poisson(blueLambda)
-    );
+shots:
+gr+
+Math.floor(Math.random()*13)+3,
 
-  const gr=
-    Math.min(
-      6,
-      poisson(redLambda)
-    );
+on:
+gr+
+Math.floor(Math.random()*6),
 
+pos:100-poss,
 
-  const blueShots=
-    5+
-    Math.floor(
-      possBlue/7
-    )+
-    Math.floor(
-      Math.random()*9
-    );
+corners:
+Math.floor(Math.random()*8)+1
 
-  const redShots=
-    5+
-    Math.floor(
-      possRed/7
-    )+
-    Math.floor(
-      Math.random()*9
-    );
+}
 
-
-  const blueOn=
-    Math.min(
-      blueShots,
-      Math.max(
-        gb,
-        Math.floor(
-          blueShots*
-          (.32+Math.random()*.15)
-        )
-      )
-    );
-
-  const redOn=
-    Math.min(
-      redShots,
-      Math.max(
-        gr,
-        Math.floor(
-          redShots*
-          (.32+Math.random()*.15)
-        )
-      )
-    );
-
-
-  const result={
-
-    blue:{
-      name:b.name,
-      goals:gb,
-      shots:blueShots,
-      on:blueOn,
-      pos:possBlue,
-      corners:
-        Math.floor(
-          Math.random()*8
-        )+2
-    },
-
-    red:{
-      name:r.name,
-      goals:gr,
-      shots:redShots,
-      on:redOn,
-      pos:possRed,
-      corners:
-        Math.floor(
-          Math.random()*8
-        )+2
-    }
-
-  };
-
-
-  await roomRef.child("match").set(result);
+});
 
 }
 
@@ -2971,251 +2654,64 @@ async function simulateMatch(){
 
 function renderMatch(){
 
-  const m=room.match;
+let m=room.match;
 
-  if(!m){
+if(!m){
 
-    $("matchResult").textContent=
-      room.status==="finished"
-        ?"اكتمل الفريقان. شغّل محاكاة AI."
-        :"عند اكتمال التشكيلتين ستظهر المدربين.";
+$("matchResult").textContent=
+"بعد اكتمال التشكيلتين يمكنك المحاكاة.";
 
-    return;
+return;
 
-  }
+}
 
+$("matchResult").innerHTML=`
 
-  let winnerText="";
+<div style="
+font-size:24px;
+font-weight:900;
+text-align:center">
 
-  if(m.blue.goals>m.red.goals){
+${esc(m.blue.name)}
+${m.blue.goals}
+-
+${m.red.goals}
+${esc(m.red.name)}
 
-    winnerText=
-      "🏆 فوز "+esc(m.blue.name);
+</div>
 
-  }else if(m.red.goals>m.blue.goals){
+<hr>
 
-    winnerText=
-      "🏆 فوز "+esc(m.red.name);
+🔵 الاستحواذ ${m.blue.pos}%
+— التسديدات ${m.blue.shots}
+(${m.blue.on} على المرمى)
+— الركنيات ${m.blue.corners}
 
-  }else{
+<br>
 
-    winnerText=
-      "🤝 تعادل";
+🔴 الاستحواذ ${m.red.pos}%
+— التسديدات ${m.red.shots}
+(${m.red.on} على المرمى)
+— الركنيات ${m.red.corners}
 
-  }
-
-
-  $("matchResult").innerHTML=`
-
-    <div
-      style="
-        font-size:26px;
-        font-weight:900;
-        text-align:center
-      "
-    >
-      ${esc(m.blue.name)}
-      ${m.blue.goals}
-      -
-      ${m.red.goals}
-      ${esc(m.red.name)}
-    </div>
-
-    <div
-      style="
-        text-align:center;
-        color:#54efae;
-        font-weight:900;
-        margin:8px
-      "
-    >
-      ${winnerText}
-    </div>
-
-    <hr>
-
-    🔵
-    <b>${esc(m.blue.name)}</b>
-    <br>
-    الاستحواذ:
-    ${m.blue.pos}%
-    —
-    التسديدات:
-    ${m.blue.shots}
-    —
-    على المرمى:
-    ${m.blue.on}
-    —
-    الركنيات:
-    ${m.blue.corners}
-
-    <br><br>
-
-    🔴
-    <b>${esc(m.red.name)}</b>
-    <br>
-    الاستحواذ:
-    ${m.red.pos}%
-    —
-    التسديدات:
-    ${m.red.shots}
-    —
-    على المرمى:
-    ${m.red.on}
-    —
-    الركنيات:
-    ${m.red.corners}
-
-  `;
+`;
 
 }
 
 
 /* =========================================================
-   TIMERS
+   ENTER KEY FOR BID
 ========================================================= */
 
-function scheduleTimers(){
+$("bidInput").addEventListener(
+"keydown",
+e=>{
 
-  scheduleTimersAuction();
+if(e.key==="Enter")
+makeBid();
 
-  scheduleTimersResult();
+});
 
-}
-
-
-function scheduleTimersAuction(){
-
-  clearTimeout(auctionTimer);
-
-  if(
-    host &&
-    room?.auction?.locked &&
-    room.auction.nextTurnAt
-  ){
-
-    const wait=
-      Math.max(
-        0,
-        Number(room.auction.nextTurnAt)-Date.now()
-      );
-
-    auctionTimer=setTimeout(
-      releaseTurn,
-      wait+50
-    );
-
-  }
-
-}
-
-
-function scheduleTimersResult(){
-
-  if(
-    !host ||
-    !room?.resultPopup
-  )
-    return;
-
-  /*
-    بمجرد الضغط OK يبدأ انتظار 2.5 ثانية.
-  */
-
-  if(room.resultPopup.confirmed){
-
-    clearTimeout(resultTimer);
-
-    resultTimer=setTimeout(
-      async()=>{
-
-        if(
-          !room ||
-          !room.resultPopup ||
-          room.auction
-        )
-          return;
-
-        const b=room.players.blue;
-        const r=room.players.red;
-
-        if(
-          b.team.length>=11 &&
-          r.team.length>=11
-        ){
-
-          await finishTeams();
-
-          return;
-
-        }
-
-        const p=
-          choose(
-            room.pool,
-            room.used||[],
-            room.recent||[]
-          );
-
-        if(!p)
-          return;
-
-        await roomRef.update({
-
-          auction:newAuction(p),
-
-          turn:
-            room.turn ||
-            "blue",
-
-          resultPopup:null,
-
-          logs:[
-            ...(room.logs||[]),
-            {
-              text:
-                "⚡ لاعب جديد ظهر في المزاد: "+
-                p.name
-            }
-          ]
-
-        });
-
-      },
-      2500
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   GLOBAL RESULT MODAL BEHAVIOUR
-========================================================= */
-
-setInterval(()=>{
-
-  if(
-    room?.resultPopup &&
-    $("resultModal").classList.contains("hidden")===false
-  ){
-
-    /*
-      لا نغلق النافذة تلقائياً.
-      اللاعب يضغط OK بنفسه.
-    */
-
-  }
-
-},500);
-
-
-/* =========================================================
-   INITIAL
-========================================================= */
-
-$("simBtn").disabled=true;
 
 </script>
 
