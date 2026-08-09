@@ -1,0 +1,2960 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>FC Auction Online</title>
+
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ background:#06101b;
+ color:#fff;
+ font-family:Arial,Tahoma,sans-serif
+}
+
+.app{
+ width:min(1100px,96%);
+ margin:auto;
+ padding:15px 0 50px
+}
+
+button,input{
+ font-family:inherit
+}
+
+button{
+ border:0;
+ border-radius:13px;
+ padding:14px 18px;
+ font-size:17px;
+ font-weight:900;
+ cursor:pointer
+}
+
+input{
+ width:100%;
+ padding:14px;
+ border-radius:13px;
+ border:1px solid #38516b;
+ background:#07131f;
+ color:#fff;
+ font-size:18px;
+ text-align:center
+}
+
+.panel{
+ background:#0b1928;
+ border:1px solid #29435e;
+ border-radius:20px;
+ padding:16px;
+ margin-bottom:15px
+}
+
+.hidden{display:none!important}
+
+.green{
+ background:#18df88;
+ color:#04140c
+}
+
+.red{
+ background:#e63d68;
+ color:#fff
+}
+
+.blue{
+ background:#247eff;
+ color:#fff
+}
+
+.start{
+ width:100%
+}
+
+h1{
+ text-align:center;
+ font-size:30px
+}
+
+h2{
+ text-align:center
+}
+
+.status{
+ text-align:center;
+ padding:12px;
+ border-radius:12px;
+ background:#101f30;
+ margin:12px 0
+}
+
+.online{
+ color:#18df88;
+ font-weight:900
+}
+
+.offline{
+ color:#ff416d;
+ font-weight:900
+}
+
+/* ROOM */
+
+.room{
+ max-width:600px;
+ margin:auto
+}
+
+.code{
+ text-align:center;
+ color:#18df88;
+ font-size:38px;
+ font-weight:1000;
+ letter-spacing:7px;
+ padding:12px
+}
+
+.roomPlayers{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+ margin:15px 0
+}
+
+.roomPlayer{
+ padding:18px;
+ border-radius:15px;
+ background:#101f30;
+ text-align:center
+}
+
+.blueBorder{
+ border:2px solid #247eff
+}
+
+.redBorder{
+ border:2px solid #e63d68
+}
+
+/* ARENA */
+
+.arena{
+ display:flex;
+ flex-direction:column;
+ gap:10px
+}
+
+.fieldHeader{
+ display:flex;
+ justify-content:space-between;
+ padding:12px 15px;
+ font-weight:1000
+}
+
+.blueHead{
+ background:#073e7b;
+ border-radius:15px 15px 0 0
+}
+
+.redHead{
+ background:#69152f;
+ border-radius:0 0 15px 15px
+}
+
+.budget{
+ color:#ffd44d;
+ font-size:20px
+}
+
+.pitch{
+ position:relative;
+ height:500px;
+ overflow:hidden;
+ background:repeating-linear-gradient(
+ 90deg,
+ #177b40 0,
+ #177b40 55px,
+ #1a8746 55px,
+ #1a8746 110px
+ );
+ border:3px solid #ffffffaa
+}
+
+.pitchTop{
+ border-radius:16px 16px 0 0
+}
+
+.pitchBottom{
+ border-radius:0 0 16px 16px
+}
+
+.lineMid{
+ position:absolute;
+ top:50%;
+ left:0;
+ right:0;
+ height:2px;
+ background:#ffffffaa
+}
+
+.circle{
+ position:absolute;
+ width:100px;
+ height:100px;
+ border:2px solid #ffffffaa;
+ border-radius:50%;
+ left:50%;
+ top:50%;
+ transform:translate(-50%,-50%)
+}
+
+.dot{
+ position:absolute;
+ width:7px;
+ height:7px;
+ background:#fff;
+ border-radius:50%;
+ left:50%;
+ top:50%;
+ transform:translate(-50%,-50%)
+}
+
+.boxTop,.boxBottom{
+ position:absolute;
+ left:50%;
+ transform:translateX(-50%);
+ width:220px;
+ height:120px;
+ border:2px solid #ffffffaa
+}
+
+.boxTop{
+ top:0;
+ border-top:0
+}
+
+.boxBottom{
+ bottom:0;
+ border-bottom:0
+}
+
+.goal{
+ position:absolute;
+ left:50%;
+ transform:translateX(-50%);
+ width:90px;
+ height:38px;
+ border:2px solid #ffffffaa
+}
+
+.goalTop{
+ top:0;
+ border-top:0
+}
+
+.goalBottom{
+ bottom:0;
+ border-bottom:0
+}
+
+.position{
+ position:absolute;
+ transform:translate(-50%,-50%);
+ font-weight:1000;
+ font-size:12px;
+ text-shadow:0 2px 5px #000;
+ background:#092719aa;
+ padding:4px 7px;
+ border-radius:7px
+}
+
+.gk{left:50%;top:91%}
+.rb{left:79%;top:76%}
+.cb1{left:42%;top:76%}
+.cb2{left:58%;top:76%}
+.lb{left:21%;top:76%}
+.dmf{left:50%;top:61%}
+.cmf{left:50%;top:48%}
+.amf{left:50%;top:35%}
+.rwf{left:79%;top:25%}
+.lwf{left:21%;top:25%}
+.cf{left:50%;top:13%}
+
+.fieldPlayer{
+ position:absolute;
+ transform:translate(-50%,-50%);
+ width:90px;
+ text-align:center;
+ z-index:5
+}
+
+.avatar{
+ width:44px;
+ height:44px;
+ border-radius:50%;
+ margin:auto;
+ background:#fff;
+ color:#111;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:21px;
+ box-shadow:0 4px 12px #0009
+}
+
+.fieldName{
+ font-size:10px;
+ font-weight:1000;
+ white-space:nowrap;
+ text-shadow:0 2px 4px #000
+}
+
+.fieldPlayer.gk{left:50%;top:91%}
+.fieldPlayer.rb{left:79%;top:76%}
+.fieldPlayer.cb1{left:42%;top:76%}
+.fieldPlayer.cb2{left:58%;top:76%}
+.fieldPlayer.lb{left:21%;top:76%}
+.fieldPlayer.dmf{left:50%;top:61%}
+.fieldPlayer.cmf{left:50%;top:48%}
+.fieldPlayer.amf{left:50%;top:35%}
+.fieldPlayer.rwf{left:79%;top:25%}
+.fieldPlayer.lwf{left:21%;top:25%}
+.fieldPlayer.cf{left:50%;top:13%}
+
+/* AUCTION */
+
+.auction{
+ padding:16px;
+ text-align:center;
+ border-radius:20px;
+ border:3px solid #247eff;
+ background:#063d80
+}
+
+.auction.redAuction{
+ background:#71152f;
+ border-color:#ff416d
+}
+
+.turn{
+ padding:12px;
+ border-radius:12px;
+ margin-bottom:12px;
+ font-size:19px;
+ font-weight:1000
+}
+
+.turnBlue{
+ background:#0b5fc4
+}
+
+.turnRed{
+ background:#a51f48
+}
+
+.card{
+ width:270px;
+ margin:0 auto 14px;
+ border-radius:24px;
+ padding:13px;
+ background:linear-gradient(145deg,#f3d878,#96712d);
+ color:#171006;
+ box-shadow:0 12px 30px #0009
+}
+
+.rating{
+ font-size:45px;
+ font-weight:1000;
+ text-align:left
+}
+
+.cardPosition{
+ text-align:left;
+ font-weight:1000
+}
+
+.face{
+ height:100px;
+ font-size:68px;
+ display:flex;
+ align-items:center;
+ justify-content:center
+}
+
+.cardName{
+ text-align:center;
+ font-size:24px;
+ font-weight:1000
+}
+
+.cardInfo{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ font-size:12px;
+ font-weight:900;
+ margin-top:7px
+}
+
+.bidValue{
+ font-size:30px;
+ font-weight:1000;
+ color:#ffd44d;
+ margin:8px
+}
+
+.actions{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px
+}
+
+.actions button{
+ height:58px
+}
+
+.message{
+ margin-top:10px;
+ padding:10px;
+ border-radius:12px;
+ background:#092e59;
+ border:1px solid #4d9cff;
+ min-height:44px
+}
+
+/* REPLACEMENT */
+
+.replace{
+ text-align:center;
+ padding:15px;
+ border-radius:20px;
+ background:#351525;
+ border:3px solid #ff416d
+}
+
+.replaceTitle{
+ font-size:23px;
+ font-weight:1000
+}
+
+.transfer{
+ margin:10px 0;
+ padding:12px;
+ border-radius:12px;
+ background:#101f30;
+ font-weight:900
+}
+
+/* COACH */
+
+.coaches{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px
+}
+
+.coach{
+ padding:20px;
+ text-align:center;
+ border-radius:18px;
+ background:#101f30;
+ border:2px solid #ffd44d
+}
+
+.coachName{
+ font-size:25px;
+ color:#ffd44d;
+ font-weight:1000
+}
+
+/* MATCH */
+
+.matchTitle{
+ text-align:center;
+ font-size:28px;
+ font-weight:1000
+}
+
+.score{
+ display:grid;
+ grid-template-columns:1fr auto 1fr;
+ gap:10px;
+ align-items:center;
+ font-size:55px;
+ font-weight:1000;
+ text-align:center
+}
+
+.blueStat{
+ background:#073e7b;
+ border:2px solid #247eff;
+ border-radius:18px;
+ padding:15px
+}
+
+.redStat{
+ background:#69152f;
+ border:2px solid #e63d68;
+ border-radius:18px;
+ padding:15px
+}
+
+.stats{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ margin-top:15px
+}
+
+.stat{
+ background:#101f30;
+ border-radius:14px;
+ padding:13px;
+ text-align:center
+}
+
+.stat b{
+ font-size:21px
+}
+
+.events{
+ background:#07131f;
+ border-radius:15px;
+ padding:15px;
+ margin-top:15px;
+ line-height:2
+}
+
+@media(max-width:700px){
+
+ .roomPlayers,
+ .coaches,
+ .stats{
+  grid-template-columns:1fr
+ }
+
+ .pitch{
+  height:450px
+ }
+
+ .card{
+  width:250px
+ }
+
+ .score{
+  font-size:42px
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<h1>⚽ FC AUCTION ONLINE</h1>
+
+<!-- ROOM -->
+
+<div id="roomScreen" class="panel">
+
+<div class="room">
+
+<h2>🏠 غرفة اللعب</h2>
+
+<div id="connectionStatus" class="status">
+🔌 غير متصل
+</div>
+
+<div id="hostBox">
+
+<input
+ id="name1"
+ placeholder="اسم اللاعب الأول"
+ maxlength="20"
+>
+
+<br><br>
+
+<button class="green start" onclick="createRoom()">
+🏠 إنشاء غرفة
+</button>
+
+</div>
+
+<div id="roomInfo" class="hidden">
+
+<h3 style="text-align:center">
+🔑 كود الغرفة
+</h3>
+
+<div id="code" class="code">
+-----
+</div>
+
+<div class="status">
+أرسل هذا الكود للاعب الثاني
+</div>
+
+<div class="roomPlayers">
+
+<div class="roomPlayer blueBorder">
+
+🔵 اللاعب الأول
+
+<br><br>
+
+<b id="p1room"></b>
+
+</div>
+
+<div class="roomPlayer redBorder">
+
+🔴 اللاعب الثاني
+
+<br><br>
+
+<b id="p2room">
+في الانتظار...
+</b>
+
+</div>
+
+</div>
+
+<div id="joinBox">
+
+<input
+ id="roomCode"
+ placeholder="أدخل كود الغرفة"
+ maxlength="5"
+ style="text-transform:uppercase"
+>
+
+<br><br>
+
+<input
+ id="name2"
+ placeholder="اسم اللاعب الثاني"
+ maxlength="20"
+>
+
+<br><br>
+
+<button class="blue start" onclick="joinRoom()">
+📱 دخول الغرفة
+</button>
+
+</div>
+
+<div id="hostStart" class="hidden">
+
+<button
+ class="green start"
+ onclick="startGame()"
+>
+▶ ابدأ المزاد
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- GAME -->
+
+<div id="gameScreen" class="hidden">
+
+<div class="arena">
+
+<!-- BLUE -->
+
+<div>
+
+<div class="fieldHeader blueHead">
+
+<div>
+🔵 <span id="nameBlue"></span>
+</div>
+
+<div class="budget">
+💰 <span id="budgetBlue">200</span>M
+</div>
+
+</div>
+
+<div class="pitch pitchTop" id="bluePitch">
+
+<div class="lineMid"></div>
+<div class="circle"></div>
+<div class="dot"></div>
+<div class="boxTop"></div>
+<div class="goal goalTop"></div>
+
+<div class="position gk">GK</div>
+<div class="position rb">RB</div>
+<div class="position cb1">CB</div>
+<div class="position cb2">CB</div>
+<div class="position lb">LB</div>
+<div class="position dmf">DMF</div>
+<div class="position cmf">CMF</div>
+<div class="position amf">AMF</div>
+<div class="position rwf">RWF</div>
+<div class="position lwf">LWF</div>
+<div class="position cf">CF</div>
+
+</div>
+
+</div>
+
+
+<!-- AUCTION -->
+
+<div id="auction" class="auction">
+
+<div id="turnBox" class="turn turnBlue">
+🎯
+</div>
+
+<div class="card">
+
+<div class="rating" id="rating">
+90
+</div>
+
+<div class="cardPosition" id="cardPos">
+GK
+</div>
+
+<div class="face" id="face">
+🧤
+</div>
+
+<div class="cardName" id="cardName">
+Courtois
+</div>
+
+<div class="cardInfo">
+
+<div>
+🌍 <span id="nation"></span>
+</div>
+
+<div>
+🏟️ <span id="club"></span>
+</div>
+
+</div>
+
+</div>
+
+<div class="bidValue">
+المزايدة:
+<span id="currentBid">0</span>M
+</div>
+
+<input
+ id="bidInput"
+ type="number"
+ inputmode="decimal"
+ placeholder="اكتب مزايدتك"
+>
+
+<br><br>
+
+<div class="actions">
+
+<button
+ class="green"
+ onclick="bid()"
+>
+OK
+</button>
+
+<button
+ class="red"
+ onclick="noWant()"
+>
+لا أريد
+</button>
+
+</div>
+
+<div id="auctionMessage" class="message">
+انتظر...
+</div>
+
+</div>
+
+
+<!-- RED -->
+
+<div>
+
+<div class="pitch pitchBottom" id="redPitch">
+
+<div class="lineMid"></div>
+<div class="circle"></div>
+<div class="dot"></div>
+<div class="boxBottom"></div>
+<div class="goal goalBottom"></div>
+
+<div class="position gk">GK</div>
+<div class="position rb">RB</div>
+<div class="position cb1">CB</div>
+<div class="position cb2">CB</div>
+<div class="position lb">LB</div>
+<div class="position dmf">DMF</div>
+<div class="position cmf">CMF</div>
+<div class="position amf">AMF</div>
+<div class="position rwf">RWF</div>
+<div class="position lwf">LWF</div>
+<div class="position cf">CF</div>
+
+</div>
+
+<div class="fieldHeader redHead">
+
+<div>
+🔴 <span id="nameRed"></span>
+</div>
+
+<div class="budget">
+💰 <span id="budgetRed">200</span>M
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- REPLACEMENT -->
+
+<div id="replaceScreen" class="panel hidden">
+
+<div class="replace">
+
+<div class="replaceTitle">
+🎁 نتيجة المزايدة
+</div>
+
+<div class="transfer" id="transferText">
+</div>
+
+<div class="card">
+
+<div class="rating" id="replaceRating"></div>
+
+<div class="cardPosition" id="replacePos"></div>
+
+<div class="face" id="replaceFace"></div>
+
+<div class="cardName" id="replaceName"></div>
+
+<div class="cardInfo">
+
+<div>
+🌍 <span id="replaceNation"></span>
+</div>
+
+<div>
+🏟️ <span id="replaceClub"></span>
+</div>
+
+</div>
+
+</div>
+
+<button
+ id="replacementOk"
+ class="green start"
+ onclick="confirmReplacement()"
+>
+OK
+</button>
+
+</div>
+
+</div>
+
+
+<!-- COACH -->
+
+<div id="coachScreen" class="panel hidden">
+
+<h2>
+🏆 اكتملت التشكيلتان
+</h2>
+
+<div class="coaches">
+
+<div class="coach">
+
+🔵 المدرب
+
+<div
+ class="coachName"
+ id="coachBlue"
+>
+</div>
+
+</div>
+
+<div class="coach">
+
+🔴 المدرب
+
+<div
+ class="coachName"
+ id="coachRed"
+>
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<button
+ id="matchButton"
+ class="green start"
+ onclick="startMatch()"
+>
+🤖 محاكاة المباراة بالـ AI
+</button>
+
+</div>
+
+
+<!-- MATCH -->
+
+<div id="matchScreen" class="panel hidden">
+
+<div class="matchTitle">
+🤖 محاكاة المباراة AI
+</div>
+
+<p
+ id="matchStatus"
+ style="text-align:center"
+>
+جاري تحليل قوة التشكيلتين...
+</p>
+
+<div class="score">
+
+<div class="blueStat">
+🔵 <span id="scoreBlue">0</span>
+</div>
+
+<div>
+-
+</div>
+
+<div class="redStat">
+<span id="scoreRed">0</span> 🔴
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+الاستحواذ
+<br>
+<b>
+<span id="posBlue">50</span>%
+-
+<span id="posRed">50</span>%
+</b>
+</div>
+
+<div class="stat">
+التسديدات
+<br>
+<b>
+<span id="shotBlue">0</span>
+-
+<span id="shotRed">0</span>
+</b>
+</div>
+
+<div class="stat">
+على المرمى
+<br>
+<b>
+<span id="onBlue">0</span>
+-
+<span id="onRed">0</span>
+</b>
+</div>
+
+<div class="stat">
+التمريرات
+<br>
+<b>
+<span id="passBlue">0</span>
+-
+<span id="passRed">0</span>
+</b>
+</div>
+
+<div class="stat">
+دقة التمرير
+<br>
+<b>
+<span id="accBlue">0</span>%
+-
+<span id="accRed">0</span>%
+</b>
+</div>
+
+<div class="stat">
+الهجمات
+<br>
+<b>
+<span id="attBlue">0</span>
+-
+<span id="attRed">0</span>
+</b>
+</div>
+
+</div>
+
+<div
+ id="events"
+ class="events"
+>
+</div>
+
+<h2 id="winner"></h2>
+
+<br>
+
+<button
+ class="green start"
+ onclick="location.reload()"
+>
+🔄 لعبة جديدة
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   اللاعبين
+========================================================= */
+
+const players=[
+
+{name:"Courtois",rating:90,pos:"GK",club:"Real Madrid",nation:"🇧🇪 بلجيكا",face:"🧤"},
+{name:"Alisson",rating:89,pos:"GK",club:"Liverpool",nation:"🇧🇷 البرازيل",face:"🧤"},
+{name:"Donnarumma",rating:89,pos:"GK",club:"PSG",nation:"🇮🇹 إيطاليا",face:"🧤"},
+
+{name:"Hakimi",rating:88,pos:"RB",club:"PSG",nation:"🇲🇦 المغرب",face:"⚡"},
+{name:"Walker",rating:85,pos:"RB",club:"Man City",nation:"🏴 إنجلترا",face:"⚡"},
+
+{name:"Van Dijk",rating:89,pos:"CB",club:"Liverpool",nation:"🇳🇱 هولندا",face:"🛡️"},
+{name:"Ruben Dias",rating:88,pos:"CB",club:"Man City",nation:"🇵🇹 البرتغال",face:"🛡️"},
+{name:"Saliba",rating:87,pos:"CB",club:"Arsenal",nation:"🇫🇷 فرنسا",face:"🛡️"},
+{name:"Araujo",rating:86,pos:"CB",club:"Barcelona",nation:"🇺🇾 أوروغواي",face:"🛡️"},
+
+{name:"Theo Hernandez",rating:86,pos:"LB",club:"AC Milan",nation:"🇫🇷 فرنسا",face:"⚡"},
+{name:"Davies",rating:86,pos:"LB",club:"Bayern",nation:"🇨🇦 كندا",face:"⚡"},
+
+{name:"Rodri",rating:91,pos:"DMF",club:"Man City",nation:"🇪🇸 إسبانيا",face:"🧠"},
+{name:"Kimmich",rating:88,pos:"DMF",club:"Bayern",nation:"🇩🇪 ألمانيا",face:"🧠"},
+
+{name:"De Bruyne",rating:90,pos:"CMF",club:"Man City",nation:"🇧🇪 بلجيكا",face:"🎯"},
+{name:"Bellingham",rating:91,pos:"CMF",club:"Real Madrid",nation:"🏴 إنجلترا",face:"⭐"},
+{name:"Pedri",rating:88,pos:"CMF",club:"Barcelona",nation:"🇪🇸 إسبانيا",face:"🎯"},
+
+{name:"Odegaard",rating:88,pos:"AMF",club:"Arsenal",nation:"🇳🇴 النرويج",face:"🎩"},
+{name:"Musiala",rating:88,pos:"AMF",club:"Bayern",nation:"🇩🇪 ألمانيا",face:"✨"},
+{name:"Wirtz",rating:87,pos:"AMF",club:"Leverkusen",nation:"🇩🇪 ألمانيا",face:"✨"},
+
+{name:"Salah",rating:89,pos:"RWF",club:"Liverpool",nation:"🇪🇬 مصر",face:"⚡"},
+{name:"Saka",rating:87,pos:"RWF",club:"Arsenal",nation:"🏴 إنجلترا",face:"⚡"},
+
+{name:"Vinicius Jr",rating:90,pos:"LWF",club:"Real Madrid",nation:"🇧🇷 البرازيل",face:"🔥"},
+{name:"Leao",rating:86,pos:"LWF",club:"AC Milan",nation:"🇵🇹 البرتغال",face:"🔥"},
+
+{name:"Mbappe",rating:92,pos:"CF",club:"Real Madrid",nation:"🇫🇷 فرنسا",face:"🚀"},
+{name:"Haaland",rating:91,pos:"CF",club:"Man City",nation:"🇳🇴 النرويج",face:"👹"},
+{name:"Kane",rating:90,pos:"CF",club:"Bayern",nation:"🏴 إنجلترا",face:"🎯"},
+{name:"Lautaro",rating:87,pos:"CF",club:"Inter",nation:"🇦🇷 الأرجنتين",face:"🔥"}
+
+];
+
+const POSITIONS=[
+"GK",
+"RB",
+"CB",
+"CB",
+"LB",
+"DMF",
+"CMF",
+"AMF",
+"RWF",
+"LWF",
+"CF"
+];
+
+const coaches=[
+"Pep Guardiola",
+"Carlo Ancelotti",
+"Jürgen Klopp",
+"José Mourinho",
+"Xabi Alonso",
+"Mikel Arteta"
+];
+
+
+/* =========================================================
+   حالة اللعبة
+========================================================= */
+
+let peer=null;
+let connection=null;
+let isHost=false;
+let mySide=null;
+
+let roomCode="";
+let blueName="";
+let redName="";
+
+let state={
+ phase:"room",
+
+ blue:{
+  name:"",
+  money:200,
+  team:[]
+ },
+
+ red:{
+  name:"",
+  money:200,
+  team:[]
+ },
+
+ queue:[],
+ index:0,
+ current:null,
+ bid:0,
+ bidder:null,
+ turn:1,
+ replacement:null,
+
+ coachBlue:"",
+ coachRed:"",
+
+ match:null
+};
+
+let used=new Set();
+
+
+/* =========================================================
+   أدوات
+========================================================= */
+
+function randomCode(){
+
+ let chars="abcdefghijklmnopqrstuvwxyz0123456789";
+ let code="";
+
+ for(let i=0;i<5;i++){
+  code+=chars[Math.floor(Math.random()*chars.length)];
+ }
+
+ return code;
+}
+
+
+function setStatus(text,online=false){
+
+ const el=document.getElementById("connectionStatus");
+
+ el.textContent=text;
+
+ el.className="status "+(online?"online":"offline");
+}
+
+
+function send(data){
+
+ if(connection && connection.open){
+
+  connection.send(data);
+
+ }
+
+}
+
+
+function broadcastState(){
+
+ if(!isHost)return;
+
+ send({
+  type:"STATE",
+  state:state
+ });
+
+ renderState();
+}
+
+
+/* =========================================================
+   إنشاء الغرفة
+========================================================= */
+
+function createRoom(){
+
+ let name=document.getElementById("name1").value.trim();
+
+ if(!name){
+
+  alert("اكتب اسم اللاعب الأول");
+
+  return;
+ }
+
+ isHost=true;
+ mySide="blue";
+
+ blueName=name;
+
+ state.blue.name=name;
+
+ state.red.name="";
+
+ roomCode=randomCode();
+
+ setStatus("🔌 جاري إنشاء الغرفة...",false);
+
+ peer=new Peer(roomCode);
+
+ peer.on("open",id=>{
+
+  document.getElementById("hostBox")
+  .classList.add("hidden");
+
+  document.getElementById("roomInfo")
+  .classList.remove("hidden");
+
+  document.getElementById("joinBox")
+  .classList.add("hidden");
+
+  document.getElementById("hostStart")
+  .classList.add("hidden");
+
+  document.getElementById("code").textContent=
+  roomCode.toUpperCase();
+
+  document.getElementById("p1room").textContent=
+  name;
+
+  setStatus(
+   "🟢 الغرفة جاهزة — انتظر اللاعب الثاني",
+   true
+  );
+
+ });
+
+ peer.on("connection",conn=>{
+
+  if(connection){
+
+   conn.close();
+
+   return;
+  }
+
+  connection=conn;
+
+  connection.on("open",()=>{
+
+   setStatus(
+    "🟢 اللاعب الثاني متصل",
+    true
+   );
+
+   send({
+    type:"WELCOME",
+    blueName:state.blue.name
+   });
+
+  });
+
+  connection.on("data",handleData);
+
+  connection.on("close",()=>{
+
+   setStatus(
+    "🔴 اللاعب الثاني خرج من الغرفة",
+    false
+   );
+
+  });
+
+ });
+
+ peer.on("error",err=>{
+
+  console.log(err);
+
+  setStatus(
+   "❌ خطأ في الاتصال: "+err.type,
+   false
+  );
+
+ });
+
+}
+
+
+/* =========================================================
+   دخول اللاعب الثاني
+========================================================= */
+
+function joinRoom(){
+
+ let code=document
+ .getElementById("roomCode")
+ .value
+ .trim()
+ .toLowerCase();
+
+ let name=document
+ .getElementById("name2")
+ .value
+ .trim();
+
+ if(code.length!==5){
+
+  alert("كود الغرفة لازم يكون 5 أحرف");
+
+  return;
+ }
+
+ if(!name){
+
+  alert("اكتب اسم اللاعب الثاني");
+
+  return;
+ }
+
+ mySide="red";
+ isHost=false;
+ roomCode=code;
+
+ setStatus(
+  "🔌 جاري الاتصال بالغرفة...",
+  false
+ );
+
+ peer=new Peer();
+
+ peer.on("open",()=>{
+
+  connection=peer.connect(roomCode,{
+   reliable:true
+  });
+
+  connection.on("open",()=>{
+
+   setStatus(
+    "🟢 تم الاتصال باللاعب الأول",
+    true
+   );
+
+   send({
+    type:"JOIN",
+    name:name
+   });
+
+  });
+
+  connection.on("data",handleData);
+
+  connection.on("close",()=>{
+
+   setStatus(
+    "🔴 انقطع الاتصال",
+    false
+   );
+
+  });
+
+ });
+
+ peer.on("error",err=>{
+
+  console.log(err);
+
+  alert(
+   "لم يتم العثور على الغرفة. تأكد من الكود."
+  );
+
+  setStatus(
+   "❌ فشل الاتصال",
+   false
+  );
+
+ });
+
+}
+
+
+/* =========================================================
+   استقبال البيانات
+========================================================= */
+
+function handleData(data){
+
+ if(!data)return;
+
+ /* دخول اللاعب الثاني */
+
+ if(data.type==="JOIN" && isHost){
+
+  if(state.red.name){
+
+   send({
+    type:"ERROR",
+    message:"الغرفة ممتلئة"
+   });
+
+   return;
+  }
+
+  if(data.name===state.blue.name){
+
+   send({
+    type:"ERROR",
+    message:"اختار اسم مختلف"
+   });
+
+   return;
+  }
+
+  state.red.name=data.name;
+
+  document.getElementById("p2room")
+  .textContent=data.name;
+
+  document.getElementById("hostStart")
+  .classList.remove("hidden");
+
+  setStatus(
+   "🟢 لاعبان متصلان — يمكن بدء اللعبة",
+   true
+  );
+
+  send({
+   type:"WELCOME",
+   blueName:state.blue.name,
+   redName:state.red.name
+  });
+
+  return;
+ }
+
+
+ /* ترحيب */
+
+ if(data.type==="WELCOME"){
+
+  state.blue.name=data.blueName||"";
+  state.red.name=data.redName||"";
+
+  if(mySide==="red"){
+
+   document.getElementById("hostBox")
+   .classList.add("hidden");
+
+   document.getElementById("roomInfo")
+   .classList.remove("hidden");
+
+   document.getElementById("joinBox")
+   .classList.add("hidden");
+
+   document.getElementById("p1room")
+   .textContent=state.blue.name;
+
+   document.getElementById("p2room")
+   .textContent=
+   document.getElementById("name2").value;
+
+  }
+
+  return;
+ }
+
+
+ /* خطأ */
+
+ if(data.type==="ERROR"){
+
+  alert(data.message);
+
+  return;
+ }
+
+
+ /* تحديث الحالة */
+
+ if(data.type==="STATE"){
+
+  state=data.state;
+
+  renderState();
+
+ }
+
+}
+
+
+/* =========================================================
+   بدء اللعبة
+========================================================= */
+
+function startGame(){
+
+ if(!isHost)return;
+
+ if(!state.blue.name || !state.red.name){
+
+  alert("لازم يدخل لاعبان");
+
+  return;
+ }
+
+ state.blue.money=200;
+ state.red.money=200;
+
+ state.blue.team=[];
+ state.red.team=[];
+
+ used.clear();
+
+ state.queue=[];
+
+ /*
+ نختار 11 لاعبا أساسيا
+ واحد لكل مركز
+ */
+
+ POSITIONS.forEach(pos=>{
+
+  let list=players.filter(
+   p=>p.pos===pos&&!used.has(p.name)
+  );
+
+  if(list.length){
+
+   let p={
+    ...list[
+     Math.floor(Math.random()*list.length)
+    ]
+   };
+
+   used.add(p.name);
+
+   state.queue.push(p);
+  }
+
+ });
+
+ state.index=0;
+
+ state.phase="auction";
+
+ state.current=null;
+
+ state.bid=0;
+
+ state.bidder=null;
+
+ state.turn=1;
+
+ state.replacement=null;
+
+ nextPlayerHost();
+
+}
+
+
+/* =========================================================
+   اللاعب التالي
+========================================================= */
+
+function nextPlayerHost(){
+
+ if(!isHost)return;
+
+ if(state.index>=state.queue.length){
+
+  finishTeamsHost();
+
+  return;
+ }
+
+ state.current={
+  ...state.queue[state.index]
+ };
+
+ state.bid=0;
+ state.bidder=null;
+ state.turn=1;
+ state.replacement=null;
+
+ broadcastState();
+}
+
+
+/* =========================================================
+   عرض اللاعب
+========================================================= */
+
+function showCurrent(){
+
+ if(!state.current)return;
+
+ let p=state.current;
+
+ document.getElementById("rating")
+ .textContent=p.rating;
+
+ document.getElementById("cardPos")
+ .textContent=p.pos;
+
+ document.getElementById("face")
+ .textContent=p.face;
+
+ document.getElementById("cardName")
+ .textContent=p.name;
+
+ document.getElementById("nation")
+ .textContent=p.nation;
+
+ document.getElementById("club")
+ .textContent=p.club;
+
+ document.getElementById("currentBid")
+ .textContent=state.bid;
+
+ document.getElementById("bidInput").value="";
+
+ let myTurn=
+ (state.turn===1 && mySide==="blue") ||
+ (state.turn===2 && mySide==="red");
+
+ document.getElementById("bidInput").disabled=
+ !myTurn;
+
+ document.querySelectorAll(".actions button")
+ .forEach(b=>b.disabled=!myTurn);
+
+ setTurn();
+
+}
+
+
+/* =========================================================
+   الدور
+========================================================= */
+
+function setTurn(){
+
+ let person=
+ state.turn===1?
+ state.blue.name:
+ state.red.name;
+
+ let auction=
+ document.getElementById("auction");
+
+ auction.classList.toggle(
+  "redAuction",
+  state.turn===2
+ );
+
+ let box=
+ document.getElementById("turnBox");
+
+ box.className=
+ "turn "+
+ (state.turn===1?
+ "turnBlue":
+ "turnRed");
+
+ box.textContent=
+ "🎯 دور "+person+" للمزايدة";
+
+ let min=
+ state.bid===0?
+ 1:
+ state.bid+1;
+
+ document.getElementById("bidInput")
+ .min=min;
+
+ document.getElementById("bidInput")
+ .placeholder=
+ state.bid===0?
+ "اكتب مزايدتك":
+ "أقل مزايدة "+min+"M";
+
+ document.getElementById("auctionMessage")
+ .textContent=
+ state.bid===0?
+ "أدخل المزايدة ثم اضغط OK":
+ "المزايدة الحالية "+
+ state.bid+
+ "M — لازم تزيد أو تضغط لا أريد";
+
+}
+
+
+/* =========================================================
+   المزايدة
+========================================================= */
+
+function bid(){
+
+ if(!isHost){
+
+  let amount=Number(
+   document.getElementById("bidInput").value
+  );
+
+  if(!amount){
+
+   alert("اكتب المزايدة");
+
+   return;
+  }
+
+  send({
+   type:"ACTION",
+   action:"BID",
+   amount:amount
+  });
+
+  return;
+ }
+
+ hostBid(
+  Number(
+   document.getElementById("bidInput").value
+  ),
+  1
+ );
+
+}
+
+
+/* =========================================================
+   تنفيذ المزايدة عند Host
+========================================================= */
+
+function hostBid(amount,side){
+
+ if(!isHost)return;
+
+ let player=
+ side===1?
+ state.blue:
+ state.red;
+
+ let min=
+ state.bid===0?
+ 1:
+ state.bid+1;
+
+ if(!amount){
+
+  return;
+ }
+
+ if(amount<min){
+
+  sendErrorToSide(
+   side,
+   "❌ أقل مزايدة مسموحة "+min+"M"
+  );
+
+  return;
+ }
+
+ if(amount>player.money){
+
+  sendErrorToSide(
+   side,
+   "❌ ميزانيتك "+player.money+"M فقط"
+  );
+
+  return;
+ }
+
+ if(side!==state.turn){
+
+  sendErrorToSide(
+   side,
+   "⏳ ليس دورك الآن"
+  );
+
+  return;
+ }
+
+ state.bid=amount;
+
+ state.bidder=side;
+
+ state.turn=
+ side===1?
+ 2:
+ 1;
+
+ broadcastState();
+
+}
+
+
+/* =========================================================
+   إرسال خطأ
+========================================================= */
+
+function sendErrorToSide(side,message){
+
+ if(side===2){
+
+  send({
+   type:"ALERT",
+   message:message
+  });
+
+ }else{
+
+  alert(message);
+
+ }
+
+}
+
+
+/* =========================================================
+   لا أريد
+========================================================= */
+
+function noWant(){
+
+ if(!isHost){
+
+  send({
+   type:"ACTION",
+   action:"NOWANT"
+  });
+
+  return;
+ }
+
+ hostNoWant(1);
+
+}
+
+
+/* =========================================================
+   تنفيذ لا أريد
+========================================================= */
+
+function hostNoWant(side){
+
+ if(!isHost)return;
+
+ if(side!==state.turn){
+
+  sendErrorToSide(
+   side,
+   "⏳ ليس دورك الآن"
+  );
+
+  return;
+ }
+
+
+ /*
+ إذا لم توجد مزايدة:
+ اللاعب الذي قال لا أريد يأخذ
+ لاعباً عشوائياً مجاناً.
+ */
+
+ if(!state.bidder){
+
+  let refusing=
+   side===1?
+   state.blue:
+   state.red;
+
+  let random=
+   getRandomPlayer(state.current.pos);
+
+  if(!random){
+
+   finishAuctionHost();
+
+   return;
+  }
+
+  state.replacement={
+   owner:side,
+   player:random,
+   winner:null,
+   price:0,
+   soldPlayer:null
+  };
+
+  state.phase="replacement";
+
+  broadcastState();
+
+  return;
+ }
+
+
+ /*
+ يوجد مزاد:
+ صاحب أعلى سعر يأخذ اللاعب.
+ والآخر يحصل على لاعب عشوائي مجانا.
+ */
+
+ let winnerSide=state.bidder;
+
+ let loserSide=
+  winnerSide===1?
+  2:
+  1;
+
+ let winner=
+  winnerSide===1?
+  state.blue:
+  state.red;
+
+ let loser=
+  loserSide===1?
+  state.blue:
+  state.red;
+
+ winner.money-=state.bid;
+
+ winner.team.push({
+  ...state.current
+ });
+
+ let random=
+  getRandomPlayer(state.current.pos);
+
+ if(random){
+
+  state.replacement={
+   owner:loserSide,
+   player:random,
+   winner:winnerSide,
+   price:state.bid,
+   soldPlayer:{
+    ...state.current
+   }
+  };
+
+  state.phase="replacement";
+
+ }else{
+
+  state.replacement=null;
+
+  state.index++;
+
+  state.phase="auction";
+ }
+
+ broadcastState();
+
+}
+
+
+/* =========================================================
+   اللاعب العشوائي
+========================================================= */
+
+function getRandomPlayer(pos){
+
+ let list=players.filter(
+  p=>p.pos===pos &&
+  !used.has(p.name)
+ );
+
+ if(!list.length){
+
+  return null;
+ }
+
+ let p={
+  ...list[
+   Math.floor(Math.random()*list.length)
+  ]
+ };
+
+ used.add(p.name);
+
+ return p;
+}
+
+
+/* =========================================================
+   تأكيد اللاعب العشوائي
+========================================================= */
+
+function confirmReplacement(){
+
+ if(!isHost){
+
+  send({
+   type:"ACTION",
+   action:"CONFIRM"
+  });
+
+  return;
+ }
+
+ hostConfirmReplacement();
+
+}
+
+
+/* =========================================================
+   تنفيذ التأكيد
+========================================================= */
+
+function hostConfirmReplacement(){
+
+ if(!isHost)return;
+
+ if(!state.replacement)return;
+
+ let r=state.replacement;
+
+ let owner=
+  r.owner===1?
+  state.blue:
+  state.red;
+
+ owner.team.push({
+  ...r.player
+ });
+
+ state.replacement=null;
+
+ state.index++;
+
+ state.phase="auction";
+
+ state.bid=0;
+ state.bidder=null;
+ state.turn=1;
+
+ nextPlayerHost();
+
+}
+
+
+/* =========================================================
+   استقبال الأوامر من اللاعب الثاني
+========================================================= */
+
+function processAction(data){
+
+ if(!isHost)return;
+
+ if(data.action==="BID"){
+
+  hostBid(data.amount,2);
+
+ }
+
+ if(data.action==="NOWANT"){
+
+  hostNoWant(2);
+
+ }
+
+ if(data.action==="CONFIRM"){
+
+  hostConfirmReplacement();
+
+ }
+
+ if(data.action==="MATCH"){
+
+  startMatchHost();
+
+ }
+
+}
+
+
+/* =========================================================
+   تعديل handleData لدعم ACTION
+========================================================= */
+
+const oldHandleData=handleData;
+
+handleData=function(data){
+
+ if(data && data.type==="ACTION"){
+
+  if(isHost){
+
+   processAction(data);
+
+  }
+
+  return;
+ }
+
+ if(data && data.type==="ALERT"){
+
+  alert(data.message);
+
+  return;
+ }
+
+ oldHandleData(data);
+
+};
+
+
+/* =========================================================
+   عرض نتيجة الاستبدال
+========================================================= */
+
+function showReplacement(){
+
+ let r=state.replacement;
+
+ if(!r)return;
+
+ let p=r.player;
+
+ document.getElementById("replaceScreen")
+ .classList.remove("hidden");
+
+ document.getElementById("gameScreen")
+ .classList.add("hidden");
+
+ let text="";
+
+ if(r.winner){
+
+  let winnerName=
+   r.winner===1?
+   state.blue.name:
+   state.red.name;
+
+  let loserName=
+   r.owner===1?
+   state.blue.name:
+   state.red.name;
+
+  text=
+   "🏆 "+winnerName+
+   " أخذ "+r.soldPlayer.name+
+   " بـ "+r.price+"M"+
+   "<br><br>"+
+   "🎁 "+loserName+
+   " أخذ "+p.name+
+   " عشوائياً مجاناً";
+
+ }else{
+
+  let ownerName=
+   r.owner===1?
+   state.blue.name:
+   state.red.name;
+
+  text=
+   "🎁 "+ownerName+
+   " لم يرد اللاعب"+
+   "<br><br>"+
+   "وحصل على "+p.name+
+   " مجاناً";
+ }
+
+ document.getElementById("transferText")
+ .innerHTML=text;
+
+ document.getElementById("replaceRating")
+ .textContent=p.rating;
+
+ document.getElementById("replacePos")
+ .textContent=p.pos;
+
+ document.getElementById("replaceFace")
+ .textContent=p.face;
+
+ document.getElementById("replaceName")
+ .textContent=p.name;
+
+ document.getElementById("replaceNation")
+ .textContent=p.nation;
+
+ document.getElementById("replaceClub")
+ .textContent=p.club;
+
+
+ let canConfirm=
+  isHost ||
+  r.owner===2;
+
+ document.getElementById("replacementOk")
+ .disabled=!canConfirm;
+
+}
+
+
+/* =========================================================
+   إنهاء المزاد
+========================================================= */
+
+function finishAuctionHost(){
+
+ state.index++;
+
+ state.phase="auction";
+
+ state.bid=0;
+ state.bidder=null;
+ state.turn=1;
+
+ nextPlayerHost();
+
+}
+
+
+/* =========================================================
+   إنهاء التشكيلات
+========================================================= */
+
+function finishTeamsHost(){
+
+ state.phase="coach";
+
+ state.coachBlue=
+ coaches[
+  Math.floor(Math.random()*coaches.length)
+ ];
+
+ state.coachRed=
+ coaches[
+  Math.floor(Math.random()*coaches.length)
+ ];
+
+ broadcastState();
+
+}
+
+
+/* =========================================================
+   عرض التشكيلات
+========================================================= */
+
+function renderAll(){
+
+ renderTeam(
+  state.blue,
+  document.getElementById("bluePitch")
+ );
+
+ renderTeam(
+  state.red,
+  document.getElementById("redPitch")
+ );
+
+}
+
+
+function renderTeam(team,pitch){
+
+ pitch.querySelectorAll(".fieldPlayer")
+ .forEach(x=>x.remove());
+
+ let cbCount=0;
+
+ team.team.forEach(player=>{
+
+  let pos=player.pos.toLowerCase();
+
+  if(player.pos==="CB"){
+
+   cbCount++;
+
+   pos=
+    cbCount===1?
+    "cb1":
+    "cb2";
+
+  }
+
+  let el=document.createElement("div");
+
+  el.className=
+   "fieldPlayer "+pos;
+
+  el.innerHTML=
+   '<div class="avatar">'+
+   player.face+
+   '</div>'+
+   '<div class="fieldName">'+
+   player.name+
+   '</div>';
+
+  pitch.appendChild(el);
+
+ });
+
+}
+
+
+/* =========================================================
+   المال
+========================================================= */
+
+function updateMoney(){
+
+ document.getElementById("budgetBlue")
+ .textContent=state.blue.money;
+
+ document.getElementById("budgetRed")
+ .textContent=state.red.money;
+
+}
+
+
+/* =========================================================
+   عرض الحالة كاملة
+========================================================= */
+
+function renderState(){
+
+ document.getElementById("nameBlue")
+ .textContent=state.blue.name;
+
+ document.getElementById("nameRed")
+ .textContent=state.red.name;
+
+ document.getElementById("p1room")
+ .textContent=state.blue.name;
+
+ document.getElementById("p2room")
+ .textContent=
+ state.red.name||"في الانتظار...";
+
+ updateMoney();
+
+ renderAll();
+
+
+ /* غرفة */
+
+ if(state.phase==="room"){
+
+  document.getElementById("roomScreen")
+  .classList.remove("hidden");
+
+  document.getElementById("gameScreen")
+  .classList.add("hidden");
+
+  document.getElementById("replaceScreen")
+  .classList.add("hidden");
+
+  document.getElementById("coachScreen")
+  .classList.add("hidden");
+
+  document.getElementById("matchScreen")
+  .classList.add("hidden");
+
+  return;
+ }
+
+
+ /* مزاد */
+
+ if(state.phase==="auction"){
+
+  document.getElementById("roomScreen")
+  .classList.add("hidden");
+
+  document.getElementById("gameScreen")
+  .classList.remove("hidden");
+
+  document.getElementById("replaceScreen")
+  .classList.add("hidden");
+
+  document.getElementById("coachScreen")
+  .classList.add("hidden");
+
+  document.getElementById("matchScreen")
+  .classList.add("hidden");
+
+  showCurrent();
+
+  return;
+ }
+
+
+ /* استبدال */
+
+ if(state.phase==="replacement"){
+
+  document.getElementById("roomScreen")
+  .classList.add("hidden");
+
+  document.getElementById("gameScreen")
+  .classList.add("hidden");
+
+  document.getElementById("coachScreen")
+  .classList.add("hidden");
+
+  document.getElementById("matchScreen")
+  .classList.add("hidden");
+
+  showReplacement();
+
+  return;
+ }
+
+
+ /* المدربين */
+
+ if(state.phase==="coach"){
+
+  document.getElementById("roomScreen")
+  .classList.add("hidden");
+
+  document.getElementById("gameScreen")
+  .classList.add("hidden");
+
+  document.getElementById("replaceScreen")
+  .classList.add("hidden");
+
+  document.getElementById("coachScreen")
+  .classList.remove("hidden");
+
+  document.getElementById("matchScreen")
+  .classList.add("hidden");
+
+  document.getElementById("coachBlue")
+  .textContent=state.coachBlue;
+
+  document.getElementById("coachRed")
+  .textContent=state.coachRed;
+
+  return;
+ }
+
+
+ /* المباراة */
+
+ if(state.phase==="match"){
+
+  document.getElementById("roomScreen")
+  .classList.add("hidden");
+
+  document.getElementById("gameScreen")
+  .classList.add("hidden");
+
+  document.getElementById("replaceScreen")
+  .classList.add("hidden");
+
+  document.getElementById("coachScreen")
+  .classList.add("hidden");
+
+  document.getElementById("matchScreen")
+  .classList.remove("hidden");
+
+  if(state.match){
+
+   renderMatch(state.match);
+
+  }
+
+ }
+
+}
+
+
+/* =========================================================
+   بدء المباراة
+========================================================= */
+
+function startMatch(){
+
+ if(!isHost){
+
+  send({
+   type:"ACTION",
+   action:"MATCH"
+  });
+
+  return;
+ }
+
+ startMatchHost();
+
+}
+
+
+function startMatchHost(){
+
+ if(!isHost)return;
+
+ state.phase="match";
+
+ state.match=null;
+
+ broadcastState();
+
+ setTimeout(()=>{
+
+  simulateMatch();
+
+ },1800);
+
+}
+
+
+/* =========================================================
+   محاكاة المباراة
+========================================================= */
+
+function simulateMatch(){
+
+ if(!isHost)return;
+
+ let bluePower=
+ state.blue.team.reduce(
+  (s,p)=>s+p.rating,0
+ )/
+ Math.max(1,state.blue.team.length);
+
+ let redPower=
+ state.red.team.reduce(
+  (s,p)=>s+p.rating,0
+ )/
+ Math.max(1,state.red.team.length);
+
+ let blueStrength=
+  bluePower+
+  (Math.random()*8-4);
+
+ let redStrength=
+  redPower+
+  (Math.random()*8-4);
+
+ let bluePoss=Math.round(
+  48+
+  (blueStrength-redStrength)*0.8
+ );
+
+ bluePoss=Math.max(
+  35,
+  Math.min(65,bluePoss)
+ );
+
+ let redPoss=100-bluePoss;
+
+ let shotBlue=Math.max(
+  4,
+  Math.round(
+   8+
+   blueStrength/7+
+   Math.random()*5
+  )
+ );
+
+ let shotRed=Math.max(
+  4,
+  Math.round(
+   8+
+   redStrength/7+
+   Math.random()*5
+  )
+ );
+
+ let onBlue=Math.max(
+  1,
+  Math.round(
+   shotBlue*
+   (.35+blueStrength/250)
+  )
+ );
+
+ let onRed=Math.max(
+  1,
+  Math.round(
+   shotRed*
+   (.35+redStrength/250)
+  )
+ );
+
+ let expectedBlue=
+  (onBlue/4)*
+  (blueStrength/88);
+
+ let expectedRed=
+  (onRed/4)*
+  (redStrength/88);
+
+ let goalBlue=Math.min(
+  5,
+  Math.floor(
+   Math.random()*
+   (expectedBlue+1.5)
+  )
+ );
+
+ let goalRed=Math.min(
+  5,
+  Math.floor(
+   Math.random()*
+   (expectedRed+1.5)
+  )
+ );
+
+ let passBlue=Math.round(
+  430+
+  bluePoss*3+
+  Math.random()*60
+ );
+
+ let passRed=Math.round(
+  430+
+  redPoss*3+
+  Math.random()*60
+ );
+
+ let accBlue=Math.round(
+  78+
+  (blueStrength-85)*.7+
+  Math.random()*7
+ );
+
+ let accRed=Math.round(
+  78+
+  (redStrength-85)*.7+
+  Math.random()*7
+ );
+
+ let attacksBlue=Math.round(
+  35+
+  blueStrength/2+
+  Math.random()*15
+ );
+
+ let attacksRed=Math.round(
+  35+
+  redStrength/2+
+  Math.random()*15
+ );
+
+ let events=[];
+
+ for(let i=0;i<goalBlue;i++){
+
+  events.push(
+   "⚽ 🔵 هدف! "+
+   state.blue.name+
+   " — سجله "+
+   randomScorer(state.blue)
+  );
+
+ }
+
+ for(let i=0;i<goalRed;i++){
+
+  events.push(
+   "⚽ 🔴 هدف! "+
+   state.red.name+
+   " — سجله "+
+   randomScorer(state.red)
+  );
+
+ }
+
+ if(bluePoss>redPoss){
+
+  events.push(
+   "🔵 "+
+   state.blue.name+
+   " سيطر على الاستحواذ "+
+   bluePoss+"%"
+  );
+
+ }else{
+
+  events.push(
+   "🔴 "+
+   state.red.name+
+   " سيطر على الاستحواذ "+
+   redPoss+"%"
+  );
+
+ }
+
+ events.push(
+  "🎯 التسديدات: 🔵 "+
+  shotBlue+
+  " مقابل 🔴 "+
+  shotRed
+ );
+
+ events.push(
+  "🧠 التمريرات: 🔵 "+
+  passBlue+
+  " مقابل 🔴 "+
+  passRed
+ );
+
+ let result="";
+
+ if(goalBlue>goalRed){
+
+  result=
+   "🏆 فاز "+
+   state.blue.name+
+   " بنتيجة "+
+   goalBlue+
+   " - "+
+   goalRed;
+
+ }else if(goalRed>goalBlue){
+
+  result=
+   "🏆 فاز "+
+   state.red.name+
+   " بنتيجة "+
+   goalRed+
+   " - "+
+   goalBlue;
+
+ }else{
+
+  result=
+   "🤝 تعادل "+
+   goalBlue+
+   " - "+
+   goalRed;
+
+ }
+
+ state.match={
+
+  goalBlue,
+  goalRed,
+
+  bluePoss,
+  redPoss,
+
+  shotBlue,
+  shotRed,
+
+  onBlue,
+  onRed,
+
+  passBlue,
+  passRed,
+
+  accBlue:
+   Math.max(
+    70,
+    Math.min(95,accBlue)
+   ),
+
+  accRed:
+   Math.max(
+    70,
+    Math.min(95,accRed)
+   ),
+
+  attacksBlue,
+  attacksRed,
+
+  events,
+  result
+ };
+
+ broadcastState();
+
+}
+
+
+/* =========================================================
+   عرض المباراة
+========================================================= */
+
+function renderMatch(m){
+
+ document.getElementById("matchStatus")
+ .textContent=
+ "✅ انتهت المباراة — تقرير AI جاهز";
+
+ document.getElementById("scoreBlue")
+ .textContent=m.goalBlue;
+
+ document.getElementById("scoreRed")
+ .textContent=m.goalRed;
+
+ document.getElementById("posBlue")
+ .textContent=m.bluePoss;
+
+ document.getElementById("posRed")
+ .textContent=m.redPoss;
+
+ document.getElementById("shotBlue")
+ .textContent=m.shotBlue;
+
+ document.getElementById("shotRed")
+ .textContent=m.shotRed;
+
+ document.getElementById("onBlue")
+ .textContent=m.onBlue;
+
+ document.getElementById("onRed")
+ .textContent=m.onRed;
+
+ document.getElementById("passBlue")
+ .textContent=m.passBlue;
+
+ document.getElementById("passRed")
+ .textContent=m.passRed;
+
+ document.getElementById("accBlue")
+ .textContent=m.accBlue;
+
+ document.getElementById("accRed")
+ .textContent=m.accRed;
+
+ document.getElementById("attBlue")
+ .textContent=m.attacksBlue;
+
+ document.getElementById("attRed")
+ .textContent=m.attacksRed;
+
+ document.getElementById("events")
+ .innerHTML=
+ m.events
+ .map(x=>"<div>"+x+"</div>")
+ .join("");
+
+ document.getElementById("winner")
+ .textContent=m.result;
+
+}
+
+
+/* =========================================================
+   هداف عشوائي
+========================================================= */
+
+function randomScorer(team){
+
+ let attackers=
+  team.team.filter(
+   p=>[
+    "CF",
+    "AMF",
+    "LWF",
+    "RWF"
+   ].includes(p.pos)
+  );
+
+ if(!attackers.length){
+
+  attackers=team.team;
+
+ }
+
+ if(!attackers.length){
+
+  return "لاعب";
+ }
+
+ return attackers[
+  Math.floor(
+   Math.random()*attackers.length
+  )
+ ].name;
+
+}
+
+
+/* =========================================================
+   أزرار اللاعب الثاني
+========================================================= */
+
+document
+ .getElementById("bidInput")
+ .addEventListener("keydown",e=>{
+
+  if(e.key==="Enter"){
+
+   bid();
+
+  }
+
+ });
+
+
+/* =========================================================
+   تحديث تلقائي
+========================================================= */
+
+setInterval(()=>{
+
+ if(
+  connection &&
+  !connection.open
+ ){
+
+  setStatus(
+   "🔴 الاتصال غير متاح",
+   false
+  );
+
+ }
+
+},5000);
+
+</script>
+
+</body>
+</html>
