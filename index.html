@@ -1,63 +1,1544 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>FC Auction Online - Fixed</title>
+<title>LAST MINUTE ⚽</title>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#02070d;color:#fff;font-family:Arial,Tahoma,sans-serif;padding:7px}.app{max-width:1200px;margin:auto}.card{background:#0a1420;border:1px solid #29445e;border-radius:16px;padding:10px;margin:7px 0}h1{text-align:center;margin:4px 0;font-size:clamp(24px,7vw,40px)}.sub{text-align:center;color:#9fb1c3;font-size:12px}.status{padding:9px;border-radius:11px;background:#12243a;text-align:center;font-weight:900}.ok{background:#063a29;color:#55efae}.bad{background:#461821;color:#ffb7bf}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:700px){.grid{grid-template-columns:1fr}}input{width:100%;padding:12px;margin-top:6px;border-radius:11px;border:1px solid #38536c;background:#06131f;color:#fff;font-size:16px}button{width:100%;padding:12px;margin-top:7px;border:0;border-radius:11px;font-weight:900;cursor:pointer;background:#20df91;color:#06101b}.blue{background:#1688ff;color:#fff}.red{background:#ff566b;color:#fff}.dark{background:#193048;color:#fff}button:disabled{opacity:.35;cursor:not-allowed}.hidden{display:none!important}.roomcode{text-align:center;font-size:28px;color:#54efae;font-weight:1000;letter-spacing:5px}.arena{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:8px}@media(max-width:950px){.arena{grid-template-columns:1fr}.side{min-height:350px!important}}.side{min-height:560px;padding:8px;border-radius:17px;border:2px solid}.bs{background:#062d58;border-color:#1688ff}.rs{background:#58162c;border-color:#ff566b}.side h3{text-align:center;margin:3px}.money{text-align:center;color:#54efae;font-size:20px;font-weight:1000}.pitch{position:relative;height:500px;border-radius:13px;overflow:hidden;background:linear-gradient(90deg,#0b6b35 50%,#086130 50%);border:2px solid #fff5}.line{position:absolute;inset:8px;border:2px solid #ffffff70}.half{position:absolute;left:0;right:0;top:50%;border-top:2px solid #fff8}.circle{position:absolute;width:70px;height:70px;border:2px solid #fff8;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}.pos{position:absolute;transform:translate(-50%,-50%);width:58px;text-align:center;font-size:7px;font-weight:900}.slot{width:52px;min-height:55px;background:#061522dd;border:1px solid #fff6;border-radius:8px;margin:auto;padding:2px}.slot img{width:31px;height:31px;object-fit:cover;border-radius:50%;display:block;margin:auto}.slot b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:6px}.gk{left:50%;top:91%}.rb{left:82%;top:78%}.cb1{left:61%;top:74%}.cb2{left:39%;top:74%}.lb{left:18%;top:78%}.dmf{left:50%;top:62%}.cmf{left:50%;top:50%}.amf{left:50%;top:37%}.rwf{left:76%;top:24%}.lwf{left:24%;top:24%}.cf{left:50%;top:12%}.center{background:#07111c;border:2px solid #315673;border-radius:17px;padding:9px;text-align:center;min-height:560px}.turnBlue{border-color:#1688ff!important;box-shadow:0 0 22px #1688ff66}.turnRed{border-color:#ff566b!important;box-shadow:0 0 22px #ff566b66}.fc{width:min(280px,95%);margin:5px auto;background:linear-gradient(145deg,#f0d27b,#76501b 48%,#d7b65c);color:#211605;border:3px solid #f8df91;border-radius:15px;padding:9px}.fc img{width:125px;height:125px;display:block;margin:8px auto;object-fit:cover;border-radius:50%;background:#10263b;border:3px solid #fae9a9}.fcname{font-size:19px;font-weight:1000}.price{font-size:28px;color:#54efae;font-weight:1000}.turn{padding:7px;border-radius:10px;background:#172534;margin:5px 0;font-weight:900}.progress{display:grid;grid-template-columns:repeat(11,1fr);gap:2px}.dot{height:5px;background:#23384d;border-radius:8px}.done{background:#54efae}.cur{background:#ffd54a}.results{display:grid;grid-template-columns:1fr 1fr;gap:7px}.result{background:#111f2f;border-radius:12px;padding:7px}.result img{width:75px;height:75px;object-fit:cover;border-radius:50%}.toast{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:#111f2e;border:1px solid #36546e;border-radius:12px;padding:10px 14px;z-index:20;display:none;max-width:92%;text-align:center;font-weight:900}.info{color:#a9bdce;font-size:12px;line-height:1.6}.playersList{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}.playerMini{background:#101f30;border-radius:10px;padding:6px;font-size:11px}@media(max-width:500px){.playersList{grid-template-columns:1fr}}.wait{padding:15px;text-align:center;color:#ffd54a;font-weight:900}.timer{font-size:12px;color:#a8bdcf;margin-top:4px}.historyBox{max-height:160px;overflow:auto;text-align:right;font-size:11px}.historyItem{padding:5px;border-bottom:1px solid #23394d}.free{color:#54efae}.win{color:#ffd54a}.winner{color:#54efae;font-weight:1000}.warning{color:#ffd54a}.log{font-size:12px;color:#9fb1c3;text-align:right;max-height:150px;overflow:auto}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:
+ radial-gradient(circle at top,#153f35,#071412 65%);
+ color:white;
+ min-height:100vh;
+}
+
+button,input{
+ font:inherit;
+}
+
+button{
+ border:0;
+ cursor:pointer;
+}
+
+#app{
+ max-width:700px;
+ margin:auto;
+ padding:15px;
+}
+
+.logo{
+ text-align:center;
+ font-size:34px;
+ font-weight:900;
+ margin:10px 0 3px;
+}
+
+.logo span{color:#39ff88}
+
+.subtitle{
+ text-align:center;
+ color:#a8c5b7;
+ margin-bottom:20px;
+}
+
+.card{
+ background:rgba(255,255,255,.07);
+ border:1px solid rgba(255,255,255,.1);
+ border-radius:22px;
+ padding:18px;
+ margin-bottom:15px;
+ box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+input{
+ width:100%;
+ padding:15px;
+ border-radius:14px;
+ border:1px solid #35564a;
+ background:#081713;
+ color:white;
+ outline:none;
+ margin-bottom:10px;
+ text-align:center;
+}
+
+.mainBtn{
+ width:100%;
+ padding:16px;
+ border-radius:15px;
+ background:linear-gradient(135deg,#18e878,#0bb95e);
+ color:#04120c;
+ font-weight:900;
+ margin-top:8px;
+}
+
+.secondary{
+ background:#172923;
+ color:white;
+ border:1px solid #35564a;
+}
+
+.hidden{display:none!important}
+
+.roomCode{
+ font-size:38px;
+ letter-spacing:7px;
+ font-weight:900;
+ text-align:center;
+ color:#4dff9a;
+ margin:10px;
+}
+
+.status{
+ text-align:center;
+ color:#b8d6c9;
+ margin:10px 0;
+}
+
+.score{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ background:#06100d;
+ padding:15px;
+ border-radius:18px;
+}
+
+.team{
+ text-align:center;
+ width:40%;
+}
+
+.teamName{
+ font-size:14px;
+ color:#a5c2b5;
+}
+
+.goals{
+ font-size:42px;
+ font-weight:900;
+}
+
+.vs{
+ color:#48ff95;
+ font-weight:900;
+}
+
+.clock{
+ text-align:center;
+ font-size:25px;
+ font-weight:900;
+ margin:15px;
+ color:#ffe66d;
+}
+
+.event{
+ text-align:center;
+ font-size:22px;
+ font-weight:900;
+ margin:12px 0;
+}
+
+.turn{
+ text-align:center;
+ background:#0e251d;
+ border-radius:14px;
+ padding:12px;
+ color:#70ffae;
+ font-weight:bold;
+}
+
+.actions{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+ margin-top:15px;
+}
+
+.action{
+ min-height:85px;
+ border-radius:17px;
+ background:linear-gradient(145deg,#15392d,#0c211a);
+ color:white;
+ border:1px solid #315c4b;
+ font-weight:900;
+ font-size:17px;
+}
+
+.action small{
+ display:block;
+ color:#9bbbae;
+ margin-top:5px;
+ font-size:12px;
+}
+
+.action:disabled{
+ opacity:.35;
+}
+
+.powerTitle{
+ margin-top:18px;
+ color:#d5eee2;
+ font-weight:bold;
+}
+
+.powers{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:8px;
+ margin-top:10px;
+}
+
+.power{
+ padding:12px 5px;
+ border-radius:13px;
+ background:#241f0b;
+ color:#ffe76b;
+ border:1px solid #665820;
+ font-size:13px;
+ font-weight:bold;
+}
+
+.power:disabled{
+ opacity:.3;
+}
+
+.log{
+ max-height:160px;
+ overflow:auto;
+ margin-top:15px;
+ background:#050c09;
+ border-radius:15px;
+ padding:10px;
+}
+
+.log div{
+ padding:7px;
+ border-bottom:1px solid rgba(255,255,255,.05);
+ font-size:13px;
+}
+
+.wait{
+ text-align:center;
+ padding:25px;
+ color:#a9c7ba;
+}
+
+.result{
+ text-align:center;
+ padding:25px 10px;
+}
+
+.result h1{
+ font-size:40px;
+ margin:5px;
+}
+
+.bigEmoji{
+ font-size:65px;
+}
+
+.nameInput{
+ display:flex;
+ gap:8px;
+}
+
+.nameInput input{
+ margin:0;
+}
+
+@media(max-width:450px){
+ .logo{font-size:29px}
+ .action{font-size:15px}
+ .goals{font-size:35px}
+}
 </style>
 </head>
-<body><div class="app">
-<h1>⚽ FC AUCTION ONLINE</h1><div class="sub">نظام مزايدة بالتناوب: اللاعب الأول يزايد ثم الثاني ثم الأول وهكذا</div>
-<div id="status" class="status">جاري الاتصال...</div>
-<section id="home" class="card"><h2>🏠 إنشاء أو دخول غرفة</h2><div class="grid"><div><input id="name1" placeholder="اسم اللاعب الأول"><button class="blue" onclick="createRoom()">➕ إنشاء غرفة</button></div><div><input id="name2" placeholder="اسم اللاعب الثاني"><input id="code" maxlength="6" placeholder="كود الغرفة"><button class="red" onclick="joinRoom()">🚪 دخول لاعب ثاني</button></div></div><div class="card info"><b>طريقة اللعب:</b><br>1. اللاعب الأول ينشئ الغرفة ويرسل الكود.<br>2. اللاعب الثاني يدخل بالكود.<br>3. اللاعب الأول يبدأ اللعبة.<br>4. يظهر لاعب، ثم تتناوب المزايدة بين اللاعبين.<br>5. إذا لم توجد مزايدة ثم انسحب اللاعب، يأخذ اللاعب الحالي اللاعب مجاناً.<br>6. إذا كانت هناك مزايدة، آخر مزايد يشتري اللاعب والآخر يأخذ اللاعب الاحتياطي مجاناً.<br>7. بعد الحسم يبدأ المزاد التالي تلقائياً بدون زر OK وبدون تعليق.</div></section>
-<section id="room" class="hidden"><div id="setup" class="card"><div>كود الغرفة</div><div id="roomCode" class="roomcode">------</div><div id="players" class="grid"></div><div id="pool" class="card"></div><div id="scenarioPreview" class="card hidden"><h3>🎲 قائمة اللاعبين</h3><div id="previewPlayers" class="playersList"></div></div><button id="start" class="hidden" onclick="startGame()">▶️ بدء اللعبة</button></div>
-<div id="game" class="hidden"><div id="scenario" class="card" style="text-align:center;font-weight:900"></div><div class="arena">
-<div class="side bs"><h3>🔵 <span id="bn"></span></h3><div id="bm" class="money">200M</div><div id="bp" class="pitch"></div></div>
-<div id="auction" class="center"><div>⚡ مزاد اللاعب</div><div id="progress" class="progress"></div><div class="fc"><div id="position">GK</div><img id="photo"><div id="pname" class="fcname">—</div><div id="meta">—</div></div><div id="price" class="price">0M</div><div id="turn" class="turn">—</div><div id="timer" class="timer">—</div><input id="bid" type="number" min="1" placeholder="مبلغ المزايدة"><button id="bidBtn" onclick="bid()">💰 زايد</button><button id="passBtn" class="dark" onclick="pass()">↩️ انسحاب / حسم الدور</button><div id="auctionInfo" class="info"></div></div>
-<div class="side rs"><h3>🔴 <span id="rn"></span></h3><div id="rm" class="money">200M</div><div id="rp" class="pitch"></div></div></div>
-<div id="finish" class="card hidden"><div id="score"></div><div id="history" class="historyBox"></div><button id="next" class="blue hidden" onclick="newScenario()">🎲 قائمة جديدة بـ22 لاعباً مختلفاً</button></div>
-</div></section></div><div id="toast" class="toast"></div>
+
+<body>
+
+<div id="app">
+
+  <div class="logo">⚽ LAST <span>MINUTE</span></div>
+  <div class="subtitle">المباراة التي يمكن أن تنقلب في آخر ثانية 🔥</div>
+
+  <!-- HOME -->
+  <div id="home">
+
+    <div class="card">
+      <h2>👤 اسمك</h2>
+
+      <div class="nameInput">
+        <input id="playerName" maxlength="14" placeholder="اكتب اسمك">
+      </div>
+
+      <button class="mainBtn" onclick="createRoom()">
+        🏟️ إنشاء غرفة
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>🚪 عندك كود الغرفة؟</h3>
+
+      <input id="joinCode"
+             maxlength="5"
+             placeholder="مثال: A7K92"
+             style="text-transform:uppercase">
+
+      <button class="mainBtn secondary" onclick="joinRoom()">
+        ⚔️ دخول للغرفة
+      </button>
+    </div>
+
+    <div class="card">
+      <b>🎮 كيف تلعب؟</b>
+      <p>أنت تختار الهجوم، وصديقك يختار الدفاع.</p>
+      <p>كل جولة يمكن أن تغير نتيجة المباراة.</p>
+      <p>استعمل قدراتك في الوقت المناسب 😈</p>
+    </div>
+
+  </div>
+
+
+  <!-- LOBBY -->
+  <div id="lobby" class="hidden">
+
+    <div class="card">
+      <h2 style="text-align:center">🏟️ الغرفة جاهزة</h2>
+
+      <div class="roomCode" id="roomCode"></div>
+
+      <p class="status">
+        أرسل هذا الكود لصديقك
+      </p>
+
+      <div id="lobbyPlayers"></div>
+
+      <button id="startBtn"
+              class="mainBtn hidden"
+              onclick="startGame()">
+        🚀 ابدأ المباراة
+      </button>
+
+      <div id="waitingText" class="wait">
+        ⏳ ننتظر اللاعب الثاني...
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- GAME -->
+  <div id="game" class="hidden">
+
+    <div class="score">
+
+      <div class="team">
+        <div class="teamName" id="name1">لاعب 1</div>
+        <div class="goals" id="score1">0</div>
+      </div>
+
+      <div class="vs">VS</div>
+
+      <div class="team">
+        <div class="teamName" id="name2">لاعب 2</div>
+        <div class="goals" id="score2">0</div>
+      </div>
+
+    </div>
+
+    <div class="clock" id="clock">00:00</div>
+
+    <div class="card">
+
+      <div class="event" id="event">
+        المباراة تبدأ...
+      </div>
+
+      <div class="turn" id="turnText">
+        ⏳ انتظر...
+      </div>
+
+      <div id="actionsArea"></div>
+
+      <div class="powerTitle">🃏 قدراتك</div>
+
+      <div class="powers">
+
+        <button class="power" id="pGoal"
+                onclick="usePower('goal')">
+          🎯 قناص
+        </button>
+
+        <button class="power" id="pKeeper"
+                onclick="usePower('keeper')">
+          🧤 حارس
+        </button>
+
+        <button class="power" id="pTurbo"
+                onclick="usePower('turbo')">
+          ⚡ Turbo
+        </button>
+
+        <button class="power" id="pSpy"
+                onclick="usePower('spy')">
+          🕵️ كشف
+        </button>
+
+        <button class="power" id="pChaos"
+                onclick="usePower('chaos')">
+          💥 فوضى
+        </button>
+
+        <button class="power" id="pRed"
+                onclick="usePower('red')">
+          🟥 ضغط الحكم
+        </button>
+
+      </div>
+
+      <div class="log" id="gameLog"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- RESULT -->
+  <div id="result" class="hidden">
+
+    <div class="card result">
+
+      <div class="bigEmoji" id="resultEmoji">🏆</div>
+
+      <h1 id="resultTitle">فوز!</h1>
+
+      <p id="resultScore"></p>
+
+      <button class="mainBtn" onclick="location.reload()">
+        🔄 مباراة جديدة
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
 <script>
-const firebaseConfig={apiKey:"AIzaSyAGKh-bNXYBVbv0BcIIxi8IHR4a0leSA",authDomain:"fc-auction-online.firebaseapp.com",databaseURL:"https://fc-auction-online-default-rtdb.europe-west1.firebasedatabase.app",projectId:"fc-auction-online",storageBucket:"fc-auction-online.firebasestorage.app",messagingSenderId:"131249827121",appId:"1:249827121:web:eae71599ef1f8fda28d410"};
-firebase.initializeApp(firebaseConfig);const db=firebase.database();
-const RAW_PLAYERS=[
-["GK","Courtois","Real Madrid"],["GK","Ederson","Manchester City"],["GK","Alisson","Liverpool"],["GK","Neuer","Bayern Munich"],["GK","Donnarumma","PSG"],["GK","Oblak","Atletico Madrid"],["GK","Ter Stegen","Barcelona"],["GK","Maignan","AC Milan"],
-["RB","Alexander-Arnold","Liverpool"],["RB","Walker","Manchester City"],["RB","Hakimi","PSG"],["RB","Carvajal","Real Madrid"],["RB","Frimpong","Leverkusen"],["RB","Trippier","Newcastle"],["RB","Pedro Porro","Tottenham"],["RB","James","Chelsea"],
-["CB","Van Dijk","Liverpool"],["CB","Ruben Dias","Manchester City"],["CB","Saliba","Arsenal"],["CB","Militao","Real Madrid"],["CB","Araujo","Barcelona"],["CB","Marquinhos","PSG"],["CB","De Ligt","Manchester United"],["CB","Bastoni","Inter"],["CB","Stones","Manchester City"],["CB","Konate","Liverpool"],["CB","Gvardiol","Manchester City"],["CB","Bremer","Juventus"],["CB","Pau Torres","Aston Villa"],["CB","Kim Min-Jae","Bayern Munich"],["CB","Upamecano","Bayern Munich"],["CB","Gabriel","Arsenal"],
-["LB","Theo Hernandez","AC Milan"],["LB","Alphonso Davies","Bayern Munich"],["LB","Robertson","Liverpool"],["LB","Cancelo","Barcelona"],["LB","Nuno Mendes","PSG"],["LB","Estupinan","Brighton"],["LB","Shaw","Manchester United"],["LB","Grimaldo","Leverkusen"],
-["DMF","Rodri","Manchester City"],["DMF","Rice","Arsenal"],["DMF","Tchouameni","Real Madrid"],["DMF","Casemiro","Manchester United"],["DMF","Kimmich","Bayern Munich"],["DMF","Zubimendi","Real Sociedad"],["DMF","Palhinha","Bayern Munich"],["DMF","Caicedo","Chelsea"],
-["CMF","De Bruyne","Manchester City"],["CMF","Modric","Real Madrid"],["CMF","Pedri","Barcelona"],["CMF","Valverde","Real Madrid"],["CMF","Bellingham","Real Madrid"],["CMF","Gundogan","Barcelona"],["CMF","Bruno Fernandes","Manchester United"],["CMF","Bernardo Silva","Manchester City"],
-["AMF","Odegaard","Arsenal"],["AMF","Musiala","Bayern Munich"],["AMF","Wirtz","Leverkusen"],["AMF","Foden","Manchester City"],["AMF","Palmer","Chelsea"],["AMF","Maddison","Tottenham"],["AMF","Olmo","Barcelona"],["AMF","Mkhitaryan","Inter"],
-["RWF","Salah","Liverpool"],["RWF","Saka","Arsenal"],["RWF","Mahrez","Al Ahli"],["RWF","Yamal","Barcelona"],["RWF","Bowen","West Ham"],["RWF","Kulusevski","Tottenham"],["RWF","Rodrygo","Real Madrid"],["RWF","Dembele","PSG"],
-["LWF","Vinicius Jr","Real Madrid"],["LWF","Rafael Leao","AC Milan"],["LWF","Son","Tottenham"],["LWF","Kvaratskhelia","Napoli"],["LWF","Luis Diaz","Liverpool"],["LWF","Martinelli","Arsenal"],["LWF","Grealish","Manchester City"],["LWF","Coman","Bayern Munich"],
-["CF","Mbappe","Real Madrid"],["CF","Haaland","Manchester City"],["CF","Kane","Bayern Munich"],["CF","Lewandowski","Barcelona"],["CF","Osimhen","Napoli"],["CF","Lautaro Martinez","Inter"],["CF","Benzema","Al Ittihad"],["CF","Vlahovic","Juventus"]];
-function makeAvatar(name,position){const initials=String(name).split(" ").filter(Boolean).slice(0,2).map(x=>x[0]).join("").toUpperCase();const colors={GK:"#ffcf33",RB:"#1688ff",CB:"#355cde",LB:"#1688ff",DMF:"#12b886",CMF:"#20df91",AMF:"#b76cff",RWF:"#ff8c42",LWF:"#ff5d8f",CF:"#ff566b"};const c=colors[position]||"#1688ff";const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="200" height="200" rx="100" fill="#07111c"/><circle cx="100" cy="100" r="92" fill="${c}"/><circle cx="100" cy="100" r="82" fill="#07111c"/><text x="100" y="115" text-anchor="middle" font-family="Arial" font-size="62" font-weight="900" fill="${c}">${initials}</text></svg>`;return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg)}
-const PLAYERS=RAW_PLAYERS.map((x,i)=>({id:"local_"+i,name:x[1],position:x[0],club:x[2],nationality:"⭐",image:makeAvatar(x[1],x[0])}));
-const FORM=[["GK","gk"],["RB","rb"],["CB","cb1"],["CB","cb2"],["LB","lb"],["DMF","dmf"],["CMF","cmf"],["AMF","amf"],["RWF","rwf"],["LWF","lwf"],["CF","cf"]];
-const POS=["GK","RB","CB","LB","DMF","CMF","AMF","RWF","LWF","CF"];const NEED={GK:2,RB:2,CB:4,LB:2,DMF:2,CMF:2,AMF:2,RWF:2,LWF:2,CF:2};
-let id=localStorage.fcAuctionId||(localStorage.fcAuctionId="p_"+Math.random().toString(36).slice(2)+Date.now());let ref=null,code="",side="",host=false,room=null;let starting=false,resolving=false;
-const $=x=>document.getElementById(x);function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}function toast(t){$("toast").textContent=t;$("toast").style.display="block";clearTimeout(window.tt);window.tt=setTimeout(()=>$("toast").style.display="none",3000)}function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}function other(x){return x==="blue"?"red":"blue"}
-function makeScenario(history=[]){const used=new Set(history),out=[];for(const pos of POS){const a=shuffle(PLAYERS.filter(p=>p.position===pos&&!used.has(p.id)));if(a.length<NEED[pos])return null;out.push(...a.slice(0,NEED[pos]))}return shuffle(out)}
-async function createRoom(){const name=$("name1").value.trim();if(!name)return toast("اكتب اسم اللاعب الأول");try{code=Math.random().toString(36).slice(2,8).toUpperCase();side="blue";host=true;ref=db.ref("rooms/"+code);await ref.set({status:"waiting",players:{blue:{id,name,budget:200,team:{}},red:null},scenario:[],history:[],scenarioNo:0,index:0,used:[],auction:null});listen();showRoom();toast("✅ تم إنشاء الغرفة: "+code)}catch(e){console.error(e);toast("❌ تعذر إنشاء الغرفة")}}
-async function joinRoom(){const name=$("name2").value.trim(),c=$("code").value.trim().toUpperCase();if(!name||!c)return toast("أكمل الاسم والكود");try{const r=db.ref("rooms/"+c),s=await r.once("value");if(!s.exists())return toast("❌ الغرفة غير موجودة");if(s.val().players?.red)return toast("❌ الغرفة ممتلئة");code=c;side="red";host=false;ref=r;await r.child("players/red").set({id,name,budget:200,team:{}});await r.update({status:"ready"});listen();showRoom();toast("✅ دخلت الغرفة")}catch(e){console.error(e);toast("❌ حدث خطأ أثناء الدخول")}}
-function listen(){if(!ref)return;ref.off();ref.on("value",s=>{room=s.val();render();if(host&&room?.status==="playing"&&!room.auction&&!starting)maybeStartNext()})}function showRoom(){$("home").classList.add("hidden");$("room").classList.remove("hidden");$("roomCode").textContent=code}
-async function startGame(){if(!host||!room?.players?.red)return toast("انتظر اللاعب الثاني");const scenario=makeScenario(room.history||[]);if(!scenario)return toast("❌ لا يوجد عدد كافٍ من اللاعبين المختلفين");const history=[...(room.history||[]),...scenario.map(p=>p.id)];await ref.update({status:"playing",scenario,history,scenarioNo:Number(room.scenarioNo||0)+1,index:0,used:[],auction:null,players:{blue:{...room.players.blue,budget:200,team:{}},red:{...room.players.red,budget:200,team:{}}}});toast("🎲 بدأت اللعبة — أول دور للأزرق");maybeStartNext()}
-async function maybeStartNext(){if(!host||starting||!room||room.status!=="playing"||room.auction)return;starting=true;try{const ok=await ref.transaction(r=>{if(!r||r.status!=="playing"||r.auction)return r;if(Number(r.index||0)>=11){r.status="finished";return r}const pos=FORM[Number(r.index)][0];const used=new Set(r.used||[]);const candidates=(r.scenario||[]).filter(p=>p.position===pos&&!used.has(p.id));if(candidates.length<2){r.status="finished";return r}const chosen=shuffle(candidates).slice(0,2);r.auction={player:chosen[0],reserve:chosen[1],position:pos,price:0,highest:null,active:true,turn:"blue",turnAt:Date.now()+900};return r},{applyLocally:false});if(!ok.committed){} }catch(e){console.error(e)}finally{starting=false}}
-async function bid(){if(!side||!room?.auction||room.auction.turn!==side)return toast("ليس دورك الآن");const value=Number($("bid").value);if(!Number.isFinite(value)||value<=0)return toast("اكتب مبلغاً صحيحاً");const result=await ref.transaction(r=>{if(!r||r.status!=="playing"||!r.auction)return r;const a=r.auction;if(a.turn!==side)return r;if(Date.now()<Number(a.turnAt||0))return r;const me=r.players?.[side];if(!me||value<=Number(a.price||0)||value>Number(me.budget||0)||Object.keys(me.team||{}).length>=11)return r;a.price=value;a.highest=side;a.turn=other(side);a.turnAt=Date.now()+1800;return r},{applyLocally:false});$("bid").value="";if(result.committed)toast("💰 تمت المزايدة — الدور انتقل للاعب الآخر")}
-async function pass(auto=false){if(resolving||!room?.auction)return;if(!auto&&room.auction.turn!==side)return toast("ليس دورك الآن");if(!auto&&Date.now()<Number(room.auction.turnAt||0))return toast("انتظر حتى يبدأ دورك");resolving=true;try{const result=await ref.transaction(r=>{if(!r||r.status!=="playing"||!r.auction)return r;const a=r.auction;if(!auto&&a.turn!==side)return r;if(!auto&&Date.now()<Number(a.turnAt||0))return r;const highest=a.highest;const winner=highest||side;const loser=highest?other(highest):null;const winnerPlayer=a.player;const reserve=a.reserve;const pos=a.position;const w=r.players?.[winner];if(!w)return r;function add(team,p){team={...(team||{})};if(pos==="CB"){if(!team.CB1)team.CB1=p;else if(!team.CB2)team.CB2=p;else return null}else{if(team[pos])return null;team[pos]=p}return team}const wt=add(w.team,winnerPlayer);if(!wt)return r;w.team=wt;if(highest)w.budget=Number(w.budget||0)-Number(a.price||0);r.used=[...(r.used||[]),winnerPlayer.id];if(loser){const l=r.players[loser];const lt=add(l.team,reserve);if(lt){l.team=lt;r.used.push(reserve.id)}}r.used=[...new Set(r.used)];r.index=Number(r.index||0)+1;r.auction=null;if(r.index>=11)r.status="finished";return r},{applyLocally:false});if(result.committed){toast("✅ تم الحسم — المزاد التالي سيبدأ تلقائياً")}}catch(e){console.error(e);toast("❌ خطأ أثناء حسم المزاد")}finally{resolving=false}}
-async function newScenario(){if(!host||room?.status!=="finished")return;const scenario=makeScenario(room.history||[]);if(!scenario)return toast("⚠️ لا توجد 22 لاعباً جديداً في القاعدة");const history=[...(room.history||[]),...scenario.map(p=>p.id)];await ref.update({status:"playing",scenario,history,scenarioNo:Number(room.scenarioNo||0)+1,index:0,used:[],auction:null,players:{blue:{...room.players.blue,budget:200,team:{}},red:{...room.players.red,budget:200,team:{}}}});maybeStartNext()}
-function addPitch(team,p,pos){if(pos==="CB"){if(!team.CB1)team.CB1=p;else if(!team.CB2)team.CB2=p}else team[pos]=p}
-function pitch(team){let h='<div class="line"><div class="half"></div><div class="circle"></div></div>';for(const [pos,css] of FORM){let p=css==="cb1"?team?.CB1:css==="cb2"?team?.CB2:team?.[pos];h+=`<div class="pos ${css}"><div>${pos}</div><div class="slot">${p?`<img src="${esc(p.image)}"><b>${esc(p.name)}</b>`:"—"}</div></div>`}return h}
-function render(){if(!room)return;const b=room.players?.blue,r=room.players?.red;if(room.status==="waiting"||room.status==="ready"){$("setup").classList.remove("hidden");$("game").classList.add("hidden");$("players").innerHTML=`<div class="card">🔵 <b>${esc(b?.name||"—")}</b><br><small>${b?"جاهز":"—"}</small></div><div class="card">🔴 <b>${esc(r?.name||"—")}</b><br><small>${r?"جاهز":"في انتظار اللاعب الثاني"}</small></div>`;$("start").classList.toggle("hidden",!(host&&r));$("pool").innerHTML=`<b>📦 قاعدة اللاعبين جاهزة</b><br>${PLAYERS.length} لاعباً محلياً — لا يوجد fetch للاعبين`;return}
-$("setup").classList.add("hidden");$("game").classList.remove("hidden");$("bn").textContent=b?.name||"—";$("rn").textContent=r?.name||"—";$("bm").textContent=Number(b?.budget||0)+"M";$("rm").textContent=Number(r?.budget||0)+"M";$("bp").innerHTML=pitch(b?.team||{});$("rp").innerHTML=pitch(r?.team||{});$("scenario").textContent="🎲 سيناريو #"+room.scenarioNo+" — قائمة 22 لاعباً";$("progress").innerHTML=Array.from({length:11},(_,i)=>`<i class="dot ${i<Number(room.index||0)?"done":i===Number(room.index||0)?"cur":""}"></i>`).join("");
-if(room.auction){const a=room.auction,p=a.player;$("photo").src=p.image;$("pname").textContent=p.name;$("position").textContent=p.position;$("meta").textContent=p.nationality+" · "+p.club;$("price").textContent=Number(a.price||0)+"M";$("auction").className="center "+(a.turn==="blue"?"turnBlue":"turnRed");const ready=room.turn===side&&Date.now()>=Number(a.turnAt||0);$("turn").textContent=room.turn===side?(ready?"🎯 دورك الآن":"⏳ استعد لدورك"):"⏳ دور اللاعب الآخر";$("bidBtn").disabled=!ready;$("passBtn").disabled=!ready;$("bid").disabled=!ready;$("auctionInfo").innerHTML=a.highest?`🏆 أعلى مزايد حالياً: <b>${a.highest===side?"أنت":"اللاعب الآخر"}</b> — ${a.price}M`:`لم يزايد أحد بعد — يبدأ الدور بالتناوب`;}else{$("auction").className="center";$("pname").textContent=room.status==="finished"?"انتهت القائمة":"⏳ الحسم تم — جارٍ تجهيز المزاد التالي";$("position").textContent="—";$("meta").textContent="—";$("price").textContent="—";$("turn").textContent=room.status==="finished"?"🏆 انتهت اللعبة":"⚡ المزاد التالي يبدأ تلقائياً";$("bidBtn").disabled=true;$("passBtn").disabled=true;$("bid").disabled=true;$("auctionInfo").innerHTML=""}
-if(room.status==="finished"){$("finish").classList.remove("hidden");const bc=Object.keys(b?.team||{}).length,rc=Object.keys(r?.team||{}).length;$("score").innerHTML=`<h2>🏆 انتهت القائمة</h2><p>🔵 ${esc(b.name)}: ${bc}/11 لاعبين</p><p>🔴 ${esc(r.name)}: ${rc}/11 لاعبين</p><p class="info">القائمة استعملت 22 لاعباً. القائمة التالية لن تعيد أي لاعب استعمل سابقاً.</p>`;$("next").classList.toggle("hidden",!host)}else $("finish").classList.add("hidden");updateTimer()}
-function updateTimer(){if(!room?.auction){$("timer").textContent="";return}const ms=Math.max(0,Number(room.auction.turnAt||0)-Date.now());$("timer").textContent=ms>0?"⏱️ "+Math.ceil(ms/1000)+" ثانية":"🎯 يمكنك المزايدة الآن"}
-setInterval(()=>{if(room){updateTimer();if(host&&room.status==="playing"&&room.auction&&Date.now()>=Number(room.auction.turnAt||0)&&!resolving){pass(true)}}},500);
-db.ref(".info/connected").on("value",s=>{if(s.val()===true){$("status").textContent="🟢 متصل بالغرفة وقاعدة البيانات";$("status").className="status ok"}else{$("status").textContent="🔴 انقطع الاتصال — انتظر عودة الاتصال";$("status").className="status bad"}});
-$("pool").innerHTML=`<b>📦 قاعدة اللاعبين جاهزة</b><br>${PLAYERS.length} لاعباً محلياً.<br>لا يوجد جلب لاعبين من API أثناء اللعب.`;
-</script></body></html>
+
+/* =====================================================
+   🔥 ضع معلومات مشروع Firebase هنا
+   ===================================================== */
+
+const firebaseConfig = {
+
+  apiKey: "ضع_API_KEY_هنا",
+
+  authDomain: "ضع-PROJECT.firebaseapp.com",
+
+  databaseURL: "https://ضع-PROJECT-default-rtdb.firebaseio.com",
+
+  projectId: "ضع-PROJECT",
+
+  storageBucket: "ضع-PROJECT.firebasestorage.app",
+
+  messagingSenderId: "ضع-MESSAGING-ID",
+
+  appId: "ضع-APP-ID"
+
+};
+
+
+/* ===================================================== */
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
+
+
+let roomId = null;
+let myId = null;
+let myRole = null;
+let myName = "";
+
+let roomRef = null;
+
+let localGame = null;
+let timerInterval = null;
+
+
+/* =========================
+   أدوات
+========================= */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+function show(id){
+  $(id).classList.remove("hidden");
+}
+
+function hide(id){
+  $(id).classList.add("hidden");
+}
+
+function randomCode(){
+
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let result="";
+
+  for(let i=0;i<5;i++){
+    result += chars[Math.floor(Math.random()*chars.length)];
+  }
+
+  return result;
+}
+
+function randomId(){
+  return Math.random().toString(36).substring(2)+Date.now();
+}
+
+function getName(){
+
+  let n=$("playerName").value.trim();
+
+  if(!n){
+    alert("اكتب اسمك أولاً");
+    return null;
+  }
+
+  return n.substring(0,14);
+}
+
+
+/* =========================
+   إنشاء غرفة
+========================= */
+
+async function createRoom(){
+
+  const n=getName();
+
+  if(!n)return;
+
+  myName=n;
+
+  myId=randomId();
+
+  roomId=randomCode();
+
+  roomRef=db.ref("rooms/"+roomId);
+
+  const data={
+
+    status:"waiting",
+
+    host:myId,
+
+    player1:{
+      id:myId,
+      name:myName,
+      role:"player1"
+    },
+
+    player2:null,
+
+    game:null
+
+  };
+
+  try{
+
+    await roomRef.set(data);
+
+    enterLobby();
+
+    listenRoom();
+
+  }catch(e){
+
+    alert("حدث خطأ في Firebase:\n"+e.message);
+
+  }
+
+}
+
+
+/* =========================
+   دخول غرفة
+========================= */
+
+async function joinRoom(){
+
+  const n=getName();
+
+  if(!n)return;
+
+  let code=$("joinCode").value.trim().toUpperCase();
+
+  if(code.length!==5){
+
+    alert("كود الغرفة يجب أن يكون 5 أحرف");
+    return;
+  }
+
+  roomId=code;
+
+  myName=n;
+
+  myId=randomId();
+
+  roomRef=db.ref("rooms/"+roomId);
+
+  try{
+
+    const snap=await roomRef.get();
+
+    if(!snap.exists()){
+
+      alert("الغرفة غير موجودة");
+      return;
+    }
+
+    const room=snap.val();
+
+    if(room.player2){
+
+      alert("الغرفة ممتلئة");
+      return;
+    }
+
+    if(room.status!=="waiting"){
+
+      alert("المباراة بدأت بالفعل");
+      return;
+    }
+
+    await roomRef.child("player2").set({
+
+      id:myId,
+      name:myName,
+      role:"player2"
+
+    });
+
+    enterLobby();
+
+    listenRoom();
+
+  }catch(e){
+
+    alert("حدث خطأ:\n"+e.message);
+
+  }
+
+}
+
+
+/* =========================
+   اللوبي
+========================= */
+
+function enterLobby(){
+
+  hide("home");
+  show("lobby");
+
+  $("roomCode").textContent=roomId;
+
+}
+
+function listenRoom(){
+
+  roomRef.on("value",snap=>{
+
+    if(!snap.exists())return;
+
+    const room=snap.val();
+
+    updateLobby(room);
+
+    if(room.status==="playing"){
+
+      localGame=room.game;
+
+      hide("lobby");
+      hide("home");
+
+      show("game");
+
+      renderGame();
+
+    }
+
+    if(room.status==="finished"){
+
+      localGame=room.game;
+
+      showResult();
+
+    }
+
+  });
+
+}
+
+function updateLobby(room){
+
+  let html="";
+
+  if(room.player1){
+
+    html+=`
+      <div class="card">
+        🟢 ${escapeHtml(room.player1.name)}
+        ${room.host===room.player1.id?" 👑":""}
+      </div>
+    `;
+
+  }
+
+  if(room.player2){
+
+    html+=`
+      <div class="card">
+        🔵 ${escapeHtml(room.player2.name)}
+      </div>
+    `;
+
+  }
+
+  $("lobbyPlayers").innerHTML=html;
+
+  if(room.player1 && room.player2){
+
+    if(room.host===myId){
+
+      show("startBtn");
+
+      $("waitingText").textContent=
+        "🔥 اللاعبان جاهزان! ابدأ المباراة.";
+
+    }else{
+
+      hide("startBtn");
+
+      $("waitingText").textContent=
+        "⏳ ننتظر صاحب الغرفة يبدأ المباراة...";
+
+    }
+
+  }else{
+
+    hide("startBtn");
+
+    $("waitingText").textContent=
+      "⏳ ننتظر اللاعب الثاني...";
+
+  }
+
+}
+
+
+/* =========================
+   بدء المباراة
+========================= */
+
+async function startGame(){
+
+  const snap=await roomRef.get();
+
+  const room=snap.val();
+
+  if(!room.player2){
+
+    alert("لا يوجد لاعب ثانٍ");
+    return;
+  }
+
+  const now=Date.now();
+
+  const game={
+
+    startedAt:now,
+
+    round:1,
+
+    maxRounds:8,
+
+    score1:0,
+
+    score2:0,
+
+    phase:"choice",
+
+    choice1:null,
+
+    choice2:null,
+
+    powers1:{
+      goal:1,
+      keeper:1,
+      turbo:1,
+      spy:1,
+      chaos:1,
+      red:1
+    },
+
+    powers2:{
+      goal:1,
+      keeper:1,
+      turbo:1,
+      spy:1,
+      chaos:1,
+      red:1
+    },
+
+    activePower1:null,
+    activePower2:null,
+
+    lastEvent:"🏟️ انطلاق المباراة!"
+
+  };
+
+  await roomRef.update({
+
+    status:"playing",
+
+    game:game
+
+  });
+
+}
+
+
+/* =========================
+   عرض اللعبة
+========================= */
+
+function renderGame(){
+
+  if(!localGame)return;
+
+  const g=localGame;
+
+  const room=lastRoom;
+
+  if(room){
+
+    $("name1").textContent=
+      room.player1 ? room.player1.name:"لاعب 1";
+
+    $("name2").textContent=
+      room.player2 ? room.player2.name:"لاعب 2";
+
+  }
+
+  $("score1").textContent=g.score1;
+  $("score2").textContent=g.score2;
+
+  $("event").textContent=
+    g.lastEvent || "اختر قرارك";
+
+  updatePowers();
+
+  if(g.phase==="choice"){
+
+    renderChoices();
+
+  }else{
+
+    $("actionsArea").innerHTML=
+      `<div class="wait">⏳ جاري حساب الجولة...</div>`;
+
+  }
+
+  updateTurn();
+
+  startClock();
+
+  addLogIfNeeded(g.lastEvent);
+
+}
+
+let lastRoom=null;
+let lastLogged="";
+
+roomRef && roomRef.on("value",()=>{});
+
+
+/* إعادة ربط room listener لإبقاء lastRoom */
+
+function listenRoom(){
+
+  roomRef.on("value",snap=>{
+
+    if(!snap.exists())return;
+
+    const room=snap.val();
+
+    lastRoom=room;
+
+    updateLobby(room);
+
+    if(room.status==="playing"){
+
+      localGame=room.game;
+
+      hide("lobby");
+      hide("home");
+      hide("result");
+
+      show("game");
+
+      renderGame();
+
+    }
+
+    if(room.status==="finished"){
+
+      localGame=room.game;
+
+      showResult();
+
+    }
+
+  });
+
+}
+
+
+/* =========================
+   القرارات
+========================= */
+
+function renderChoices(){
+
+  let isPlayer1=myRole==="player1";
+
+  if(!myRole){
+
+    if(lastRoom.player1 &&
+       lastRoom.player1.id===myId){
+
+      myRole="player1";
+
+    }
+
+    if(lastRoom.player2 &&
+       lastRoom.player2.id===myId){
+
+      myRole="player2";
+
+    }
+
+  }
+
+  const mine=isPlayer1 ?
+    localGame.choice1:
+    localGame.choice2;
+
+  if(mine){
+
+    $("actionsArea").innerHTML=
+      `<div class="wait">
+        ✅ اخترت قرارك<br>
+        ⏳ ننتظر الخصم...
+      </div>`;
+
+    return;
+
+  }
+
+  let html="";
+
+  if(isPlayer1){
+
+    html=`
+
+      <div style="text-align:center;margin-bottom:8px">
+        ⚔️ أنت المهاجم
+      </div>
+
+      <div class="actions">
+
+        <button class="action"
+          onclick="choose('attack')">
+          ⚡ هجوم سريع
+          <small>متوازن</small>
+        </button>
+
+        <button class="action"
+          onclick="choose('pass')">
+          🧠 تمريرة ذكية
+          <small>آمنة</small>
+        </button>
+
+        <button class="action"
+          onclick="choose('shot')">
+          💣 تسديدة
+          <small>خطيرة</small>
+        </button>
+
+        <button class="action"
+          onclick="choose('dribble')">
+          🪄 مراوغة
+          <small>مفاجئة</small>
+        </button>
+
+      </div>
+
+    `;
+
+  }else{
+
+    html=`
+
+      <div style="text-align:center;margin-bottom:8px">
+        🛡️ أنت المدافع
+      </div>
+
+      <div class="actions">
+
+        <button class="action"
+          onclick="choose('defend')">
+          🛡️ دفاع
+          <small>ضد الهجوم</small>
+        </button>
+
+        <button class="action"
+          onclick="choose('press')">
+          🔥 ضغط
+          <small>مخاطرة</small>
+        </button>
+
+        <button class="action"
+          onclick="choose('counter')">
+          ⚡ مرتدة
+          <small>خطر</small>
+        </button>
+
+        <button class="action"
+          onclick="choose('keeper')">
+          🧤 الحارس
+          <small>تصدي</small>
+        </button>
+
+      </div>
+
+    `;
+
+  }
+
+  $("actionsArea").innerHTML=html;
+
+}
+
+
+/* =========================
+   اختيار
+========================= */
+
+async function choose(action){
+
+  if(!roomRef || !localGame)return;
+
+  if(localGame.phase!=="choice")return;
+
+  const update={};
+
+  if(myRole==="player1"){
+
+    if(localGame.choice1)return;
+
+    update["game/choice1"]=action;
+
+  }else{
+
+    if(localGame.choice2)return;
+
+    update["game/choice2"]=action;
+
+  }
+
+  await roomRef.update(update);
+
+  setTimeout(resolveRound,400);
+
+}
+
+
+/* =========================
+   حساب الجولة
+========================= */
+
+let resolving=false;
+
+async function resolveRound(){
+
+  if(resolving)return;
+
+  resolving=true;
+
+  try{
+
+    const snap=await roomRef.get();
+
+    if(!snap.exists()){
+      resolving=false;
+      return;
+    }
+
+    const room=snap.val();
+
+    const g=room.game;
+
+    if(!g ||
+       g.phase!=="choice" ||
+       !g.choice1 ||
+       !g.choice2){
+
+      resolving=false;
+      return;
+
+    }
+
+    let score1=g.score1;
+    let score2=g.score2;
+
+    let event="";
+
+    const a=g.choice1;
+    const d=g.choice2;
+
+    let chance=0;
+
+    /*
+      اللاعب 1 مهاجم
+      اللاعب 2 مدافع
+    */
+
+    if(a==="attack") chance=50;
+    if(a==="pass") chance=40;
+    if(a==="shot") chance=60;
+    if(a==="dribble") chance=55;
+
+    if(d==="defend") chance-=20;
+    if(d==="press") chance-=5;
+    if(d==="counter") chance-=10;
+    if(d==="keeper") chance-=25;
+
+    if(g.activePower1==="goal") chance+=25;
+    if(g.activePower1==="turbo") chance+=15;
+
+    if(g.activePower2==="keeper") chance-=35;
+    if(g.activePower2==="red") chance+=15;
+
+    chance=Math.max(5,Math.min(95,chance));
+
+    const goal=Math.random()*100<chance;
+
+    if(goal){
+
+      score1++;
+
+      event=
+        "⚽🔥 GOAL! "+room.player1.name+
+        " يسجل!";
+
+    }else{
+
+      /*
+        فرصة مرتدة للمدافع
+      */
+
+      let counterChance=0;
+
+      if(d==="counter")counterChance=30;
+      if(d==="press")counterChance=12;
+
+      if(Math.random()*100<counterChance){
+
+        score2++;
+
+        event=
+          "⚡😱 مرتدة! "+
+          room.player2.name+
+          " يخطف الهدف!";
+
+      }else{
+
+        const fails=[
+          "🧤 تصدي رائع!",
+          "😱 خارج المرمى!",
+          "🛡️ الدفاع أنقذ الموقف!",
+          "💨 ضاعت الهجمة!",
+          "🔥 مباراة مشتعلة!"
+        ];
+
+        event=fails[
+          Math.floor(Math.random()*fails.length)
+        ];
+
+      }
+
+    }
+
+    let nextRound=g.round+1;
+
+    let finished=nextRound>g.maxRounds;
+
+    const updates={
+
+      "game/score1":score1,
+      "game/score2":score2,
+      "game/round":nextRound,
+      "game/choice1":null,
+      "game/choice2":null,
+      "game/activePower1":null,
+      "game/activePower2":null,
+      "game/lastEvent":event
+
+    };
+
+    if(finished){
+
+      updates.status="finished";
+
+      updates["game/phase"]="finished";
+
+    }else{
+
+      updates["game/phase"]="choice";
+
+    }
+
+    await roomRef.update(updates);
+
+  }catch(e){
+
+    console.error(e);
+
+  }
+
+  resolving=false;
+
+}
+
+
+/* =========================
+   القدرات
+========================= */
+
+async function usePower(type){
+
+  if(!localGame)return;
+
+  if(localGame.phase!=="choice")return;
+
+  const powerPath=
+    myRole==="player1" ?
+    "game/powers1/"+type :
+    "game/powers2/"+type;
+
+  const powerObj=
+    myRole==="player1" ?
+    localGame.powers1:
+    localGame.powers2;
+
+  if(!powerObj || !powerObj[type]){
+
+    alert("هذه القدرة استُعملت");
+    return;
+
+  }
+
+  const updates={};
+
+  updates[powerPath]=0;
+
+  updates[
+    myRole==="player1" ?
+    "game/activePower1":
+    "game/activePower2"
+  ]=type;
+
+  await roomRef.update(updates);
+
+}
+
+
+/* =========================
+   القدرات UI
+========================= */
+
+function updatePowers(){
+
+  if(!localGame)return;
+
+  const p=
+    myRole==="player1" ?
+    localGame.powers1:
+    localGame.powers2;
+
+  if(!p)return;
+
+  $("pGoal").disabled=!p.goal;
+  $("pKeeper").disabled=!p.keeper;
+  $("pTurbo").disabled=!p.turbo;
+  $("pSpy").disabled=!p.spy;
+  $("pChaos").disabled=!p.chaos;
+  $("pRed").disabled=!p.red;
+
+}
+
+
+/* =========================
+   الدور
+========================= */
+
+function updateTurn(){
+
+  if(!localGame)return;
+
+  if(localGame.phase!=="choice"){
+
+    $("turnText").textContent=
+      "⏳ حساب الجولة...";
+
+    return;
+
+  }
+
+  let mine=
+    myRole==="player1" ?
+    localGame.choice1:
+    localGame.choice2;
+
+  if(mine){
+
+    $("turnText").textContent=
+      "✅ تم اختيار قرارك — ننتظر الخصم";
+
+  }else{
+
+    $("turnText").textContent=
+      "🔥 اختر قرارك الآن!";
+
+  }
+
+}
+
+
+/* =========================
+   الوقت
+========================= */
+
+function startClock(){
+
+  clearInterval(timerInterval);
+
+  timerInterval=setInterval(()=>{
+
+    if(!localGame)return;
+
+    const elapsed=
+      Math.floor(
+        (Date.now()-localGame.startedAt)/1000
+      );
+
+    const seconds=elapsed%60;
+    const minutes=Math.floor(elapsed/60);
+
+    $("clock").textContent=
+      String(minutes).padStart(2,"0")+
+      ":"+
+      String(seconds).padStart(2,"0");
+
+  },500);
+
+}
+
+
+/* =========================
+   النتيجة
+========================= */
+
+function showResult(){
+
+  hide("home");
+  hide("lobby");
+  hide("game");
+
+  show("result");
+
+  clearInterval(timerInterval);
+
+  const g=localGame;
+
+  $("resultScore").textContent=
+    g.score1+" - "+g.score2;
+
+  let win=false;
+
+  if(myRole==="player1"){
+    win=g.score1>g.score2;
+  }else{
+    win=g.score2>g.score1;
+  }
+
+  if(g.score1===g.score2){
+
+    $("resultEmoji").textContent="🤝";
+    $("resultTitle").textContent="تعادل!";
+
+  }else if(win){
+
+    $("resultEmoji").textContent="🏆";
+    $("resultTitle").textContent="أنت الفائز! 🔥";
+
+  }else{
+
+    $("resultEmoji").textContent="😈";
+    $("resultTitle").textContent="صديقك فاز!";
+
+  }
+
+}
+
+
+/* =========================
+   السجل
+========================= */
+
+function addLogIfNeeded(text){
+
+  if(!text)return;
+
+  if(text===lastLogged)return;
+
+  lastLogged=text;
+
+  const div=document.createElement("div");
+
+  div.textContent=text;
+
+  $("gameLog").prepend(div);
+
+}
+
+
+/* =========================
+   حماية النص
+========================= */
+
+function escapeHtml(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   تحديد اللاعب
+========================= */
+
+function detectRole(room){
+
+  if(room.player1 &&
+     room.player1.id===myId){
+
+    myRole="player1";
+
+  }
+
+  if(room.player2 &&
+     room.player2.id===myId){
+
+    myRole="player2";
+
+  }
+
+}
+
+
+/* =========================
+   مراقبة الغرفة
+========================= */
+
+function setupRoleWatcher(){
+
+  if(!roomRef)return;
+
+  roomRef.on("value",snap=>{
+
+    if(!snap.exists())return;
+
+    const room=snap.val();
+
+    lastRoom=room;
+
+    detectRole(room);
+
+  });
+
+}
+
+
+/* =========================
+   إعادة تعريف listener
+========================= */
+
+const originalCreateRoom=createRoom;
+const originalJoinRoom=joinRoom;
+
+
+/*
+  مراقبة إضافية لتحديد اللاعب
+*/
+
+setInterval(()=>{
+
+  if(lastRoom){
+
+    detectRole(lastRoom);
+
+  }
+
+},500);
+
+
+/* =========================
+   زر Enter
+========================= */
+
+$("joinCode").addEventListener("input",function(){
+
+  this.value=this.value
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g,"");
+
+});
+
+</script>
+
+</body>
+</html>
